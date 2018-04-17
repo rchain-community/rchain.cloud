@@ -1,5 +1,6 @@
 var express = require("express");
 var app = express();
+var stream= require('stream');
 var docker = new (require("dockerode"))();
 var server = require("http").createServer(app);
 var uuid = require("uuid/v4");
@@ -35,12 +36,15 @@ io.on("connection", function(socket) {
       fs.writeFile(dir + "/" + filename, data.body, "utf8", function() {
         // run docker
         var image = "rchain/rnode:" + (data.version || "latest");
+        var ss = new stream.Writable({
+          write(chunk, encoding, callback) {
+            console.log('output: ' + chunk.toString('utf8'))
+          }
+        });
         docker
-          .run(image, ["--eval", "/tmp/" + filename, "--mount",
-            'type=bind,source="' + dir + '",target=/tmp'], process.stdout, [
-            "--mount",
-            'type=bind,source="' + dir + '",target=/tmp'
-          ])
+          .run(image, ["--eval", "/tmp/" + filename], ss, {
+            Binds: [dir + ':/tmp']
+          })
           .then(function(container) {
             console.log(container.output);
             return container.remove();
@@ -56,6 +60,6 @@ io.on("connection", function(socket) {
   });
 });
 
-var port = process.env.PORT || 80;
+var port = process.env.PORT || 8000;
 server.listen(port);
 console.log("Server started on port", port);
