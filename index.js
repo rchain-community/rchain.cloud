@@ -69,6 +69,7 @@ io.on("connection", function(socket) {
             Binds: [dir + ":/tmp"]
           })
           .then(function(container) {
+            socket.emit("output.done");
             console.log(container.output);
             return container.remove();
           })
