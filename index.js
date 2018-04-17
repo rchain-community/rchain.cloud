@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
-var stream= require('stream');
+var stream = require("stream");
+const { StringDecoder } = require("string_decoder");
 var docker = new (require("dockerode"))();
 var server = require("http").createServer(app);
 var uuid = require("uuid/v4");
@@ -10,6 +11,30 @@ var io = require("socket.io")(server, {
 });
 var path = require("path");
 var fs = require("fs");
+
+class StringWritable extends stream.Writable {
+  constructor(cb) {
+    super();
+    this.cb = cb;
+    const state = this._writableState;
+    this._decoder = new StringDecoder(state.defaultEncoding);
+    this.data = "";
+  }
+  _write(chunk, encoding, callback) {
+    if (encoding === "buffer") {
+      chunk = this._decoder.write(chunk);
+    }
+    this.cb(chunk);
+    this.data += chunk;
+    callback();
+  }
+  _final(callback) {
+    var chunk = this._decoder.end();
+    this.cb(chunk);
+    this.data += chunk;
+    callback();
+  }
+}
 
 app.use(express.static(__dirname + "/public"));
 
@@ -36,14 +61,12 @@ io.on("connection", function(socket) {
       fs.writeFile(dir + "/" + filename, data.body, "utf8", function() {
         // run docker
         var image = "rchain/rnode:" + (data.version || "latest");
-        var ss = new stream.Writable({
-          write(chunk, encoding, callback) {
-            console.log('output: ' + chunk.toString('utf8'))
-          }
+        var ss = new StringWritable(chunk => {
+          socket.emit("output.append", chunk);
         });
         docker
           .run(image, ["--eval", "/tmp/" + filename], ss, {
-            Binds: [dir + ':/tmp']
+            Binds: [dir + ":/tmp"]
           })
           .then(function(container) {
             console.log(container.output);
