@@ -3,10 +3,18 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <link rel="stylesheet" href="vendor/codemirror.css"/>
+    <link rel="stylesheet" href="main.css"/>
 </head>
 <body>
-    <textarea id="mirror"></textarea>
-<script src="vendor/codemirror.js"></script>
-<script src="editor.js"></script>
+    <div class="header">
+        <h2>Rchain.cloud</h2>
+        <div href="#" class="link">Online Rholang interpreter.</div>
+    </div>
+    <div class="program">
+        <div class="editor"><textarea id="mirror"></textarea></div>
+        <div class="console"></div>
+    </div>
+    <script src="vendor/codemirror.js"></script>
+    <script src="editor.js"></script>
 </body>
 </html>
