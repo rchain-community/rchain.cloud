@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "simpleserver": "node_modules/.bin/http-server -c-1 ./ -p 8888"
   },
   "author": "",
