@@ -60,6 +60,6 @@ io.on("connection", function(socket) {
   });
 });
 
-var port = process.env.PORT || 8000;
+var port = process.env.PORT || 80;
 server.listen(port);
 console.log("Server started on port", port);
