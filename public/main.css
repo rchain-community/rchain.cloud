@@ -80,6 +80,14 @@ body {
     z-index: 1000;
 }
 
+#selectVersion {
+    position: absolute;
+    right: calc(50% + 20px);
+    top: 20px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
 .run:hover {
     background: #fff;
     color: #116cd6;
