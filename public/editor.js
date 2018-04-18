@@ -47,7 +47,7 @@ fetch('/v1/versions').then(function (response) {
   response.json().then(function (data) {
     data.forEach(function (version) {
       if (version !== 'latest') {
-        document.getElementById('selectVersion').innerHTML += '<option value="' + version + '">' + version + '</option>'
+        document.getElementById('selectVersion').innerHTML += '<option value="' + version + '">' + version + ' &dtrif;</option>'
       }
     })
   })

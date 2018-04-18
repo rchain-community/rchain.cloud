@@ -8,33 +8,39 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
 </head>
 <body>
-    <div class="header">
-        <h2>RChain.cloud</h2>
-        <div class="link">
-            Online Rholang interpreter.
-            <a class="github" target="_blank" href="https://github.com/th3build/rchain.cloud">Github
-                repository</a>
-            </div>
-        </div>
-        <div class="program">
-            <div class="editor"><textarea id="mirror">new testResult in {
+
+<div class="header">
+    <h2>RChain.cloud</h2>
+    <div class="link">
+        Online Rholang interpreter.
+        <a class="github" target="_blank" href="https://github.com/th3build/rchain.cloud">
+            Github repository
+        </a>
+    </div>
+</div>
+
+<div class="program">
+    <div class="editor">
+        <select id="selectVersion" title="Select version">
+            <option selected value="latest">latest &dtrif;</option>
+        </select>
+        <div id="runButton" onclick="run()" class="run">Run</div>
+        <textarea title="Your code" id="mirror">new testResult in {
    contract @"HelloWorld"(@data) = {
      testResult!(data)
    } |
    @"HelloWorld"!(true)
-}</textarea></div>
-            <div class="console">
-                <pre class="text" id="consoleText"></pre>
-            </div>
-            <div id="runButton" onclick="run()" class="run">Run</div>
-            <select id="selectVersion">
-                <option default value="latest">latest</option>
-            </select>
-        </div>
+}</textarea>
     </div>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/vendor/codemirror.js"></script>
-    <script src="/vendor/rholang.js"></script>
-    <script src="/editor.js"></script>
+    <div class="console">
+        <pre class="text" id="consoleText"></pre>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/vendor/codemirror.js"></script>
+<script src="/vendor/rholang.js"></script>
+<script src="/editor.js"></script>
+
 </body>
 </html>
