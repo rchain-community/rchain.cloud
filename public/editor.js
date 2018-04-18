@@ -8,7 +8,9 @@ var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('mirror'), {
 
 // Run event triggered by user
 function run () {
-  socket.emit('run', {version: 'latest', body: myCodeMirror.getValue()})
+  var e = document.getElementById('selectVersion')
+  var version = e.options[e.selectedIndex].value
+  socket.emit('run', {version, body: myCodeMirror.getValue()})
   document.getElementById('runButton').innerHTML = 'Loading...'
 }
 
@@ -40,3 +42,13 @@ function loadingDone (data) {
   document.getElementById('consoleText').innerHTML += '<span style="color: #9a9ea2;">' +
     'Completed in ' + data.executionTime + 's.</span>'
 }
+
+fetch('/v1/versions').then(function (response) {
+  response.json().then(function (data) {
+    data.forEach(function (version) {
+      if (version !== 'latest') {
+        document.getElementById('selectVersion').innerHTML += '<option value="' + version + '">' + version + '</option>'
+      }
+    })
+  })
+})
