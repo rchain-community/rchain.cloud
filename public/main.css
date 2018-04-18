@@ -153,3 +153,12 @@ body {
 .CodeMirror-gutters {
 	opacity: 0;
 }
+
+.leanlink {
+    text-decoration: none;
+    color: #fff;
+}
+
+.leanlink:hover {
+    color: #592ade
+}
