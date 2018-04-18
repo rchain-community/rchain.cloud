@@ -2,7 +2,7 @@ var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('mirror'), {
   lineNumbers: true,
   lineWrapping: true,
   tabSize: 3,
-  mode: 'php',
+  mode: 'rholang',
   theme: 'solarized'
 })
 
