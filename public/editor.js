@@ -16,17 +16,26 @@ function run () {
 var socket = io()
 socket.on('output.clean', function () { clearConsole() })
 socket.on('output.append', function (message) { appendToConsole(message) })
-socket.on('output.done', function () { loadingDone() })
+socket.on('output.done', function (data) { loadingDone(data) })
 
 // Functions for callbacks from socket.io
 function clearConsole () {
-  document.getElementById('consoleText').innerHTML = ''
+  document.getElementById('consoleText').innerHTML = '<span style="color: #9a9ea2;">&gt;</span>&nbsp;'
 }
 
 function appendToConsole (message) {
+  console.log(JSON.stringify(message))
+
+  if (message.length < 24 && message.indexOf(':\r\n') === message.length - 3) {
+    message = '<span style="color: #9a9ea2;">' + message + '</span>'
+  }
+
+  message = message.replace('\r\n> ', '\r\n<span style="color: #9a9ea2;">&gt;</span>&nbsp;')
   document.getElementById('consoleText').innerHTML += message
 }
 
-function loadingDone () {
+function loadingDone (data) {
   document.getElementById('runButton').innerHTML = 'Run'
+  document.getElementById('consoleText').innerHTML += '<span style="color: #9a9ea2;">' +
+    'Completed in ' + data.executionTime + 's.</span>'
 }

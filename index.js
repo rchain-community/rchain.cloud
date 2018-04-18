@@ -38,19 +38,27 @@ io.on('connection', function (socket) {
     const id = uuid()
     const dir = '/tmp/' + id
     const filename = 'input.rho'
+    const path = dir + '/' + filename
+    const hrstart = process.hrtime()
+    console.time('run')
     fs.mkdir(dir, 0o777, function () {
-      fs.writeFile(dir + '/' + filename, data.body, 'utf8', function () {
+      fs.writeFile(path, data.body, 'utf8', function () {
         // run docker
         const image = 'rchain/rnode:' + (data.version || 'latest')
         const stream = new StringWritable(chunk => {
           socket.emit('output.append', chunk)
         })
-        console.log('Running ' + image + ' with: ' + dir + '/' + filename)
-        docker.run(image, ['--eval', '/tmp/' + filename], stream, {
-          Binds: [dir + ':/tmp']
+        console.log('Running ' + image + ' with: ' + path)
+        docker.run(image, ['--eval', path], stream, {
+          Binds: [dir + ':' + dir]
         }).then(function (container) {
-          socket.emit('output.done')
+          const hrend = process.hrtime(hrstart)
+          socket.emit('output.done', {
+            executionTime: Math.round((hrend[0] + hrend[1] / 1000000000) * 1000) / 1000
+          })
+          console.timeEnd('run')
           console.log(container.output)
+          fs.unlink(path, () => {})
         }).catch(function (err) {
           console.log(err)
         })
