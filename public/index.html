@@ -2,32 +2,34 @@
 <html>
 <head>
     <title>rchain.cloud</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <link rel="stylesheet" href="vendor/codemirror.css"/>
     <link rel="stylesheet" href="main.css"/>
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
 </head>
 <body>
-    <div class="header">
-        <h2>RChain.cloud</h2>
-        <div class="link">
-            Online Rholang interpreter. 
-            <a class="leanlink" target="_blank" href="https://github.com/th3build/rchain.cloud/">#github</a>
-            <a class="leanlink" target="_blank" href="https://leanmotherfuckers.com/">#leanmotherfuckers</a>
-        </div>
+<div class="header">
+    <h2>RChain.cloud</h2>
+    <div class="link">
+        Online Rholang interpreter.
+        <a class="github" target="_blank" href="https://github.com/th3build/rchain.cloud">Github
+            repository</a>
     </div>
-    <div class="program">
-        <div class="editor"><textarea id="mirror">new testResult in {
+</div>
+<div class="program">
+    <div class="editor"><textarea id="mirror">new testResult in {
     contract @"HelloWorld"(@data) = {
         testResult!(data)
     } |
     @"HelloWorld"!(true)
 }</textarea></div>
-        <div class="console"><pre class="text" id="consoleText"></pre></div>
-        <div id="runButton" onclick="run()" class="run">Run</div>
+    <div class="console">
+        <pre class="text" id="consoleText"></pre>
     </div>
-    <script src="http://rchain.cloud/socket.io/socket.io.js"></script>
-    <script src="vendor/codemirror.js"></script>
-    <script src="editor.js"></script>
+    <div id="runButton" onclick="run()" class="run">Run</div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="vendor/codemirror.js"></script>
+<script src="editor.js"></script>
 </body>
 </html>

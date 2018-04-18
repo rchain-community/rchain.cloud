@@ -15,10 +15,12 @@ body {
     color: #fff;
     margin: 0;
     font-size: 24px;
+    line-height: 32px;
 }
 
 .link {
     float: right;
+    line-height: 32px;
     text-decoration: none;
     align-self: center;
     font-size: 16px;
@@ -243,6 +245,20 @@ body {
 .leanlink {
     text-decoration: none;
     color: #fff;
+}
+
+.github {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    float: right;
+    margin-top: 4px;
+    margin-left: 8px;
+    background: transparent url('images/github.svg') no-repeat center;
+    background-size: 20px 20px;
+    text-indent: -10000px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .leanlink:hover {
