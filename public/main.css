@@ -44,16 +44,16 @@ body {
 
 .program .editor {
     flex: 1;
+    background: #292c34;
     width: 50%;
 }
 
 .program .console {
     flex: 1;
     background: #343d46;
-    border-left: 1px solid #38393a;
     font-family: 'Source Code Pro', 'Courier New', Courier, monospace;
     width: 50%;
-    overflow: auto;
+    overflow-y: auto;
 }
 
 .program .console .text {
@@ -62,7 +62,7 @@ body {
     margin: 0;
     font-size: 14px;
     line-height: 20px;
-    white-space: pre-line;
+    white-space: pre-wrap;
 }
 
 .run {
@@ -75,6 +75,7 @@ body {
     color: #fff;
     cursor: pointer;
     transition: all 0.2s ease;
+    z-index: 1000;
 }
 
 .run:hover {

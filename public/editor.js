@@ -31,6 +31,7 @@ function appendToConsole (message) {
   }
 
   message = message.replace('\r\n> ', '\r\n<span style="color: #9a9ea2;">&gt;</span>&nbsp;')
+  message = message.replace(/^Syntax Error,/, '<span style="color: #e63747;">Syntax Error</span>,')
   document.getElementById('consoleText').innerHTML += message
 }
 
