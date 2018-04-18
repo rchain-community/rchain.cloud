@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <link rel="stylesheet" href="vendor/codemirror.css"/>
     <link rel="stylesheet" href="main.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
 </head>
 <body>
     <div class="header">
@@ -11,9 +12,16 @@
         <div href="#" class="link">Online Rholang interpreter.</div>
     </div>
     <div class="program">
-        <div class="editor"><textarea id="mirror"></textarea></div>
-        <div class="console"></div>
+        <div class="editor"><textarea id="mirror">new testResult in {
+    contract @"HelloWorld"(@data) = {
+        testResult!(data)
+    } |
+    @"HelloWorld"!(true)
+}</textarea></div>
+        <div class="console"><pre class="text" id="consoleText"></pre></div>
+        <div id="runButton" onclick="run()" class="run">Run</div>
     </div>
+    <script src="http://rchain.cloud/socket.io/socket.io.js"></script>
     <script src="vendor/codemirror.js"></script>
     <script src="editor.js"></script>
 </body>
