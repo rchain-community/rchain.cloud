@@ -10,9 +10,9 @@
 <body>
 
 <div class="header">
-    <h2>RChain.cloud</h2>
+    <h2>rchain.cloud</h2>
     <div class="link">
-        Online Rholang interpreter.
+        Online Rholang Interpreter.
         <a class="github" target="_blank" href="https://github.com/th3build/rchain.cloud">
             Github repository
         </a>
@@ -21,10 +21,8 @@
 
 <div class="program">
     <div class="editor">
-        <select id="selectVersion" title="Select version">
-            <option selected value="latest">latest &dtrif;</option>
-        </select>
-        <div id="runButton" onclick="run()" class="run">Run</div>
+        <a onclick="showOptions()" class="options">Options</a>
+        <a id="runButton" onclick="run()" class="run">Run</a>
         <textarea title="Your code" id="mirror">new testResult in {
    contract @"HelloWorld"(@data) = {
      testResult!(data)
@@ -34,6 +32,21 @@
     </div>
     <div class="console">
         <pre class="text" id="consoleText"></pre>
+    </div>
+</div>
+
+<div class="modal" id="runOptions">
+    <div class="modal-inner">
+        <a class="close" onclick="hideOptions()">&times;</a>
+
+        <h3>Options</h3>
+
+        <fieldset>
+            <label>RNode version</label>
+            <select id="selectVersion" title="Select version">
+                <option selected value="latest">latest</option>
+            </select>
+        </fieldset>
     </div>
 </div>
 

@@ -1,11 +1,15 @@
+/* --- General --- */
+
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+/* --- Header --- */
+
 .header {
     padding: 20px;
-    background-color: #000;
+    background-color: #030405;
     display: flex;
     justify-content: space-between;
 }
@@ -34,6 +38,22 @@ body {
     display: flex;
     justify-content: center;
 }
+
+.github {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    float: right;
+    margin-top: 4px;
+    margin-left: 8px;
+    background: transparent url('images/github.svg') no-repeat center;
+    background-size: 20px 20px;
+    text-indent: -10000px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* --- Main content --- */
 
 .program {
     width: 100%;
@@ -69,36 +89,41 @@ body {
     white-space: pre-wrap;
 }
 
+.options {
+    position: absolute;
+    right: 128px;
+    bottom: 12px;
+    height: 37px;
+    width: 37px;
+    z-index: 1000;
+    background: transparent url('images/options.svg') no-repeat center;
+    background-size: 20px 20px;
+    text-indent: -1000px;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+.options:hover {
+    opacity: 1;
+}
+
 .run {
     position: absolute;
     right: 20px;
     bottom: 12px;
     background-color: #116cd6;
     padding: 10px 20px;
-    border-radius: 0 5px 5px 0;
+    border-radius: 5px;
     color: #fff;
-    width: 32px;
+    width: 64px;
     text-align: center;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
     z-index: 1000;
-}
-
-#selectVersion {
-    position: absolute;
-    bottom: 12px;
-    right: 90px;
-    cursor: pointer;
-    z-index: 1000;
-    -webkit-appearance: none;
-    background: rgba(0,0,0,0.3);
-    border-radius: 5px 0 0 5px;
-    border: 0;
-    padding: 10px 20px;
-    color: #aaa;
-    font-size: 14px;
 }
 
 .run:hover {
@@ -149,25 +174,76 @@ body {
     opacity: 0;
 }
 
-.leanlink {
-    text-decoration: none;
-    color: #fff;
+/* --- Modals --- */
+
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(100, 100, 100, 0.7);
+    z-index: 2000;
+    display: none;
 }
 
-.github {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
+.modal.open {
+    display: block;
+}
+
+.modal-inner {
+    background: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -150px;
+    margin-top: -150px;
+    width: 300px;
+    height: 300px;
+    padding: 24px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.modal h3 {
+    margin: -24px -24px 24px;
+    font-weight: 500;
+    padding: 24px;
+    color: #232425;
+    border-bottom: 1px solid #eee;
+}
+
+.modal .close {
     float: right;
-    margin-top: 4px;
-    margin-left: 8px;
-    background: transparent url('images/github.svg') no-repeat center;
-    background-size: 20px 20px;
-    text-indent: -10000px;
-    overflow: hidden;
-    white-space: nowrap;
+    height: 16px;
+    width: 16px;
+    border-radius: 8px;
+    background: #888;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    line-height: 14px;
+    margin-top: 5px;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
 }
 
-.leanlink:hover {
-    color: #592ade;
+.modal .close:hover {
+    opacity: 1;
+}
+
+/* --- Forms --- */
+
+fieldset {
+    border: 0;
+    padding: 0;
+    margin-bottom: 24px;
+    text-align: right;
+}
+
+fieldset label {
+    float: left;
+    font-size: 14px;
 }

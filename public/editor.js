@@ -26,8 +26,6 @@ function clearConsole () {
 }
 
 function appendToConsole (message) {
-  console.log(JSON.stringify(message))
-
   if (message.length < 24 && message.indexOf(':\r\n') === message.length - 3) {
     message = '<span style="color: #9a9ea2;">' + message + '</span>'
   }
@@ -35,6 +33,14 @@ function appendToConsole (message) {
   message = message.replace('\r\n> ', '\r\n<span style="color: #9a9ea2;">&gt;</span>&nbsp;')
   message = message.replace(/^Syntax Error,/, '<span style="color: #e63747;">Syntax Error</span>,')
   document.getElementById('consoleText').innerHTML += message
+}
+
+function showOptions () {
+  document.getElementById('runOptions').className = 'modal open'
+}
+
+function hideOptions () {
+  document.getElementById('runOptions').className = 'modal'
 }
 
 function loadingDone (data) {
@@ -47,7 +53,8 @@ fetch('/v1/versions').then(function (response) {
   response.json().then(function (data) {
     data.forEach(function (version) {
       if (version !== 'latest') {
-        document.getElementById('selectVersion').innerHTML += '<option value="' + version + '">' + version + ' &dtrif;</option>'
+        document.getElementById('selectVersion').innerHTML += '<option value="' + version + '">' +
+          version + '</option>'
       }
     })
   })
