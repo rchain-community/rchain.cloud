@@ -22,7 +22,7 @@ socket.on('output.done', function (data) { loadingDone(data) })
 
 // Functions for callbacks from socket.io
 function clearConsole () {
-  document.getElementById('consoleText').innerHTML = '<span style="color: #9a9ea2;">&gt;</span>&nbsp;'
+  document.getElementById('consoleText').innerHTML = '<span style="color: #757a84;">&gt;</span>&nbsp;'
 }
 
 function appendToConsole (message) {
@@ -30,7 +30,7 @@ function appendToConsole (message) {
     message = '<span style="color: #9a9ea2;">' + message + '</span>'
   }
 
-  message = message.replace('\r\n> ', '\r\n<span style="color: #9a9ea2;">&gt;</span>&nbsp;')
+  message = message.replace('\r\n> ', '\r\n<span style="color: #757a84;">&gt;</span>&nbsp;')
   message = message.replace(/^Syntax Error,/, '<span style="color: #e63747;">Syntax Error</span>,')
   document.getElementById('consoleText').innerHTML += message
 }
@@ -45,7 +45,7 @@ function hideOptions () {
 
 function loadingDone (data) {
   document.getElementById('runButton').innerHTML = 'Run'
-  document.getElementById('consoleText').innerHTML += '<span style="color: #9a9ea2;">' +
+  document.getElementById('consoleText').innerHTML += '<span style="color: #757a84;">' +
     'Completed in ' + data.executionTime + 's.</span>'
 }
 

@@ -1,7 +1,9 @@
 /* --- General --- */
 
-body {
+html, body {
     margin: 0;
+    padding: 0;
+    background-color: #20262e;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
@@ -9,25 +11,26 @@ body {
 
 .header {
     padding: 20px;
-    background-color: #030405;
-    display: flex;
-    justify-content: space-between;
+    background-color: #161b21;
+    height: 24px;
 }
 
 .header h2 {
     align-self: center;
     color: #fff;
     margin: 0;
-    font-size: 24px;
-    line-height: 32px;
+    font-weight: 600;
+    float: left;
+    font-size: 15px;
+    line-height: 24px;
 }
 
 .link {
-    float: right;
-    line-height: 32px;
+    text-align: right;
+    line-height: 24px;
     text-decoration: none;
     align-self: center;
-    font-size: 16px;
+    font-size: 14px;
     color: #fff;
 }
 
@@ -44,11 +47,11 @@ body {
     width: 24px;
     height: 24px;
     float: right;
-    margin-top: 4px;
     margin-left: 8px;
     background: transparent url('images/github.svg') no-repeat center;
     background-size: 20px 20px;
     text-indent: -10000px;
+    text-align: left;
     overflow: hidden;
     white-space: nowrap;
 }
@@ -60,30 +63,37 @@ body {
     display: flex;
     flex-direction: row;
     position: absolute;
-    top: 68px;
+    top: 64px;
     bottom: 0;
 }
 
 .program .editor {
     flex: 1;
-    background: #292c34;
     width: 50%;
     padding-bottom: 64px;
     position: relative;
+    border-right: 1px solid #2d333b;
+}
+
+.label {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    padding: 16px 26px 0;
+    color: #757a84;
 }
 
 .program .console {
     flex: 1;
-    background: #343d46;
-    font-family: 'Source Code Pro', 'Courier New', Courier, monospace;
     width: 50%;
     overflow-y: auto;
 }
 
 .program .console .text {
     color: #fff;
-    padding: 12px 20px;
+    padding: 16px 26px;
     margin: 0;
+    font-family: 'Source Code Pro', 'Courier New', Courier, monospace;
     font-size: 14px;
     line-height: 20px;
     white-space: pre-wrap;
@@ -134,7 +144,7 @@ body {
 /* ---- CodeMirror ---- */
 
 .CodeMirror {
-    background: #292c34 !important;
+    background: #20262e !important;
     color: #fff !important;
     line-height: 20px !important;
     height: 100%;

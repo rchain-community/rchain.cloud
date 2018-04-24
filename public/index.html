@@ -12,7 +12,7 @@
 <div class="header">
     <h2>rchain.cloud</h2>
     <div class="link">
-        Online Rholang Interpreter.
+        online rholang interpreter
         <a class="github" target="_blank" href="https://github.com/th3build/rchain.cloud">
             Github repository
         </a>
@@ -21,6 +21,7 @@
 
 <div class="program">
     <div class="editor">
+        <div class="label">YOUR CODE</div>
         <a onclick="showOptions()" class="options">Options</a>
         <a id="runButton" onclick="run()" class="run">Run</a>
         <textarea title="Your code" id="mirror">new testResult in {
@@ -31,6 +32,7 @@
 }</textarea>
     </div>
     <div class="console">
+        <div class="label">OUTPUT</div>
         <pre class="text" id="consoleText"></pre>
     </div>
 </div>
