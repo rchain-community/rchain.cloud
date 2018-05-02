@@ -123,7 +123,7 @@ html, body {
     position: absolute;
     right: 20px;
     bottom: 12px;
-    background-color: #116cd6;
+    background-color: #df3248;
     padding: 10px 20px;
     border-radius: 5px;
     color: #fff;
@@ -138,7 +138,7 @@ html, body {
 
 .run:hover {
     background: #fff;
-    color: #116cd6;
+    color: #b12b3d;
 }
 
 /* ---- CodeMirror ---- */
