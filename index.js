@@ -1,20 +1,49 @@
 const fs = require('fs')
 const uuid = require('uuid/v4')
+const bodyParser = require('body-parser')
 const express = require('express')
 const app = express()
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
 const docker = new (require('dockerode'))()
 
+// Local libs
 const StringWritable = require('./lib/StringWritable')
 const DockerRegistry = require('./lib/DockerRegistry')
 
+// Middleware
+app.use(express.static(__dirname + '/public'))
+app.use(bodyParser.urlencoded({extended: true}))
+
+// Prep docker by pulling all tags
 DockerRegistry.pullAllTags('rchain/rnode', docker)
 
-app.use(express.static(__dirname + '/public'))
+// Load index.html content
+const indexHTML = fs.readFileSync(__dirname + '/views/index.html', 'utf8')
+const example = `new testResult in {
+   contract @"HelloWorld"(@data) = {
+     testResult!(data)
+   } |
+   @"HelloWorld"!(true)
+}`
 
+// HTTP Routes
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/public/index.html')
+  const config = {autorun: false, version: 'latest'}
+  const content = indexHTML
+    .replace('{{ content }}', example)
+    .replace('{{ config }}', JSON.stringify(config))
+
+  res.send(content)
+})
+
+app.post('/', function (req, res) {
+  const config = {autorun: true, version: req.body.version || 'latest'}
+  const content = indexHTML
+    .replace('{{ content }}', req.body.content || req.body.body || example)
+    .replace('{{ config }}', JSON.stringify(config))
+
+  res.send(content)
 })
 
 app.get('/v1/versions', function (req, res) {
@@ -23,12 +52,9 @@ app.get('/v1/versions', function (req, res) {
   })
 })
 
+// Socket.io logic
 io.on('connection', function (socket) {
   console.log('a user connected')
-
-  socket.on('disconnect', function () {
-    console.log('user disconnected')
-  })
 
   socket.on('run', function (data) {
     // ask client to clean output

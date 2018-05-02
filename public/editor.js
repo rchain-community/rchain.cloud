@@ -8,14 +8,17 @@ var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('mirror'), {
 
 // Run event triggered by user
 function run () {
-  var e = document.getElementById('selectVersion')
-  var version = e.options[e.selectedIndex].value
-  socket.emit('run', {version, body: myCodeMirror.getValue()})
+  socket.emit('run', {version: config.version, body: myCodeMirror.getValue()})
   document.getElementById('runButton').innerHTML = 'Loading...'
 }
 
 // Socket.io stuff
 var socket = io()
+socket.on('connect', function () {
+  if (config.autorun) {
+    run()
+  }
+})
 socket.on('output.clean', function () { clearConsole() })
 socket.on('output.append', function (message) { appendToConsole(message) })
 socket.on('output.done', function (data) { loadingDone(data) })
@@ -47,6 +50,10 @@ function loadingDone (data) {
   document.getElementById('runButton').innerHTML = 'Run'
   document.getElementById('consoleText').innerHTML += '<span style="color: #757a84;">' +
     'Completed in ' + data.executionTime + 's.</span>'
+}
+
+function selectVersion (select) {
+  config.version = select.options[select.selectedIndex].value
 }
 
 fetch('/v1/versions').then(function (response) {

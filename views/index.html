@@ -24,12 +24,7 @@
         <div class="label">YOUR CODE</div>
         <a onclick="showOptions()" class="options">Options</a>
         <a id="runButton" onclick="run()" class="run">Run</a>
-        <textarea title="Your code" id="mirror">new testResult in {
-   contract @"HelloWorld"(@data) = {
-     testResult!(data)
-   } |
-   @"HelloWorld"!(true)
-}</textarea>
+        <textarea title="Your code" id="mirror">{{ content }}</textarea>
     </div>
     <div class="console">
         <div class="label">OUTPUT</div>
@@ -45,13 +40,14 @@
 
         <fieldset>
             <label>RNode version</label>
-            <select id="selectVersion" title="Select version">
+            <select id="selectVersion" title="Select version" onchange="selectVersion(this)">
                 <option selected value="latest">latest</option>
             </select>
         </fieldset>
     </div>
 </div>
 
+<script>window.config = {{ config }}</script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/vendor/codemirror.js"></script>
 <script src="/vendor/rholang.js"></script>
