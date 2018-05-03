@@ -42,7 +42,7 @@ You can send a POST request to `http://rchain.cloud/` to seed the editor with ce
 
 This functionality allows you to create a 'Run on RChain.cloud' button. Usually this is done using a [hidden HTML form](https://jsfiddle.net/0zwtnr8c/):
 
-```
+```html
 <form target="_blank" method="POST" action="http://rchain.cloud/">
    <input type="hidden" name="content" value="Your code here!" />
    <input type="hidden" name="version" value="latest" />
@@ -52,7 +52,7 @@ This functionality allows you to create a 'Run on RChain.cloud' button. Usually 
 
 ### Getting available version
 
-```
+```http
 GET http://rchain.cloud/v1/versions
 ```
 
