@@ -3,19 +3,27 @@ import scala.util.Try
 
 trait FileRd {
   def getName(): String
-  def getLines(): Iterable[String]
   def isFile(): Boolean
   def isDirectory(): Boolean
   def exists(): Boolean
   def listFiles(): Iterable[FileRd]
   def joinPath(p: String): FileRd
+  def openRd(): InStream
+}
+
+trait InStream {
+  def getLines(): Iterable[String]
 }
 
 trait FileWr {
-  def println(out: String)
   def ro(): FileRd
   def withExt(ext: String): FileWr
   def joinPath(p: String): FileWr
+  def openWr(): OutStream
+}
+
+trait OutStream {
+  def println(out: String)
   def close()
 }
 
@@ -57,7 +65,7 @@ trait FileWr {
 object RholangLinker {
 
   def readRhoFile(src: FileRd): String = {
-    src.getLines()
+    src.openRd.getLines()
       .map(_.split("//").headOption.getOrElse("")) //ignore comments
       .map(_.trim)
       .filter(_.nonEmpty)
@@ -254,8 +262,9 @@ object RholangLinker {
 
     val output = source.withExt(".linked")
     val outFilename = output.ro.getName
-    output.println(subedCode.toString)
-    output.close()
+    val out = output.openWr()
+    out.println(subedCode.toString)
+    out.close()
     println(s"Wrote $outFilename")
   }
  
