@@ -257,3 +257,23 @@ fieldset label {
     float: left;
     font-size: 14px;
 }
+
+@media only screen and (max-device-width: 750px) {
+    .program {
+        flex-direction: column;
+    }
+    .program .editor {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #2d333b
+    }
+    .program .console {
+        width: 100%
+    }
+}
+
+@media only screen and (max-device-width: 400px) {
+    .header .link span {
+        display: none
+    }
+}
