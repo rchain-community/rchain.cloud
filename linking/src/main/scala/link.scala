@@ -1,33 +1,6 @@
 import scala.annotation.tailrec
 import scala.util.Try
 
-trait FileRd {
-  def getName(): String
-  def isFile(): Boolean
-  def isDirectory(): Boolean
-  def exists(): Boolean
-  def listFiles(): Iterable[FileRd]
-  def joinPath(p: String): FileRd
-  def openRd(): InStream
-}
-
-trait InStream {
-  def getLines(): Iterable[String]
-}
-
-trait FileWr {
-  def ro(): FileRd
-  def withExt(ext: String): FileWr
-  def joinPath(p: String): FileWr
-  def openWr(): OutStream
-}
-
-trait OutStream {
-  def println(out: String)
-  def close()
-}
-
-
 /**
  * Provides a facility for "linking" Rholang source code. Linking is done
  * by trans-piling extended Rholang source into standard Rholang source.
@@ -272,16 +245,17 @@ object RholangLinker {
     if (args.length < 2) {
       printUsage()
     } else {
+      import scalajs.js.Dynamic.{global => g}
+
       val libDir = args.head
-      def mkRd(path: String): FileRd = ???
-      def mkWr(path: String): FileWr = ???
-      val (packages, dependencies) = readPackages(mkRd(libDir))
+      val fs = g.require("fs")
+      val (packages, dependencies) = readPackages(new JsRd(fs, libDir))
       
       if (dependencies.size != packages.length) {
         throw new Exception("Error! Cannot have duplicate exports!")
       }
 
-      val cwd = mkWr(".")
+      val cwd = new JsWr(fs, ".")
       val filenames = args.tail
       filenames.foreach(f => link(cwd.joinPath(f), packages, dependencies))
     }
