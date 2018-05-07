@@ -1,8 +1,24 @@
-import java.io.{File, PrintWriter}
-
 import scala.annotation.tailrec
-import scala.io.Source
 import scala.util.Try
+
+trait FileRd {
+  def getName(): String
+  def getLines(): Iterable[String]
+  def isFile(): Boolean
+  def isDirectory(): Boolean
+  def exists(): Boolean
+  def listFiles(): Iterable[FileRd]
+  def joinPath(p: String): FileRd
+}
+
+trait FileWr {
+  def println(out: String)
+  def ro(): FileRd
+  def withExt(ext: String): FileWr
+  def joinPath(p: String): FileWr
+  def close()
+}
+
 
 /**
  * Provides a facility for "linking" Rholang source code. Linking is done
@@ -40,8 +56,8 @@ import scala.util.Try
  */
 object RholangLinker {
 
-  def readRhoFile(f: File): String = {
-    Source.fromFile(f).getLines()
+  def readRhoFile(src: FileRd): String = {
+    src.getLines()
       .map(_.split("//").headOption.getOrElse("")) //ignore comments
       .map(_.trim)
       .filter(_.nonEmpty)
@@ -146,13 +162,11 @@ object RholangLinker {
     }
   }
   
-  def readPackages(dir: String): (Vector[NamedBlock], Map[String, Vector[String]]) = {
-    val d = new File(dir)
-    
+  def readPackages(d: FileRd): (Vector[NamedBlock], Map[String, Vector[String]]) = {
     val rhoFiles = if(d.exists && d.isDirectory) {
       d.listFiles.filter(f => f.isFile && f.getName.endsWith("rho")).toVector
     } else {
-      throw new Exception(s"$dir is not a directory!")
+      throw new Exception(s"${d.getName} is not a directory!")
     }
     
     processPackageDependencies(
@@ -234,12 +248,12 @@ object RholangLinker {
     println(usage)
   }
  
-  def link(filename: String, packages: Vector[NamedBlock], dependencies: Map[String, Vector[String]]): Unit = {
-    val parsedInput = parseRholang(readRhoFile(new File(filename)))
+  def link(source: FileWr, packages: Vector[NamedBlock], dependencies: Map[String, Vector[String]]): Unit = {
+    val parsedInput = parseRholang(readRhoFile(source.ro))
     val subedCode = mapImports(parsedInput, packages, dependencies)
 
-    val outFilename = filename + ".linked"
-    val output = new PrintWriter(outFilename)
+    val output = source.withExt(".linked")
+    val outFilename = output.ro.getName
     output.println(subedCode.toString)
     output.close()
     println(s"Wrote $outFilename")
@@ -250,14 +264,17 @@ object RholangLinker {
       printUsage()
     } else {
       val libDir = args.head
-      val (packages, dependencies) = readPackages(libDir)
+      def mkRd(path: String): FileRd = ???
+      def mkWr(path: String): FileWr = ???
+      val (packages, dependencies) = readPackages(mkRd(libDir))
       
       if (dependencies.size != packages.length) {
         throw new Exception("Error! Cannot have duplicate exports!")
       }
-      
+
+      val cwd = mkWr(".")
       val filenames = args.tail
-      filenames.foreach(f => link(f, packages, dependencies))
+      filenames.foreach(f => link(cwd.joinPath(f), packages, dependencies))
     }
   }
 }
