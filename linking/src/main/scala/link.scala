@@ -242,20 +242,23 @@ object RholangLinker {
   }
  
   def main(args: Array[String]) : Unit = {
+    import io.scalajs.nodejs
+    import io.scalajs.nodejs.fs
+
+    val args = nodejs.process.argv.drop(2)  // node link.js ...
+
     if (args.length < 2) {
       printUsage()
     } else {
-      import scalajs.js.Dynamic.{global => g}
 
       val libDir = args.head
-      val fs = g.require("fs")
-      val (packages, dependencies) = readPackages(new JsRd(fs, libDir))
+      val (packages, dependencies) = readPackages(new JsRd(fs.Fs, libDir))
       
       if (dependencies.size != packages.length) {
         throw new Exception("Error! Cannot have duplicate exports!")
       }
 
-      val cwd = new JsWr(fs, ".")
+      val cwd = new JsWr(fs.Fs, ".")
       val filenames = args.tail
       filenames.foreach(f => link(cwd.joinPath(f), packages, dependencies))
     }

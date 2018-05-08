@@ -25,35 +25,34 @@ trait OutStream {
 }
 
 
-class JsRd(fs: scalajs.js.Dynamic, path: String) extends FileRd {
-  import scalajs.js
-  import js.Dynamic.{global => g}
-  private val npath = g.require("path")
+import io.scalajs.nodejs.fs
+import io.scalajs.nodejs.path.Path
 
+class JsRd(anFs: fs.Fs, path: String) extends FileRd {
   def getName() = path
-  def isDirectory() = fs.statSync(path).isDirectory().asInstanceOf[Boolean]
-  def isFile() = fs.statSync(path).isFile().asInstanceOf[Boolean]
+  def isDirectory() = anFs.statSync(path).isDirectory()
+  def isFile() = anFs.statSync(path).isFile()
   def openRd() = new InStream {
-    private val s = fs.readFileSync(path, "utf8").asInstanceOf[String]
+    private val s = anFs.readFileSync(path, "utf8")
     def getLines() = s.split('\n')
   }
-  def exists() = fs.existsSync(path).asInstanceOf[Boolean]
-  def joinPath(other: String) = new JsRd(fs, npath.join(path, other).asInstanceOf[String])
-  def listFiles() = fs.readdirSync().asInstanceOf[js.Array[String]].map(joinPath)
+  def exists() = {
+    anFs.existsSync(path)
+  }
+  def joinPath(other: String) = new JsRd(anFs,
+    if (Path.isAbsolute(other)) { other } else { Path.join(path, other) })
+  def listFiles() = anFs.readdirSync(path).map(joinPath _)
 }
 
 
-class JsWr(fs: scalajs.js.Dynamic, path: String) extends FileWr {
-  import scalajs.js
-  import js.Dynamic.{global => g}
-  private val npath = g.require("path")
-
-  def ro() = new JsRd(fs, path)
-  def joinPath(other: String) = new JsWr(fs, npath.join(path, other).asInstanceOf[String])
-  def withExt(ext: String) = new JsWr(fs, path + ext)
+class JsWr(anFs: fs.Fs, path: String) extends FileWr {
+  def ro() = new JsRd(anFs, path)
+  def joinPath(other: String) = new JsWr(anFs,
+    if (Path.isAbsolute(other)) { other } else { Path.join(path, other) })
+  def withExt(ext: String) = new JsWr(anFs, path + ext)
   def openWr() = new OutStream {
-    val fd = fs.openSync(path, "w")
-    def close() = fs.closeSync(fd)
-    def println(s: String) = fs.writeSync(fd, s)
+    val fd = anFs.openSync(path, "w")
+    def close() = anFs.closeSync(fd)
+    def println(s: String) = anFs.writeSync(fd, s)
   }
 }
