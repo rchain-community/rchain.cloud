@@ -87,6 +87,11 @@ io.on('connection', function (socket) {
           fs.unlink(path, () => {})
         }).catch(function (err) {
           console.log(err)
+          const hrend = process.hrtime(hrstart)
+          socket.emit('output.append', 'Container Error: ' + (err.json.message || err.message) + '\n\n')
+          socket.emit('output.done', {
+            executionTime: Math.round((hrend[0] + hrend[1] / 1000000000) * 1000) / 1000
+          })
         })
       })
     })
