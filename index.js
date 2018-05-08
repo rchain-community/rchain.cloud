@@ -15,8 +15,13 @@ const DockerRegistry = require('./lib/DockerRegistry')
 app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.urlencoded({extended: true}))
 
-// Prep docker by pulling all tags
-DockerRegistry.pullAllTags('rchain/rnode', docker)
+// Ensure /tmp/rnode exists
+try {
+  fs.mkdirSync('/tmp/rnode')
+} catch (e) {}
+
+// Run containers of each version
+DockerRegistry.runAllTags('rchain/rnode', docker)
 
 // Load index.html content
 const indexHTML = fs.readFileSync(__dirname + '/views/index.html', 'utf8')
@@ -75,8 +80,9 @@ io.on('connection', function (socket) {
           socket.emit('output.append', chunk)
         })
         console.log('Running ' + image + ' with: ' + path)
-        docker.run(image, ['--eval', path], stream, {
-          Binds: [dir + ':' + dir]
+        docker.run(image, ['--eval', '/tmp/input.rho', '--grpc-host', 'rnode-server-local'], stream, {
+          Binds: [dir + ':/tmp/input.rho', '/tmp/rnode:/var/lib/rnode'],
+          Network: 'rchain'
         }).then(function (container) {
           const hrend = process.hrtime(hrstart)
           socket.emit('output.done', {
