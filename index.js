@@ -67,36 +67,62 @@ io.on('connection', function (socket) {
 
     // first temporarily store file
     const id = uuid()
-    const dir = '/tmp/' + id
+    const dir = '/tmp/rnode/' + id
     const filename = 'input.rho'
     const path = dir + '/' + filename
     const hrstart = process.hrtime()
     console.time('run')
+
+    try {
+      fs.unlinkSync('/tmp/rnode/rspace/data.mdb')
+      fs.unlinkSync('/tmp/rnode/rspace/lock.mdb')
+    } catch (e) {}
+
     fs.mkdir(dir, 0o777, function () {
       fs.writeFile(path, data.body, 'utf8', function () {
         // run docker
-        const image = 'rchain/rnode:' + (data.version || 'latest')
-        const stream = new StringWritable(chunk => {
+        const version = (data.version || 'latest')
+        const image = 'rchain/rnode:' + version
+        const streamo = new StringWritable(chunk => {
+          console.log(chunk)
           socket.emit('output.append', chunk)
         })
         console.log('Running ' + image + ' with: ' + path)
-        docker.run(image, ['--eval', '/tmp/input.rho', '--grpc-host', 'rnode-server-local'], stream, {
-          Binds: [dir + ':/tmp/input.rho', '/tmp/rnode:/var/lib/rnode'],
-          Network: 'rchain'
-        }).then(function (container) {
-          const hrend = process.hrtime(hrstart)
-          socket.emit('output.done', {
-            executionTime: Math.round((hrend[0] + hrend[1] / 1000000000) * 1000) / 1000
-          })
-          console.timeEnd('run')
-          console.log(container.output)
-          fs.unlink(path, () => {})
-        }).catch(function (err) {
-          console.log(err)
-          const hrend = process.hrtime(hrstart)
-          socket.emit('output.append', 'Container Error: ' + (err.json.message || err.message) + '\n\n')
-          socket.emit('output.done', {
-            executionTime: Math.round((hrend[0] + hrend[1] / 1000000000) * 1000) / 1000
+        DockerRegistry.getOrStartContainer(docker, 'rchain/rnode', version, function (containerId) {
+          const container = docker.getContainer(containerId)
+          console.log('attaching')
+          container.start(function () {
+            container.exec({
+              Cmd: ['/bin/main.sh', '--eval', '/var/lib/rnode/' + id + '/' + filename],
+              AttachStdout: true
+            }, function (err, exec) {
+              exec.start({hijack: true}, function (err, stream) {
+                //stream.setEncoding('utf8')
+                stream.pipe(streamo, {
+                  end: true
+                })
+
+                docker.modem.demuxStream(stream, process.stdout, process.stderr)
+              })
+            })
+            // docker.run(image, ['--eval', '/tmp/input.rho', '--grpc-host', 'rchain-local-version-' + version.replace(/\./g, '')], stream, {
+            //   Binds: [dir + ':/tmp/input.rho', '/tmp/rnode:/var/lib/rnode'],
+            //   Network: 'rchain'
+            // }).then(function (container) {
+            //   const hrend = process.hrtime(hrstart)
+            //   socket.emit('output.done', {
+            //     executionTime: Math.round((hrend[0] + hrend[1] / 1000000000) * 1000) / 1000
+            //   })
+            //   console.timeEnd('run')
+            //   console.log(container.output)
+            //   fs.unlink(path, () => {})
+            // }).catch(function (err) {
+            //   console.log(err)
+            //   const hrend = process.hrtime(hrstart)
+            //   socket.emit('output.append', 'Container Error: ' + (err.json.message || err.message) + '\n\n')
+            //   socket.emit('output.done', {
+            //     executionTime: Math.round((hrend[0] + hrend[1] / 1000000000) * 1000) / 1000
+            //   })
           })
         })
       })
