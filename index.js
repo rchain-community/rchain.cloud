@@ -29,7 +29,7 @@ const example = `new testResult in {
 
 // HTTP Routes
 app.get('/', function (req, res) {
-  const config = {autorun: false, version: 'latest'}
+  const config = {autorun: false, version: 'v0.2.1'}
   const content = indexHTML
     .replace('{{ content }}', example)
     .replace('{{ config }}', JSON.stringify(config))
@@ -38,7 +38,7 @@ app.get('/', function (req, res) {
 })
 
 app.post('/', function (req, res) {
-  const config = {autorun: true, version: req.body.version || 'latest'}
+  const config = {autorun: true, version: req.body.version || 'v0.2.1'}
   const content = indexHTML
     .replace('{{ content }}', req.body.content || req.body.body || example)
     .replace('{{ config }}', JSON.stringify(config))
