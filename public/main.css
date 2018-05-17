@@ -136,9 +136,65 @@ html, body {
     z-index: 1000;
 }
 
+.run.loading {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 .run:hover {
     background: #fff;
     color: #b12b3d;
+}
+
+.program .console h4 {
+    margin: 20px -26px 0;
+    padding: 16px 26px;
+    border-top: 1px solid #2d333b;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    color: #757a84;
+}
+
+.program .console h4:first-child {
+    margin-top: -16px;
+    border-top: 0;
+}
+
+.program .console h4.completed {
+    margin-bottom: -16px;
+}
+
+.program .console h4 + h4 {
+    margin-top: 0;
+}
+
+.program .console h4.storage-contents:after {
+    content: '\2193';
+    float: right;
+}
+
+.program .console h4.storage-contents {
+    cursor: pointer;
+    margin-bottom: -20px;
+}
+
+.program .console .type-storage {
+    display: none;
+}
+
+.program .console.show-storage .type-storage {
+    display: block;
+}
+
+.program .console.show-storage h4.storage-contents {
+    margin-bottom: 0;
+}
+
+.program .console.show-storage h4.storage-contents:after {
+    content: '\2191';
 }
 
 /* ---- CodeMirror ---- */
@@ -262,11 +318,13 @@ fieldset label {
     .program {
         flex-direction: column;
     }
+
     .program .editor {
         width: 100%;
         border-right: none;
         border-bottom: 1px solid #2d333b
     }
+
     .program .console {
         width: 100%
     }

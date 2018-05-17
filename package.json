@@ -10,6 +10,7 @@
   "author": "Thomas Schoffelen <thomas@includable.com> (https://includable.com/)",
   "license": "MIT",
   "dependencies": {
+    "better-queue": "^3.8.7",
     "body-parser": "^1.18.2",
     "dockerode": "^2.5.5",
     "express": "^4.16.3",

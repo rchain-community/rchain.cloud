@@ -5,11 +5,12 @@ var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('mirror'), {
   mode: 'rholang',
   theme: 'solarized'
 })
+var lastType = ''
 
 // Run event triggered by user
 function run () {
   socket.emit('run', {version: config.version, body: myCodeMirror.getValue()})
-  document.getElementById('runButton').innerHTML = 'Loading...'
+  $('#runButton').text('Loading...').addClass('loading')
 }
 
 // Socket.io stuff
@@ -21,22 +22,35 @@ socket.on('connect', function () {
 })
 socket.on('output.clean', function () { clearConsole() })
 socket.on('output.append', function (message) { appendToConsole(message) })
-socket.on('output.done', function (data) { loadingDone(data) })
+socket.on('output.done', function () { loadingDone() })
 
 // Functions for callbacks from socket.io
 function clearConsole () {
-  document.getElementById('consoleText').innerHTML = '<span style="color: #757a84;">&gt;</span>&nbsp;'
+  lastType = ''
+  document.getElementById('consoleLabel').style.display = 'none'
+  document.getElementById('consoleText').innerHTML = '<h4 class="uploading">uploading</h4>'
 }
 
-function appendToConsole (message) {
+function appendToConsole (data) {
+  var message = data[0]
+  var type = data[1]
+
+  if (type === 'queued') {
+    document.getElementById('consoleText').innerHTML = '<h4 class="uploading">uploading</h4>'
+  }
+
   if (message.length < 24 && message.indexOf(':\r\n') === message.length - 3) {
     message = '<span style="color: #9a9ea2;">' + message + '</span>'
   }
 
-  message = message.replace('\r\n> ', '\r\n<span style="color: #757a84;">&gt;</span>&nbsp;')
   message = message.replace(/^Syntax Error,/, '<span style="color: #e63747;">Syntax Error</span>,')
   message = message.replace(/^Container Error: /, '<span style="color: #e63747;">Container Error: </span>')
-  document.getElementById('consoleText').innerHTML += message
+
+  document.getElementById('consoleText').innerHTML +=
+    (type !== lastType ? '<h4 class="' + type.replace(' ', '-') + '">' + type + '</h4>' : '') +
+    (message.length ? '<div class="type-' + type + '">' + message + '</div>' : '')
+
+  lastType = type
 }
 
 function showOptions () {
@@ -47,23 +61,15 @@ function hideOptions () {
   document.getElementById('runOptions').className = 'modal'
 }
 
-function loadingDone (data) {
-  document.getElementById('runButton').innerHTML = 'Run'
-  document.getElementById('consoleText').innerHTML += '<span style="color: #757a84;">' +
-    'Completed in ' + data.executionTime + 's.</span>'
+function loadingDone () {
+  $('#runButton').text('Run').removeClass('loading')
+  document.getElementById('consoleText').innerHTML += '<h4 class="completed">completed</h4>'
 }
 
 function selectVersion (select) {
   config.version = select.options[select.selectedIndex].value
 }
 
-fetch('/v1/versions').then(function (response) {
-  response.json().then(function (data) {
-    data.forEach(function (version) {
-      if (version !== 'latest') {
-        document.getElementById('selectVersion').innerHTML += '<option value="' + version + '">' +
-          version + '</option>'
-      }
-    })
-  })
+$('.console').on('click', 'h4.storage-contents', function () {
+  $('.console').toggleClass('show-storage')
 })
