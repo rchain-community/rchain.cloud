@@ -47,7 +47,8 @@ function appendToConsole (data) {
   message = message.replace(/^Container Error: /, '<span style="color: #e63747;">Container Error: </span>')
 
   document.getElementById('consoleText').innerHTML +=
-    (type !== lastType ? '<h4 class="' + type.replace(' ', '-') + '">' + type + '</h4>' : '') +
+    (type !== lastType ? '<h4 class="' + type.replace(' ', '-') + '">' +
+      (type === 'stdout' ? 'output' : type) + '</h4>' : '') +
     (message.length ? '<div class="type-' + type + '">' + message + '</div>' : '')
 
   lastType = type
