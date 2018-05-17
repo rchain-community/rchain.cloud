@@ -23,12 +23,12 @@
 <div class="program">
     <div class="editor">
         <div class="label">YOUR CODE</div>
-        <a onclick="showOptions()" class="options">Options</a>
+        <!--<a onclick="showOptions()" class="options">Options</a>-->
         <a id="runButton" onclick="run()" class="run">Run</a>
         <textarea title="Your code" id="mirror">{{ content }}</textarea>
     </div>
     <div class="console">
-        <div class="label">OUTPUT</div>
+        <div class="label" id="consoleLabel">OUTPUT</div>
         <pre class="text" id="consoleText"></pre>
     </div>
 </div>
@@ -49,6 +49,10 @@
 </div>
 
 <script>window.config = {{ config }}</script>
+<script
+    src="//code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+    crossorigin="anonymous"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/vendor/codemirror.js"></script>
 <script src="/vendor/rholang.js"></script>
