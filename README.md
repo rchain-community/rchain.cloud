@@ -21,24 +21,15 @@ There's always [stuff](https://github.com/th3build/rchain.cloud/issues) that you
 
 Mayor features that are planned:
 
-- [x] Rholang/RNode version selector
 - [ ] Snippet sharing through unique URLs
-- [ ] Smart contract examples
-- [ ] Running a contract on multiple nodes
 - [ ] Support 'extended Rholang syntax' (`import`/`export`)
 
 
-## Related efforts
-A related tool called [rholangweb](https://github.com/rchain/rchain/tree/master/rholangweb) is in development as well by some of the core RChain team.
-
-
-## API
-
-### POST'ing code
+## POST API
 You can send a POST request to `http://rchain.cloud/` to seed the editor with certain content. The POST body should be form-encoded, and can contain the following parameters:
 
 - `content`: the code you want to show in the editor
-- `version`: the Docker image tag you want to use to run your code (defaults to `latest`)
+- `version`: the Docker image tag you want to use to run your code (only supports `latest` at the moment)
 
 This functionality allows you to create a 'Run on RChain.cloud' button. Usually this is done using a [hidden HTML form](https://jsfiddle.net/0zwtnr8c/):
 
@@ -49,11 +40,3 @@ This functionality allows you to create a 'Run on RChain.cloud' button. Usually 
    <input type="submit" value="Run on RChain.cloud" />
 </form>
 ```
-
-### Getting available version
-
-```http
-GET http://rchain.cloud/v1/versions
-```
-
-This endpoint returns a JSON array containing all the available versions you can use to run your code. Note that these are currently equal to the Docker Hub image tags for the `rchain/rnode` image.
