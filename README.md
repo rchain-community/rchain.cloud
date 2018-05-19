@@ -2,11 +2,11 @@
 
 **Web interface to play with the [Rholang](https://developer.rchain.coop/) language.**
 
-![Screenshot](docs/screenshot.png)
+[![Screenshot](docs/screenshot.png)](http://rchain.cloud/)
 
 
 ## Find it online
-Just want to play around with Rholang? Simply go to [rchain.cloud](http://rchain.cloud).
+Just want to play around with Rholang? Simply go to [rchain.cloud](http://rchain.cloud/).
 
 
 ## Running it locally
