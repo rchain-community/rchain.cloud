@@ -1,0 +1,41 @@
+new calculator in {
+  new channel, valueStore in {
+    valueStore!(0) |
+    contract calculator(ret) = {
+      ret!(*channel) |
+      for(@"sum", @arg1, @arg2, ack <= channel) {
+        for(_ <- valueStore) {
+          valueStore!(arg1 + arg2) | ack!(true)
+        }
+      } |
+      for(@"product", @arg1, @arg2, ack <= channel) {
+        for(_ <- valueStore) {
+          valueStore!(arg1 * arg2) | ack!(true)
+        }
+      } |
+      for(@"get", ack <= channel) {
+        for(@value <- valueStore) {
+          valueStore!(value) | ack!(value)
+        }
+      }
+     }
+   } |
+   new ret in {
+    calculator!(*ret) |
+      for(object <- ret) {
+        object!("sum", 1, 3, *ret) |
+         for(_ <- ret) {
+          object!("get", *ret) |
+            for(@value <- ret) {
+            object!("product", value, 20, *ret) |
+                for(_ <- ret) {
+                  object!("get", *ret) |
+                  for(@result <- ret) {
+                    @"stdout"!(result)
+                  }
+                }
+              }
+          }
+        }
+   }
+}

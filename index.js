@@ -46,7 +46,7 @@ const queue = new (require('better-queue'))(function (input, cb) {
 
 // HTTP Routes
 app.get('/', function (req, res) {
-  const config = {autorun: false, version: 'v0.2.1'}
+  const config = {autorun: false, version: 'v0.4.1'}
   const content = indexHTML
     .replace('{{ content }}', example)
     .replace('{{ config }}', JSON.stringify(config))
@@ -55,7 +55,7 @@ app.get('/', function (req, res) {
 })
 
 app.post('/', function (req, res) {
-  const config = {autorun: true, version: 'latest'}
+  const config = {autorun: true, version: 'v0.4.1'}
   const content = indexHTML
     .replace('{{ content }}', req.body.content || req.body.body || example)
     .replace('{{ config }}', JSON.stringify(config))
