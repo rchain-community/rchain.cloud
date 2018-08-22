@@ -9,6 +9,9 @@ var lastType = ''
 
 var editorFontSize = 16;
 
+var isDragging = false;
+
+
 // Run event triggered by user
 function run () {
   socket.emit('run', {version: config.version, body: myCodeMirror.getValue()})
@@ -122,6 +125,22 @@ function decreaseEditorFontSize(){
   $('.CodeMirror').css('font-size', editorFontSize + 'px');
 }
 
+var pageWidth;
+$('#draggable').mousedown(function(e){
+  isDragging = true;
+  pageWidth = $('body').width();
+  console.log(pageWidth);
+  e.preventDefault();
+});
+
+$(document).mouseup(function(e){
+  isDragging = false;
+}).mousemove(function(e){
+  if(isDragging){
+      console.log("PageX: " + e.pageX);
+      $('#consoleDiv').css('width', pageWidth-e.pageX);
+  }
+})
 
 //Key press listener
 document.onkeyup = function(e) {

@@ -84,7 +84,10 @@ html, body {
 }
 
 .program .console {
-    flex: 1;
+
+    /* flex prevents draggable horizontal line from working */
+    /*flex: 1;*/
+    min-width: 200px;
     width: 50%;
     overflow-y: auto;
 }
@@ -223,6 +226,13 @@ html, body {
 
 .increaseEditorFontSize:active{
     color: #fa3650;
+}
+
+/* ---- Draggable horizontal line ---- */
+#draggable{
+    width: 1%;
+    cursor: col-resize;
+    background: transparent;
 }
 
 

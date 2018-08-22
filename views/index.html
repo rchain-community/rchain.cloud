@@ -31,12 +31,18 @@
 </div>
 
 <div class="program">
+    
+    <!--    Editor/code div  -->
     <div class="editor">
         <div class="label">YOUR CODE</div>
         <!--<a onclick="showOptions()" class="options">Options</a>-->
         <a id="runButton" onclick="run()" class="run">Run</a>
         <textarea title="Your code" id="mirror">{{ content }}</textarea>
     </div>
+    <!--    Draggable horizontal line  -->
+    <div id="draggable"></div>
+
+    <!--    Console/output div  -->
     <div id="consoleDiv" class="console">
         <div class="label" id="consoleLabel">OUTPUT</div>
         <pre class="text" id="consoleText"></pre>
