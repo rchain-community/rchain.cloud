@@ -197,14 +197,44 @@ html, body {
     content: '\2191';
 }
 
+
+/* ---- Editor font size elements ---- */
+.editorOptionsButtons{
+    float: left;
+    margin-top: 4px;
+    margin-left: 10px;
+}
+
+.editorFontSize{
+    color: #df3248;
+}
+
+.decreaseEditorFontSize:hover{
+    color: #b12b3d;
+}
+
+.increaseEditorFontSize:hover{
+    color: #b12b3d;
+}
+
+.decreaseEditorFontSize:active{
+    color: #fa3650;
+}
+
+.increaseEditorFontSize:active{
+    color: #fa3650;
+}
+
+
 /* ---- CodeMirror ---- */
 
 .CodeMirror {
     background: #20262e !important;
     color: #fff !important;
-    line-height: 20px !important;
+    /*line-height: 20px !important;*/
     height: 100%;
-    font-size: 14px !important;
+    /*This line prevents dynamic font size*/
+    /*font-size: 14px !important;*/
     font-family: 'Source Code Pro', 'Courier New', Courier, monospace;
 }
 
