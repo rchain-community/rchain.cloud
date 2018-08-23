@@ -84,7 +84,10 @@ html, body {
 }
 
 .program .console {
-    flex: 1;
+
+    /* flex prevents draggable horizontal line from working */
+    /*flex: 1;*/
+    min-width: 200px;
     width: 50%;
     overflow-y: auto;
 }
@@ -197,15 +200,60 @@ html, body {
     content: '\2191';
 }
 
+
+/* ---- Editor font size elements ---- */
+.editorOptionsButtons{
+    float: left;
+    margin-top: 4px;
+    margin-left: 10px;
+}
+
+.editorFontSize{
+    color: #df3248;
+}
+
+.decreaseEditorFontSize:hover{
+    color: #b12b3d;
+}
+
+.increaseEditorFontSize:hover{
+    color: #b12b3d;
+}
+
+.decreaseEditorFontSize:active{
+    color: #fa3650;
+}
+
+.increaseEditorFontSize:active{
+    color: #fa3650;
+}
+
+/* ---- Draggable horizontal line ---- */
+#draggable{
+    width: 1%;
+    cursor: col-resize;
+    background: transparent;
+}
+
+
 /* ---- CodeMirror ---- */
 
 .CodeMirror {
     background: #20262e !important;
     color: #fff !important;
-    line-height: 20px !important;
+    /*line-height: 20px !important;*/
     height: 100%;
-    font-size: 14px !important;
+    /*This line prevents dynamic font size*/
+    /*font-size: 14px !important;*/
     font-family: 'Source Code Pro', 'Courier New', Courier, monospace;
+}
+
+/* For desktops, center the editor to the middle of the screen
+ in the presentation mode */
+@media only screen and (min-width: 980px){
+    .CodeMirror-presentation{
+        padding-left: 30%;
+    }
 }
 
 .CodeMirror-gutters {

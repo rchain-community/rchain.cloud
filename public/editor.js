@@ -7,6 +7,11 @@ var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('mirror'), {
 })
 var lastType = ''
 
+var editorFontSize = 16;
+
+var isDragging = false;
+
+
 // Run event triggered by user
 function run () {
   socket.emit('run', {version: config.version, body: myCodeMirror.getValue()})
@@ -74,3 +79,79 @@ function selectVersion (select) {
 $('.console').on('click', 'h4.storage-contents', function () {
   $('.console').toggleClass('show-storage')
 })
+
+
+function togglePresentation(){
+  if($('#runButton').is(":hidden")){
+    // Presentation mode is being turned off
+    // Automatically decrease previously increased font size
+    editorFontSize -= 10;
+    $('.CodeMirror').css('font-size', editorFontSize + 'px');
+    // Show hidden elements
+    $('#runButton').show();
+    $('#consoleDiv').show();
+    $('.header').show();
+    $('#editorLabelDiv').show();
+    $('.program').css('top', '64px');
+  }else{
+    // Presentation mode is being turned on
+    // Automatically increase font size by 10px
+    editorFontSize += 10;
+    $('.CodeMirror').css('font-size', editorFontSize + 'px');
+    // Hide the run button and console div
+    $('#runButton').hide();
+    $('#consoleDiv').hide();
+    $('.header').hide();
+    $('#editorLabelDiv').hide();
+    $('.program').css('top', '0px');
+  }
+  $('.CodeMirror').toggleClass('CodeMirror-presentation');
+  myCodeMirror.refresh();
+}
+
+function increaseEditorFontSize(){
+  //Upper limit for the font size
+  if(editorFontSize >= 200){
+    return
+  }
+  editorFontSize++;
+  $('.CodeMirror').css('font-size', editorFontSize + 'px');
+}
+
+function decreaseEditorFontSize(){
+  //Bellow 8px font is barelly readable
+  if(editorFontSize <= 8){
+    console.log("Can't decrease font anymore");
+    return;
+  }
+  editorFontSize--;
+  $('.CodeMirror').css('font-size', editorFontSize + 'px');
+}
+
+var pageWidth;
+$('#draggable').mousedown(function(e){
+  isDragging = true;
+  pageWidth = $('body').width();
+  console.log(pageWidth);
+  e.preventDefault();
+});
+
+$(document).mouseup(function(e){
+  isDragging = false;
+}).mousemove(function(e){
+  if(isDragging){
+      console.log("PageX: " + e.pageX);
+      $('#consoleDiv').css('width', pageWidth-e.pageX);
+  }
+})
+
+//Key press listener
+document.onkeyup = function(e) {
+  //Multiple key combinations can be added here
+  // 80 == 'p'
+  if (e.ctrlKey && e.altKey && e.which == 80) {
+    //alert("Ctrl + Alt + P pressed");
+    togglePresentation(); 
+    
+  }
+};

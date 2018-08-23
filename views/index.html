@@ -7,11 +7,21 @@
     <link rel="stylesheet" href="/vendor/codemirror.css"/>
     <link rel="stylesheet" href="/main.css?v=0.3.1"/>
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 </head>
 <body>
 
 <div class="header">
     <h2>rchain.cloud</h2>
+
+    <!--Editor Font Size Increment/Decrement Buttons-->
+    <div class="editorOptionsButtons">
+        <span class="editorFontSize">
+            <i class="increaseEditorFontSize fas fa-plus-square fa-3px" onclick="increaseEditorFontSize()"></i>
+            <i class="decreaseEditorFontSize fas fa-minus-square fa-3px" onClick="decreaseEditorFontSize()"></i>
+        </span>
+    </div>
+
     <div class="link">
         <span>online rholang interpreter</span>
         <a class="github" target="_blank" href="https://github.com/th3build/rchain.cloud">
@@ -21,13 +31,19 @@
 </div>
 
 <div class="program">
+    
+    <!--    Editor/code div  -->
     <div class="editor">
-        <div class="label">YOUR CODE</div>
+        <div id="editorLabelDiv" class= "label">YOUR CODE</div>
         <!--<a onclick="showOptions()" class="options">Options</a>-->
         <a id="runButton" onclick="run()" class="run">Run</a>
         <textarea title="Your code" id="mirror">{{ content }}</textarea>
     </div>
-    <div class="console">
+    <!--    Draggable horizontal line  -->
+    <div id="draggable"></div>
+
+    <!--    Console/output div  -->
+    <div id="consoleDiv" class="console">
         <div class="label" id="consoleLabel">OUTPUT</div>
         <pre class="text" id="consoleText"></pre>
     </div>
