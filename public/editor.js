@@ -91,7 +91,17 @@ function togglePresentation(){
     $('#runButton').show();
     $('#consoleDiv').show();
     $('.header').show();
+    $('#draggable').show();
     $('.program').css('top', '64px');
+
+    /*
+      If the sidebar was open before the activation of
+      the presentation mode, return opacity to 0.2
+    */
+    if($(".drawer").hasClass("drawer-open")){
+      $('.program').css('opacity', 0.2);
+    }
+    
   }else{
     // Presentation mode is being turned on
     // Automatically increase font size by 10px
@@ -101,7 +111,15 @@ function togglePresentation(){
     $('#runButton').hide();
     $('#consoleDiv').hide();
     $('.header').hide();
+    $('#draggable').hide();
     $('.program').css('top', '0px');
+    /*
+      In case the presentation mode is activated while
+      the sidebar was open, set opacity to 1.0 
+    */
+    if($(".drawer").hasClass("drawer-open")){
+      $('.program').css('opacity', 1.0);
+    }
   }
   myCodeMirror.refresh();
 }
@@ -142,7 +160,7 @@ $(document).mouseup(function(e){
   }
 })
 
-//Key press listener
+// Key press listener
 document.onkeyup = function(e) {
   //Multiple key combinations can be added here
   // 80 == 'p'
@@ -152,3 +170,54 @@ document.onkeyup = function(e) {
     
   }
 };
+// Sidebar drawer
+$(document).ready(function() {
+  $('.drawer').drawer();
+});
+
+$('.drawer').drawer({
+  class: {
+    nav: 'drawer-nav',
+    toggle: 'drawer-toggle',
+    overlay: 'drawer-overlay',
+    open: 'drawer-open',
+    close: 'drawer-close',
+    dropdown: 'drawer-dropdown'
+  },
+  iscroll: {
+    // Configuring the iScroll
+    // https://github.com/cubiq/iscroll#configuring-the-iscroll
+    mouseWheel: true,
+    preventDefault: false
+  },
+  showOverlay: true
+});
+
+/*
+  When opening sidebar, opacity of the main div is set to 0.2,
+  and then again returned to 1.0 when sidebar closes.
+*/
+$('.drawer').on('drawer.opened', function(){
+  $('.program').css('opacity', 0.2);
+  console.log("Drawer opening");
+});
+
+$('.drawer').on('drawer.closed', function(){
+  $('.program').css('opacity', 1.0);
+  console.log("Drawer closed");
+});
+
+/*
+  This works faster then using the events of the drawer
+  but this only works then the nav bar button is pressed.
+  This doesn't work when the bar is open and user clicks 
+  randomly on the screen to close the sidebar.
+*/
+function drawerClick(){
+  if($(".drawer").hasClass("drawer-open")){
+    $('.program').css('opacity', 1.0);
+
+  }else{
+    $('.program').css('opacity', 0.2);
+  }
+}

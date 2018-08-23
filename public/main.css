@@ -18,7 +18,7 @@ html, body {
 .header h2 {
     align-self: center;
     color: #fff;
-    margin: 0;
+    margin: 0 0 0 40px;
     font-weight: 600;
     float: left;
     font-size: 15px;
@@ -228,6 +228,7 @@ html, body {
     color: #fa3650;
 }
 
+
 /* ---- Draggable horizontal line ---- */
 #draggable{
     width: 1%;
@@ -235,6 +236,24 @@ html, body {
     background: transparent;
 }
 
+/* ---- Sidebar ---- */
+.drawer-toggle{
+    color: #df3248;
+    margin-top: 1px;
+}
+
+.drawer-nav{
+    background-color: #000 !important;
+}
+
+.drawer-brand{
+    color: #df3248 !important;
+}
+
+.drawer-menu-item{
+    color: #808080 !important;
+    margin-left: 30px;
+}
 
 /* ---- CodeMirror ---- */
 
