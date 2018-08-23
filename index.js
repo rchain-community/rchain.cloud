@@ -49,7 +49,7 @@ const queue = new (require('better-queue'))(function (input, cb) {
 // HTTP Routes
 app.get('/', function (req, res) {
   var files = FileReader.readFiles();
-  console.log(files);
+  //console.log(files);
   const config = {autorun: false, version: 'v0.4.1'}
   const content = indexHTML
     .replace('{{ content }}', example)

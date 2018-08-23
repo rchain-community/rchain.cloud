@@ -81,6 +81,11 @@ $('.console').on('click', 'h4.storage-contents', function () {
 })
 
 
+
+/*
+  Callback for toggling the Presentation mode.
+  Simply hide the unwanted elements with jQuery.
+*/
 function togglePresentation(){
   if($('#runButton').is(":hidden")){
     // Presentation mode is being turned off
@@ -127,6 +132,11 @@ function togglePresentation(){
   myCodeMirror.refresh();
 }
 
+/*
+  Callbacks for the editorFontSize buttons.
+  As the name suggests they increase/decrease
+  the font size of the editor.
+*/
 function increaseEditorFontSize(){
   //Upper limit for the font size
   if(editorFontSize >= 200){
@@ -146,6 +156,9 @@ function decreaseEditorFontSize(){
   $('.CodeMirror').css('font-size', editorFontSize + 'px');
 }
 
+/*
+  Draggable horizontal line mouse listeners
+*/
 var pageWidth;
 $('#draggable').mousedown(function(e){
   isDragging = true;
@@ -173,11 +186,9 @@ document.onkeyup = function(e) {
     
   }
 };
-// Sidebar drawer
+// Sidebar drawer init
 $(document).ready(function() {
   $('.drawer').drawer();
-  
-  processExampleFiles();
 });
 
 $('.drawer').drawer({
@@ -228,34 +239,18 @@ function drawerClick(){
 }
 
 
-function processExampleFiles(){
-  
-  var paths = [];
-  window.exampleFiles.forEach(file =>{
-    file = file.substring(8, file.length);
-    paths.push(file);
-    //console.log(file.split("/"));
-    //console.log(file);
-  })
-  
-  function insert(children = [], [head, ...tail]) {
-    let child = children.find(child => child.text === head);
-    if (!child) children.push(child = {text: head, nodes: []});
-    if (tail.length > 0) insert(child.nodes, tail);
-    return children;
-  }
-  
-  let objectArray = paths
-    .map(path => path.split('/').slice(1))
-    .reduce((children, path) => insert(children, path), []);
-  
-  console.log(objectArray);
-}
-
-
+/*
+  Format example file data to the format specified 
+  by the TreeView docs. Example is shown bellow.
+*/
 function getTree(){
 
   var paths = [];
+  /*
+    For each file path remove the root folder "./public/..."
+    as the web server doesn't store the static files with 
+    the "/public/" folder as it's root.
+  */
   window.exampleFiles.forEach(file =>{
     file = file.substring(8, file.length);
     paths.push(file);
@@ -263,6 +258,44 @@ function getTree(){
     //console.log(file);
   })
   
+  /*
+    Recursive function that creates the tree structure from
+    multiple file paths. This is best explained with the example.
+    e.g. File paths:
+    "/root/file1"
+    "/root/dir1/file2"
+    "/root/dir2/file3"
+    "/root/dir2/file4"
+
+    Output:
+    {
+      text: "root",
+      nodes: [
+        {
+          text: "file1"
+        },
+        {
+          text: "dir1",
+          nodes: [
+            {
+              text: "file2"
+            }
+          ]
+        },
+        {
+          text: "dir2",
+          nodes:[
+            {
+              text: "file3"
+            },
+            {
+              text: "file4"
+            }
+          ]
+        }
+      ]
+    }
+  */
   function insert(children = [], [head, ...tail]) {
     let child = children.find(child => child.text === head);
     if (!child) children.push(child = {text: head, nodes: []});
@@ -274,6 +307,13 @@ function getTree(){
     .map(path => path.split('/').slice(1))
     .reduce((children, path) => insert(children, path), []);
 
+
+  /*
+    Recursive function that iterates over the tree structure
+    and finds the nodes that are actually folders, not files.
+    For each folder node we add the folder icon ("far fa-folder-open")
+    and we declare that node as unselectable (only files can be selected).
+  */
   function treeIterate(current, depth){
     var children = current.nodes;
     if(children.length > 0){
@@ -290,10 +330,11 @@ function getTree(){
   
   treeIterate(filesArray[0], 0);
   
-  //console.log(filesArray);
-
   
   /*
+    Source data for the TreeView has to be organized
+    in the format illustrated with the example bellow.
+
   var tree = [
     {
       text: "Parent 1",
@@ -332,15 +373,30 @@ function getTree(){
   return filesArray;
 }
 
+
+/*
+  TreeView init
+*/
 $('#tree').treeview({
   data: getTree(),
   levels: 5
 });
 
+/*
+  Select listener for Rholang examples from the sidebar
+*/
 $('#tree').on('nodeSelected', function(event, data) {
   $('.drawer').drawer('close');
   var current = data;
   var path = "";
+  /*
+    Traverse up the tree to find the full path of the selected file,
+    basically leaf of the tree is the filename itself and going up
+    the tree each node is a parent directory/subdirectory of the file.
+    e.g. /example/dir1/dir2/HelloWorld.rho
+    HelloWorld.rho -> /dir2/HelloWorld.rho -> /dir1/dir2/HelloWorld.rho
+    -> example/dir1/dir2/HelloWorld.rho
+  */
   while(typeof current.parentId !== "undefined"){
     console.log(current);
     path = "/" + current.text + path;
@@ -351,6 +407,10 @@ $('#tree').on('nodeSelected', function(event, data) {
   console.log(path);
 
   // AJAX file path
+  /*
+    Send the AJAX request and set the editor
+    code as the file content
+  */
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function(){
     if(this.readyState == 4 && this.status == 200){
