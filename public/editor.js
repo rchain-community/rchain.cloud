@@ -92,6 +92,7 @@ function togglePresentation(){
     $('#consoleDiv').show();
     $('.header').show();
     $('#draggable').show();
+    $('#editorLabelDiv').show();
     $('.program').css('top', '64px');
 
     /*
@@ -112,6 +113,7 @@ function togglePresentation(){
     $('#consoleDiv').hide();
     $('.header').hide();
     $('#draggable').hide();
+    $('#editorLabelDiv').hide();
     $('.program').css('top', '0px');
     /*
       In case the presentation mode is activated while
@@ -121,6 +123,7 @@ function togglePresentation(){
       $('.program').css('opacity', 1.0);
     }
   }
+  $('.CodeMirror').toggleClass('CodeMirror-presentation');
   myCodeMirror.refresh();
 }
 
