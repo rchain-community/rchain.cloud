@@ -12,7 +12,7 @@ html, body {
 .header {
     padding: 20px;
     background-color: #161b21;
-    height: 24px;
+    height: 60px;
 }
 
 .header h2 {
@@ -204,7 +204,7 @@ html, body {
 /* ---- Editor font size elements ---- */
 .editorOptionsButtons{
     float: left;
-    margin-top: 4px;
+    margin-top: 2px;
     margin-left: 10px;
 }
 
@@ -242,6 +242,15 @@ html, body {
     margin-top: 1px;
 }
 
+.drawer-toggle:focus{
+    outline: 0;
+    outline: none;
+}
+
+.drawer-hamburger{
+    padding: 14px .75rem 20px !important;
+}
+
 .drawer-nav{
     background-color: #000 !important;
 }
@@ -253,6 +262,26 @@ html, body {
 .drawer-menu-item{
     color: #808080 !important;
     margin-left: 30px;
+}
+
+/* ---- Tree ---- */
+.node-tree{
+    background-color: transparent;
+    color: #df3248;
+}
+
+.node-tree:hover{
+    color: #df3248 !important;
+    background-color: #38383880 !important;
+}
+
+.node-selected{
+    color: #df3248 !important;
+    background-color: #38383899 !important;
+}
+
+.treeview span.icon{
+    margin-right: 15px !important;
 }
 
 /* ---- CodeMirror ---- */

@@ -5,6 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/vendor/codemirror.css"/>
+    <link rel="stylesheet" href="/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="/vendor/bootstrap-treeview.min.css">
     <link rel="stylesheet" href="/main.css?v=0.3.1"/>
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
     <!-- fontawesome.css -->
@@ -41,8 +43,7 @@
     <nav class="drawer-nav" role="navigation">
         <ul class="drawer-menu">
           <li><a class="drawer-brand" href="#">rchain.cloud</a></li>
-          <li><a class="drawer-menu-item" href="#">Example#1</a></li>
-          <li><a class="drawer-menu-item" href="#">Example#2</a></li>
+          <div id="tree"></div>
         </ul>
     </nav>
 
@@ -83,6 +84,7 @@
 </div>
 
 <script>window.config = {{ config }}</script>
+<script>var exampleFiles = {{ exampleFiles }}</script> 
 <script
     src="//code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
@@ -92,6 +94,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/vendor/codemirror.js"></script>
+<script src="/vendor/bootstrap.min.js"></script>
+<script src="/vendor/bootstrap-treeview.min.js"></script>
 <script src="/vendor/rholang.js"></script>
 <script src="/editor.js?v=0.3.1"></script>
 

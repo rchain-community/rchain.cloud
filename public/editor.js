@@ -150,7 +150,7 @@ var pageWidth;
 $('#draggable').mousedown(function(e){
   isDragging = true;
   pageWidth = $('body').width();
-  console.log(pageWidth);
+  //console.log(pageWidth);
   e.preventDefault();
 });
 
@@ -158,7 +158,7 @@ $(document).mouseup(function(e){
   isDragging = false;
 }).mousemove(function(e){
   if(isDragging){
-      console.log("PageX: " + e.pageX);
+      //console.log("PageX: " + e.pageX);
       $('#consoleDiv').css('width', pageWidth-e.pageX);
   }
 })
@@ -176,6 +176,8 @@ document.onkeyup = function(e) {
 // Sidebar drawer
 $(document).ready(function() {
   $('.drawer').drawer();
+  
+  processExampleFiles();
 });
 
 $('.drawer').drawer({
@@ -224,3 +226,139 @@ function drawerClick(){
     $('.program').css('opacity', 0.2);
   }
 }
+
+
+function processExampleFiles(){
+  
+  var paths = [];
+  window.exampleFiles.forEach(file =>{
+    file = file.substring(8, file.length);
+    paths.push(file);
+    //console.log(file.split("/"));
+    //console.log(file);
+  })
+  
+  function insert(children = [], [head, ...tail]) {
+    let child = children.find(child => child.text === head);
+    if (!child) children.push(child = {text: head, nodes: []});
+    if (tail.length > 0) insert(child.nodes, tail);
+    return children;
+  }
+  
+  let objectArray = paths
+    .map(path => path.split('/').slice(1))
+    .reduce((children, path) => insert(children, path), []);
+  
+  console.log(objectArray);
+}
+
+
+function getTree(){
+
+  var paths = [];
+  window.exampleFiles.forEach(file =>{
+    file = file.substring(8, file.length);
+    paths.push(file);
+    //console.log(file.split("/"));
+    //console.log(file);
+  })
+  
+  function insert(children = [], [head, ...tail]) {
+    let child = children.find(child => child.text === head);
+    if (!child) children.push(child = {text: head, nodes: []});
+    if (tail.length > 0) insert(child.nodes, tail);
+    return children;
+  }
+  
+  let filesArray = paths
+    .map(path => path.split('/').slice(1))
+    .reduce((children, path) => insert(children, path), []);
+
+  function treeIterate(current, depth){
+    var children = current.nodes;
+    if(children.length > 0){
+      current.icon = "far fa-folder-open";
+      current.selectable = false;
+      console.log(current);
+    }
+    for(var i = 0, len = children.length; i < len; i++){
+      if(children[i]){
+        treeIterate(children[i], depth+1);
+      }
+    }
+  }
+  
+  treeIterate(filesArray[0], 0);
+  
+  //console.log(filesArray);
+
+  
+  /*
+  var tree = [
+    {
+      text: "Parent 1",
+      nodes: [
+        {
+          text: "Child 1",
+          nodes: [
+            {
+              text: "Grandchild 1"
+            },
+            {
+              text: "Grandchild 2"
+            }
+          ]
+        },
+        {
+          text: "Child 2"
+        }
+      ]
+    },
+    {
+      text: "Parent 2"
+    },
+    {
+      text: "Parent 3"
+    },
+    {
+      text: "Parent 4"
+    },
+    {
+      text: "Parent 5"
+    }
+  ];
+  */
+
+  return filesArray;
+}
+
+$('#tree').treeview({
+  data: getTree(),
+  levels: 5
+});
+
+$('#tree').on('nodeSelected', function(event, data) {
+  $('.drawer').drawer('close');
+  var current = data;
+  var path = "";
+  while(typeof current.parentId !== "undefined"){
+    console.log(current);
+    path = "/" + current.text + path;
+    current = $('#tree').treeview('getParent', current);
+    //debugger;
+  }
+  path = "/" + current.text + path;
+  console.log(path);
+
+  // AJAX file path
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function(){
+    if(this.readyState == 4 && this.status == 200){
+      console.log(this.responseText);
+      myCodeMirror.setValue(this.responseText);
+    }
+  };
+  xhttp.open("GET", path, true);
+  xhttp.send();
+
+});
