@@ -91,6 +91,7 @@ function togglePresentation(){
     $('#runButton').show();
     $('#consoleDiv').show();
     $('.header').show();
+    $('#editorLabelDiv').show();
     $('.program').css('top', '64px');
   }else{
     // Presentation mode is being turned on
@@ -101,8 +102,10 @@ function togglePresentation(){
     $('#runButton').hide();
     $('#consoleDiv').hide();
     $('.header').hide();
+    $('#editorLabelDiv').hide();
     $('.program').css('top', '0px');
   }
+  $('.CodeMirror').toggleClass('CodeMirror-presentation');
   myCodeMirror.refresh();
 }
 
