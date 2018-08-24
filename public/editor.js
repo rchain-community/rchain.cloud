@@ -140,14 +140,15 @@ function togglePresentation(){
 function increaseEditorFontSize(){
   //Upper limit for the font size
   if(editorFontSize >= 200){
-    return
+    console.log("Can't increase font anymore");
+    return;
   }
   editorFontSize++;
   $('.CodeMirror').css('font-size', editorFontSize + 'px');
 }
 
 function decreaseEditorFontSize(){
-  //Bellow 8px font is barelly readable
+  //Bellow 8px font is barely readable
   if(editorFontSize <= 8){
     console.log("Can't decrease font anymore");
     return;
@@ -215,12 +216,12 @@ $('.drawer').drawer({
 */
 $('.drawer').on('drawer.opened', function(){
   $('.program').css('opacity', 0.2);
-  console.log("Drawer opening");
+  //console.log("Drawer opening");
 });
 
 $('.drawer').on('drawer.closed', function(){
   $('.program').css('opacity', 1.0);
-  console.log("Drawer closed");
+  //console.log("Drawer closed");
 });
 
 /*
@@ -319,7 +320,9 @@ function getTree(){
     if(children.length > 0){
       current.icon = "far fa-folder-open";
       current.selectable = false;
-      console.log(current);
+      //console.log(current);
+    }else{
+      current.icon = "far fa-file-code";
     }
     for(var i = 0, len = children.length; i < len; i++){
       if(children[i]){
@@ -398,13 +401,12 @@ $('#tree').on('nodeSelected', function(event, data) {
     -> example/dir1/dir2/HelloWorld.rho
   */
   while(typeof current.parentId !== "undefined"){
-    console.log(current);
+    //console.log(current);
     path = "/" + current.text + path;
     current = $('#tree').treeview('getParent', current);
     //debugger;
   }
   path = "/" + current.text + path;
-  console.log(path);
 
   // AJAX file path
   /*
