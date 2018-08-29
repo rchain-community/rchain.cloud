@@ -208,6 +208,7 @@ html, body {
     margin-left: 10px;
 }
 
+/*
 .editorFontSize{
     color: #df3248;
 }
@@ -228,6 +229,24 @@ html, body {
     color: #fa3650;
 }
 
+*/
+
+.red-icon{
+    color: #df3248;
+}
+
+.red-icon:hover{
+    color: #b12b3d;
+}
+
+.red-icon:active{
+    color: #fa3650;
+}
+
+
+#editorSaveIcon{
+    float: right;
+}
 
 /* ---- Draggable horizontal line ---- */
 #draggable{

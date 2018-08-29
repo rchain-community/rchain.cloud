@@ -12,7 +12,7 @@
     <!-- fontawesome.css -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <!-- drawer.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
+    <link rel="stylesheet" href="/vendor/drawer.min.css">
 
 
 </head>
@@ -28,8 +28,8 @@
     <!--Editor Font Size Increment/Decrement Buttons-->
     <div class="editorOptionsButtons">
         <span class="editorFontSize">
-            <i class="increaseEditorFontSize fas fa-plus-square fa-3px" onclick="increaseEditorFontSize()"></i>
-            <i class="decreaseEditorFontSize fas fa-minus-square fa-3px" onClick="decreaseEditorFontSize()"></i>
+            <i class="increaseEditorFontSize red-icon fas fa-plus-square" onclick="increaseEditorFontSize()"></i>
+            <i class="decreaseEditorFontSize red-icon fas fa-minus-square" onClick="decreaseEditorFontSize()"></i>
         </span>
     </div>
 
@@ -53,7 +53,10 @@
     
     <!--    Editor/code div  -->
     <div class="editor">
-        <div id="editorLabelDiv" class= "label">YOUR CODE</div>
+        <div id="editorLabelDiv" class= "label">
+            <span>YOUR CODE</span>
+            <i id="editorSaveIcon" class="red-icon far fa-save fa-2x" style="opacity: 0.6; display: none;"></i>
+        </div>
         <!--<a onclick="showOptions()" class="options">Options</a>-->
         <a id="runButton" onclick="run()" class="run">Run</a>
         <textarea title="Your code" id="mirror">{{ content }}</textarea>
@@ -86,18 +89,21 @@
 <script>window.config = {{ config }}</script>
 <script>var exampleFiles = {{ exampleFiles }}</script> 
 <script
-    src="//code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
-    crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
+  src="http://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="/vendor/iscroll.js"></script>
 <!-- drawer.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
+<script src="/vendor/drawer.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/vendor/codemirror.js"></script>
 <script src="/vendor/bootstrap.min.js"></script>
 <script src="/vendor/bootstrap-treeview.min.js"></script>
 <script src="/vendor/rholang.js"></script>
 <script src="/editor.js?v=0.3.1"></script>
+<script src="/js/draggable.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/local-storage.js"></script>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119318187-1"></script>
 <script>
