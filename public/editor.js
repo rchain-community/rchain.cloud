@@ -165,6 +165,7 @@ document.onkeyup = function(e) {
   // 80 == 'p'
   if (e.ctrlKey && e.altKey && e.which == 80) {
     //alert("Ctrl + Alt + P pressed");
+    e.preventDefault();
     togglePresentation(); 
   }
 };
