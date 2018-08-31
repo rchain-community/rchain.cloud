@@ -1,15 +1,18 @@
-var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('mirror'), {
-  lineNumbers: true,
-  lineWrapping: true,
-  tabSize: 3,
-  mode: 'rholang',
-  theme: 'solarized'
-})
+import { getStoredEditorFont, saveEditorFont, saveEditorState } from './js/local-storage.js';
+import { myCodeMirror } from './js/code-mirror.js'
+
 var lastType = ''
 
 var editorFontSize = 16;
 
-var isDragging = false;
+
+$(document).ready(function(){
+  editorFontSize = getStoredEditorFont();
+  if(editorFontSize === null){
+    editorFontSize = 16;
+  }
+  $('.CodeMirror').css('font-size', editorFontSize + 'px');
+});
 
 
 // Run event triggered by user
@@ -139,11 +142,12 @@ function togglePresentation(){
 */
 function increaseEditorFontSize(){
   //Upper limit for the font size
-  if(editorFontSize >= 200){
+  if(editorFontSize >= 80){
     console.log("Can't increase font anymore");
     return;
   }
   editorFontSize++;
+  saveEditorFont(editorFontSize);
   $('.CodeMirror').css('font-size', editorFontSize + 'px');
 }
 
@@ -154,13 +158,30 @@ function decreaseEditorFontSize(){
     return;
   }
   editorFontSize--;
+  saveEditorFont(editorFontSize);
   $('.CodeMirror').css('font-size', editorFontSize + 'px');
 }
+
+$('#incEditorFontSizeBtn').click(function (){
+  increaseEditorFontSize();
+});
+
+$('#decEditorFontSizeBtn').click(function (){
+  decreaseEditorFontSize();
+});
 
 
 
 // Key press listener
 document.onkeyup = function(e) {
+
+  /*
+    Check if the keyboard shortcuts are enabled
+  */
+  if(! $('#keyboard-shortcuts-sw').prop("checked")){
+    return;
+  }
+
   //Multiple key combinations can be added here
   // 80 == 'p'
   if (e.ctrlKey && e.altKey && e.which == 80) {

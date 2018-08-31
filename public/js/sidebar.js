@@ -1,15 +1,37 @@
+import { saveLastSelected, getStoredSettings, getLastSelected, getStoredCode, saveSetting } from './local-storage.js'
+import { myCodeMirror } from './code-mirror.js'
+
+/*
+    TreeView init
+*/
+$('#tree').treeview({
+    data: getTree(),
+    levels: 5,
+    multiSelect: false
+});
+
 // Sidebar drawer init
 $(document).ready(function () {
     $('.drawer').drawer();
 
-
     if (typeof (Storage) !== "undefined") {
         //console.log("Local storage available");
 
-        if (window.localStorage.getItem("codeStorage") !== null) {
-            // Set the editor code to the local storage content
-            myCodeMirror.setValue(window.localStorage.getItem("codeStorage"));
+        let sidebarSettings = getStoredSettings();
+        if (sidebarSettings !== null){
+            $('#keyboard-shortcuts-sw').prop("checked", sidebarSettings['keyboardShortcuts']);
         }
+        let lastSelected = getLastSelected();
+        if( lastSelected !== null){
+            $('#tree').treeview('selectNode', [ lastSelected.nodeId, { silent: true } ]);
+        }
+
+        let storedCode = getStoredCode(lastSelected.fullPath);
+        if (storedCode !== null) {
+            // Set the editor code to the local storage content
+            myCodeMirror.setValue(storedCode);
+        }
+
     } else {
         // No Web Local Storage support..
         /*
@@ -23,6 +45,12 @@ $(document).ready(function () {
 
 });
 
+$('#keyboard-shortcuts-sw').change(updateSidebarSettings); 
+
+function updateSidebarSettings(){
+    // Add more in the future
+    saveSetting("keyboardShortcuts", $('#keyboard-shortcuts-sw').prop("checked"));
+}
 
 /*
   Sidebar init
@@ -65,7 +93,7 @@ $('.drawer').on('drawer.closed', function () {
   This doesn't work when the bar is open and user clicks 
   randomly on the screen to close the sidebar.
 */
-function drawerClick() {
+$('#drawerButton').on('click', function drawerClick() {
     if ($(".drawer").hasClass("drawer-open")) {
         setTimeout(function () {
             $('.program').css('opacity', 1.0);
@@ -73,7 +101,7 @@ function drawerClick() {
     } else {
         $('.program').css('opacity', 0.2);
     }
-}
+});
 
 
 /*
@@ -90,9 +118,11 @@ function getTree() {
     */
     window.exampleFiles.forEach(file => {
         file = file.substring(8, file.length);
-        paths.push(file);
+        if(file.toUpperCase().endsWith(".RHO")){
+            paths.push(file);
+            //console.log(file);
+        }
         //console.log(file.split("/"));
-        //console.log(file);
     })
 
     /*
@@ -140,14 +170,10 @@ function getTree() {
         return children;
     }
 
+
     let filesArray = paths
         .map(path => path.split('/').slice(1))
         .reduce((children, path) => insert(children, path), []);
-
-    /*
-      Manually add items to the sidebar here:
-    */
-
 
 
 
@@ -175,6 +201,24 @@ function getTree() {
 
     treeIterate(filesArray[0], 0);
 
+    /**
+     * Manually add file entries to the sidebar here
+     */
+
+    let workspace = {
+        text: "Workspace",
+        icon: "far fa-folder-open",
+        selectable: false,
+        nodes: [
+            {
+                text: "Untitled.rho",
+                icon: "far fa-file-code",
+                selectable: true
+            }
+        ]
+    };
+
+    filesArray.unshift(workspace);
 
     /*
       Source data for the TreeView has to be organized
@@ -218,20 +262,31 @@ function getTree() {
     return filesArray;
 }
 
-
-/*
-  TreeView init
-*/
-$('#tree').treeview({
-    data: getTree(),
-    levels: 5
+/**
+ * Once node(file) is selected it can not be selected again.
+ * We can accomplish this behavior by using 'nodeUnselected' as the 
+ * event that actually selects the node. It may be counter intuitive 
+ * at the first glance but it actually works pretty nicely.
+ * When the node is selected, 'nodeSelect' event is triggered, that event
+ * then calls the 'nodeUnselect' on that node which basically selects the node.
+ * Selecting the node in 'nodeUnselected' is called with silent option turned 
+ * on so that it doesn't trigger 'nodeSelected' event, that would cause recursion.
+ */
+$('#tree').on('nodeUnselected', function(event, data){
+    $('#tree').treeview('selectNode', [data.nodeId, { silent: true }]);
+    //console.log(data);
 });
+
 
 /*
   Select listener for Rholang examples from the sidebar
 */
 $('#tree').on('nodeSelected', function (event, data) {
     $('.drawer').drawer('close');
+    console.log(data);
+    $('#tree').treeview('unselectNode', [data.nodeId, { silent: false }]);
+    //$('#tree').treeview('disableNode', [ data.nodeId, { silent: true } ]);
+    data.selectable = false;
     var current = data;
     var path = "";
     /*
@@ -250,24 +305,43 @@ $('#tree').on('nodeSelected', function (event, data) {
     }
     path = "/" + current.text + path;
 
-    // AJAX file path
-    /*
-      Send the AJAX request and set the editor
-      code as the file content
-    */
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                //console.log(this.responseText);
-                myCodeMirror.setValue(this.responseText);
-            } else {
-                console.log("Error: ", xhttp.statusText);
-            }
+    
+    saveLastSelected(data, path);
 
-        }
-    };
-    xhttp.open("GET", path, true);
-    xhttp.send();
+    // Check if the file is in local storage
+    let storedCode = getStoredCode(path);
+    
+    if(storedCode !== null){
+        myCodeMirror.setValue(storedCode);
+        // Stop here
+        return;
+    }
+
+    if(path.toUpperCase().startsWith("/WORKSPACE")){
+        // File can not be pulled via AJAX
+        myCodeMirror.setValue("");
+    }else{
+        // AJAX file path
+        /*
+        Send the AJAX request and set the editor
+        code as the file content
+        */
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                if (this.status == 200) {
+                    //console.log(this.responseText);
+                    myCodeMirror.setValue(this.responseText);
+                } else {
+                    console.log("Error: ", xhttp.statusText);
+                }
+
+            }
+        };
+        xhttp.open("GET", path, true);
+        xhttp.send();
+    }
+    
+    
 
 });

@@ -52,7 +52,7 @@ app.get('/', function (req, res) {
   //console.log(files);
   const config = {autorun: false, version: 'v0.4.1'}
   const content = indexHTML
-    .replace('{{ content }}', example)
+    //.replace('{{ content }}', example)
     .replace('{{ config }}', JSON.stringify(config))
     .replace('{{ exampleFiles }}', JSON.stringify(files))
 

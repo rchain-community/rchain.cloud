@@ -243,6 +243,10 @@ html, body {
     color: #fa3650;
 }
 
+.red-icon:focus{
+    outline: 0;
+    outline: none;
+}
 
 #editorSaveIcon{
     float: right;
@@ -283,6 +287,27 @@ html, body {
     margin-left: 30px;
 }
 
+.drawer-settings{
+    padding-bottom: 20px;
+}
+
+.drawer-settings .row{
+    padding-left: 20px;
+}
+
+.drawer-settings-label{
+    color: #767b84;
+}
+
+#fileMenuDiv{
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+#keyboard-shortcuts-sw-div{
+    padding-top: 10px;
+}
+
 /* ---- Tree ---- */
 .node-tree{
     background-color: transparent;
@@ -297,6 +322,10 @@ html, body {
 .node-selected{
     color: #df3248 !important;
     background-color: #38383899 !important;
+}
+
+.treeview{
+    padding-bottom: 30px;
 }
 
 .treeview span.icon{

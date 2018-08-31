@@ -2,6 +2,7 @@
   Draggable horizontal line mouse listeners
 */
 var pageWidth;
+var isDragging = false;
 $('#draggable').mousedown(function(e){
   isDragging = true;
   pageWidth = $('body').width();
