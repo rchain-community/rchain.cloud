@@ -31,14 +31,14 @@ Mayor features that are planned:
 You can send a POST request to `http://rchain.cloud/` to seed the editor with certain content. The POST body should be form-encoded, and can contain the following parameters:
 
 - `content`: the code you want to show in the editor
-- `version`: the Docker image tag you want to use to run your code (only supports `v0.4.1` at the moment)
+- `version`: the Docker image tag you want to use to run your code (only supports `latest` at the moment)
 
 This functionality allows you to create a 'Run on RChain.cloud' button. Usually this is done using a [hidden HTML form](https://jsfiddle.net/0zwtnr8c/):
 
 ```html
 <form target="_blank" method="POST" action="http://rchain.cloud/">
    <input type="hidden" name="content" value="Your code here!" />
-   <input type="hidden" name="version" value="v0.4.1" />
+   <input type="hidden" name="version" value="latest" />
    <input type="submit" value="Run on RChain.cloud" />
 </form>
 ```

@@ -107,7 +107,7 @@ function togglePresentation(){
     if($(".drawer").hasClass("drawer-open")){
       $('.program').css('opacity', 0.2);
     }
-    
+
   }else{
     // Presentation mode is being turned on
     // Automatically increase font size by 10px
@@ -122,7 +122,7 @@ function togglePresentation(){
     $('.program').css('top', '0px');
     /*
       In case the presentation mode is activated while
-      the sidebar was open, set opacity to 1.0 
+      the sidebar was open, set opacity to 1.0
     */
     if($(".drawer").hasClass("drawer-open")){
       $('.program').css('opacity', 1.0);
@@ -183,8 +183,8 @@ document.onkeyup = function(e) {
   // 80 == 'p'
   if (e.ctrlKey && e.altKey && e.which == 80) {
     //alert("Ctrl + Alt + P pressed");
-    togglePresentation(); 
-    
+    togglePresentation();
+
   }
 };
 // Sidebar drawer init
@@ -227,151 +227,49 @@ $('.drawer').on('drawer.closed', function(){
 /*
   This works faster then using the events of the drawer
   but this only works then the nav bar button is pressed.
-  This doesn't work when the bar is open and user clicks 
+  This doesn't work when the bar is open and user clicks
   randomly on the screen to close the sidebar.
 */
-function drawerClick(){
-  if($(".drawer").hasClass("drawer-open")){
+function drawerClick () {
+  if ($(".drawer").hasClass("drawer-open")) {
     $('.program').css('opacity', 1.0);
 
-  }else{
+  } else {
     $('.program').css('opacity', 0.2);
   }
 }
 
-
 /*
-  Format example file data to the format specified 
+  Format example file data to the format specified
   by the TreeView docs. Example is shown bellow.
 */
-function getTree(){
+function getTree () {
 
   var paths = [];
   /*
     For each file path remove the root folder "./public/..."
-    as the web server doesn't store the static files with 
+    as the web server doesn't store the static files with
     the "/public/" folder as it's root.
   */
   window.exampleFiles.forEach(file =>{
-    file = file.substring(8, file.length);
+    file = file.substring(17);
     paths.push(file);
-    //console.log(file.split("/"));
-    //console.log(file);
   })
-  
-  /*
-    Recursive function that creates the tree structure from
-    multiple file paths. This is best explained with the example.
-    e.g. File paths:
-    "/root/file1"
-    "/root/dir1/file2"
-    "/root/dir2/file3"
-    "/root/dir2/file4"
 
-    Output:
-    {
-      text: "root",
-      nodes: [
-        {
-          text: "file1"
-        },
-        {
-          text: "dir1",
-          nodes: [
-            {
-              text: "file2"
-            }
-          ]
-        },
-        {
-          text: "dir2",
-          nodes:[
-            {
-              text: "file3"
-            },
-            {
-              text: "file4"
-            }
-          ]
-        }
-      ]
-    }
-  */
   function insert(children = [], [head, ...tail]) {
     let child = children.find(child => child.text === head);
     if (!child) children.push(child = {text: head, nodes: []});
     if (tail.length > 0) insert(child.nodes, tail);
     return children;
   }
-  
+
   let filesArray = paths
     .map(path => path.split('/').slice(1))
-    .reduce((children, path) => insert(children, path), []);
-
-
-  /*
-    Recursive function that iterates over the tree structure
-    and finds the nodes that are actually folders, not files.
-    For each folder node we add the folder icon ("far fa-folder-open")
-    and we declare that node as unselectable (only files can be selected).
-  */
-  function treeIterate(current, depth){
-    var children = current.nodes;
-    if(children.length > 0){
-      current.icon = "far fa-folder-open";
-      current.selectable = false;
-      //console.log(current);
-    }else{
+    .reduce((children, path) => insert(children, path), [])
+    .map(current => {
       current.icon = "far fa-file-code";
-    }
-    for(var i = 0, len = children.length; i < len; i++){
-      if(children[i]){
-        treeIterate(children[i], depth+1);
-      }
-    }
-  }
-  
-  treeIterate(filesArray[0], 0);
-  
-  
-  /*
-    Source data for the TreeView has to be organized
-    in the format illustrated with the example bellow.
-
-  var tree = [
-    {
-      text: "Parent 1",
-      nodes: [
-        {
-          text: "Child 1",
-          nodes: [
-            {
-              text: "Grandchild 1"
-            },
-            {
-              text: "Grandchild 2"
-            }
-          ]
-        },
-        {
-          text: "Child 2"
-        }
-      ]
-    },
-    {
-      text: "Parent 2"
-    },
-    {
-      text: "Parent 3"
-    },
-    {
-      text: "Parent 4"
-    },
-    {
-      text: "Parent 5"
-    }
-  ];
-  */
+      return current;
+    });
 
   return filesArray;
 }
@@ -401,10 +299,8 @@ $('#tree').on('nodeSelected', function(event, data) {
     -> example/dir1/dir2/HelloWorld.rho
   */
   while(typeof current.parentId !== "undefined"){
-    //console.log(current);
     path = "/" + current.text + path;
     current = $('#tree').treeview('getParent', current);
-    //debugger;
   }
   path = "/" + current.text + path;
 
@@ -422,10 +318,10 @@ $('#tree').on('nodeSelected', function(event, data) {
       }else{
         console.log("Error: ", xhttp.statusText);
       }
-      
+
     }
   };
-  xhttp.open("GET", path, true);
+  xhttp.open('GET', '/examples' + path, true);
   xhttp.send();
 
 });

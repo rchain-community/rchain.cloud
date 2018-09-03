@@ -1,4 +1,5 @@
 const fs = require('fs')
+const path = require('path')
 const bodyParser = require('body-parser')
 const express = require('express')
 const app = express()
@@ -7,11 +8,10 @@ const io = require('socket.io')(server)
 
 // Local libs
 const DockerManager = require('./lib/DockerManager')
-
-const FileReader = require('./lib/FileReader');
+const FileReader = require('./lib/FileReader')
 
 // Middleware
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.urlencoded({extended: true}))
 
 // Ensure /tmp/rnode exists
@@ -23,22 +23,13 @@ try {
   fs.unlinkSync('/tmp/rnode/rspace/lock.mdb')
 } catch (e) {}
 
-// Run containers of each version
+// Start running container
 DockerManager.startContainers('rchain/rnode')
 
-// Load index.html content
-const indexHTML = fs.readFileSync(__dirname + '/views/index.html', 'utf8')
-const example = `new helloWorld in {
-  contract helloWorld(@name) = {
-    new ack in {
-      @"stdoutAck"!("Hello!", *ack) |
-      for (_ <- ack) {
-        @"stdout"!(name)
-      }
-    }
-  } |
-  helloWorld!("Joe")
-}`
+// Load static resources
+const indexHTML = fs.readFileSync(path.join(__dirname, 'views', 'index.html'), 'utf8')
+const example = fs.readFileSync(path.join(__dirname, 'public', 'examples', 'hello-world.rho'), 'utf8')
+const files = FileReader.readFiles()
 
 // Set up queue
 const queue = new (require('better-queue'))(function (input, cb) {
@@ -48,9 +39,7 @@ const queue = new (require('better-queue'))(function (input, cb) {
 
 // HTTP Routes
 app.get('/', function (req, res) {
-  var files = FileReader.readFiles();
-  //console.log(files);
-  const config = {autorun: false, version: 'v0.4.1'}
+  const config = {autorun: false, version: 'latest'}
   const content = indexHTML
     .replace('{{ content }}', example)
     .replace('{{ config }}', JSON.stringify(config))
@@ -60,7 +49,7 @@ app.get('/', function (req, res) {
 })
 
 app.post('/', function (req, res) {
-  const config = {autorun: true, version: 'v0.4.1'}
+  const config = {autorun: true, version: 'latest'}
   const content = indexHTML
     .replace('{{ content }}', req.body.content || req.body.body || example)
     .replace('{{ config }}', JSON.stringify(config))

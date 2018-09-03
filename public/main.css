@@ -129,8 +129,8 @@ html, body {
     background-color: #df3248;
     padding: 10px 20px;
     border-radius: 5px;
-    color: #fff;
-    width: 64px;
+    color: #fff !important;
+    width: 110px;
     text-align: center;
     font-size: 14px;
     font-weight: 600;
@@ -146,7 +146,7 @@ html, body {
 
 .run:hover {
     background: #fff;
-    color: #b12b3d;
+    color: #b12b3d !important;
 }
 
 .program .console h4 {
@@ -251,12 +251,17 @@ html, body {
     padding: 14px .75rem 20px !important;
 }
 
+.drawer-hamburger .fa {
+    font-size: 1.5em !important;
+}
+
 .drawer-nav{
     background-color: #000 !important;
 }
 
 .drawer-brand{
     color: #df3248 !important;
+    font-size: 20px;
 }
 
 .drawer-menu-item{
@@ -265,23 +270,23 @@ html, body {
 }
 
 /* ---- Tree ---- */
-.node-tree{
+.node-tree {
     background-color: transparent;
-    color: #df3248;
+    color: #fff;
 }
 
-.node-tree:hover{
+.node-tree:hover {
     color: #df3248 !important;
     background-color: #38383880 !important;
 }
 
-.node-selected{
+.node-selected {
     color: #df3248 !important;
     background-color: #38383899 !important;
 }
 
-.treeview span.icon{
-    margin-right: 15px !important;
+.treeview span.icon {
+    margin-right: 6px !important;
 }
 
 /* ---- CodeMirror ---- */
