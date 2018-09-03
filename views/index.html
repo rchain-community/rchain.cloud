@@ -5,14 +5,25 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/vendor/codemirror.css"/>
+    <link rel="stylesheet" href="/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="/vendor/bootstrap-treeview.min.css">
     <link rel="stylesheet" href="/main.css?v=0.3.1"/>
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+    <!-- fontawesome.css -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <!-- drawer.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
+
+
 </head>
-<body>
+<body class="drawer drawer--left">
 
 <div class="header">
-    <h2>rchain.cloud</h2>
+    <button type="button" class="drawer-toggle drawer-hamburger" onclick="drawerClick()">
+        <i class="fas fa-bars fa-2x"></i>
+    </button>
+
+    <h2 class="mainTitle">rchain.cloud</h2>
 
     <!--Editor Font Size Increment/Decrement Buttons-->
     <div class="editorOptionsButtons">
@@ -28,9 +39,17 @@
             Github repository
         </a>
     </div>
+
+    <nav class="drawer-nav" role="navigation">
+        <ul class="drawer-menu">
+          <li><a class="drawer-brand">rchain.cloud</a></li>
+          <div id="tree"></div>
+        </ul>
+    </nav>
+
 </div>
 
-<div class="program">
+<div class="program main">
     
     <!--    Editor/code div  -->
     <div class="editor">
@@ -65,12 +84,18 @@
 </div>
 
 <script>window.config = {{ config }}</script>
+<script>var exampleFiles = {{ exampleFiles }}</script> 
 <script
     src="//code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
     crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
+<!-- drawer.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/vendor/codemirror.js"></script>
+<script src="/vendor/bootstrap.min.js"></script>
+<script src="/vendor/bootstrap-treeview.min.js"></script>
 <script src="/vendor/rholang.js"></script>
 <script src="/editor.js?v=0.3.1"></script>
 

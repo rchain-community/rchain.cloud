@@ -8,6 +8,8 @@ const io = require('socket.io')(server)
 // Local libs
 const DockerManager = require('./lib/DockerManager')
 
+const FileReader = require('./lib/FileReader');
+
 // Middleware
 app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.urlencoded({extended: true}))
@@ -46,10 +48,13 @@ const queue = new (require('better-queue'))(function (input, cb) {
 
 // HTTP Routes
 app.get('/', function (req, res) {
+  var files = FileReader.readFiles();
+  //console.log(files);
   const config = {autorun: false, version: 'v0.4.1'}
   const content = indexHTML
     .replace('{{ content }}', example)
     .replace('{{ config }}', JSON.stringify(config))
+    .replace('{{ exampleFiles }}', JSON.stringify(files))
 
   res.send(content)
 })
