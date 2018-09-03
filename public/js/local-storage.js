@@ -125,7 +125,7 @@ export function saveEditorState() {
         }
         let path = "";
         // Get the full path of the file
-        console.log(current);
+        //console.log(current);
         while (typeof current.parentId !== "undefined") {
             //console.log(current);
             path = "/" + current.text + path;

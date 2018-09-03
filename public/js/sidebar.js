@@ -1,19 +1,35 @@
 import { saveLastSelected, getStoredSettings, getLastSelected, getStoredCode, saveSetting } from './local-storage.js'
 import { myCodeMirror } from './code-mirror.js'
 
-/*
-    TreeView init
-*/
-$('#tree').treeview({
-    data: getTree(),
-    levels: 5,
-    multiSelect: false
-});
+
+var treeData;
+var treeView;
+//treeData = getTree();
+//initTreeView();
+
+function generateStartTree(){
+    treeData = getTree();
+    initTreeView();
+}
+
+function initTreeView(){
+    /*
+        TreeView init
+    */
+   //console.log("init tree");
+    $('#tree').treeview({
+        data: treeData,
+        levels: 5,
+        multiSelect: false,
+        onNodeSelected: treeNodeSelected,
+        onNodeUnselected: treeNodeUnselected,
+    });
+}
 
 // Sidebar drawer init
 $(document).ready(function () {
     $('.drawer').drawer();
-
+    generateStartTree();
     if (typeof (Storage) !== "undefined") {
         //console.log("Local storage available");
 
@@ -103,6 +119,43 @@ $('#drawerButton').on('click', function drawerClick() {
     }
 });
 
+$('#createNewFileBtn').click(function(){
+    let newNodeName = "NewFile.rho";
+    let nodes = $('#tree').treeview('getEnabled');
+    treeData.forEach(function(node){
+        if(node.text.toUpperCase() == "WORKSPACE"){
+            let index = 0;
+            node.nodes.forEach(function(childNode){
+                if(childNode.text == newNodeName){
+                    index++;
+                    newNodeName = "NewFile" + index.toString() + ".rho";
+                    console.log(index);
+                }
+            });
+
+            let fileNamePromp = prompt("Enter file name:", newNodeName);
+            if(fileNamePromp == null){
+                // User exited the prompt
+                return;
+            }
+            if(! fileNamePromp.toUpperCase().endsWith(".RHO")){
+                fileNamePromp = fileNamePromp + ".rho";
+            }
+            node.nodes.push({
+                text: fileNamePromp,
+                icon: "far fa-file-code",
+                selectable: true
+
+            })
+            initTreeView();
+            let lastNode = getLastSelected();
+            console.log(lastNode);
+            $('#tree').treeview('selectNode', [lastNode.nodeId, { silent: false }]);
+
+        }
+    })
+});
+
 
 /*
 Format example file data to the format specified 
@@ -120,9 +173,7 @@ function getTree() {
         file = file.substring(8, file.length);
         if(file.toUpperCase().endsWith(".RHO")){
             paths.push(file);
-            //console.log(file);
         }
-        //console.log(file.split("/"));
     })
 
     /*
@@ -188,7 +239,6 @@ function getTree() {
         if (children.length > 0) {
             current.icon = "far fa-folder-open";
             current.selectable = false;
-            //console.log(current);
         } else {
             current.icon = "far fa-file-code";
         }
@@ -205,20 +255,31 @@ function getTree() {
      * Manually add file entries to the sidebar here
      */
 
+
+    // Check for the user/workspace files saved in the local storage
+    let workspaceFiles = [];
+    for ( var i = 0, len = localStorage.length; i < len; ++i ) {
+        var key = localStorage.key(i);
+        if(key.startsWith("storage:/Workspace/")){
+            var userFile = key.substring("storage:/Workspace/".length);
+            workspaceFiles.push({
+                text:userFile,
+                icon: "far fa-file-code",
+                selectable: true
+            });
+        }
+    }
+
     let workspace = {
         text: "Workspace",
         icon: "far fa-folder-open",
         selectable: false,
-        nodes: [
-            {
-                text: "Untitled.rho",
-                icon: "far fa-file-code",
-                selectable: true
-            }
-        ]
+        nodes: workspaceFiles
     };
 
     filesArray.unshift(workspace);
+
+    
 
     /*
       Source data for the TreeView has to be organized
@@ -272,18 +333,19 @@ function getTree() {
  * Selecting the node in 'nodeUnselected' is called with silent option turned 
  * on so that it doesn't trigger 'nodeSelected' event, that would cause recursion.
  */
-$('#tree').on('nodeUnselected', function(event, data){
+//$('#tree').on('nodeUnselected', 
+function treeNodeUnselected(event, data){
     $('#tree').treeview('selectNode', [data.nodeId, { silent: true }]);
-    //console.log(data);
-});
+    console.log(data);
+}
 
 
 /*
   Select listener for Rholang examples from the sidebar
 */
-$('#tree').on('nodeSelected', function (event, data) {
+//$('#tree').on('nodeSelected', 
+function treeNodeSelected (event, data) {
     $('.drawer').drawer('close');
-    console.log(data);
     $('#tree').treeview('unselectNode', [data.nodeId, { silent: false }]);
     //$('#tree').treeview('disableNode', [ data.nodeId, { silent: true } ]);
     data.selectable = false;
@@ -298,7 +360,6 @@ $('#tree').on('nodeSelected', function (event, data) {
       -> example/dir1/dir2/HelloWorld.rho
     */
     while (typeof current.parentId !== "undefined") {
-        //console.log(current);
         path = "/" + current.text + path;
         current = $('#tree').treeview('getParent', current);
         //debugger;
@@ -330,7 +391,6 @@ $('#tree').on('nodeSelected', function (event, data) {
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4) {
                 if (this.status == 200) {
-                    //console.log(this.responseText);
                     myCodeMirror.setValue(this.responseText);
                 } else {
                     console.log("Error: ", xhttp.statusText);
@@ -344,4 +404,4 @@ $('#tree').on('nodeSelected', function (event, data) {
     
     
 
-});
+}
