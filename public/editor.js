@@ -244,18 +244,6 @@ function drawerClick () {
   by the TreeView docs. Example is shown bellow.
 */
 function getTree () {
-
-  var paths = [];
-  /*
-    For each file path remove the root folder "./public/..."
-    as the web server doesn't store the static files with
-    the "/public/" folder as it's root.
-  */
-  window.exampleFiles.forEach(file =>{
-    file = file.substring(17);
-    paths.push(file);
-  })
-
   function insert(children = [], [head, ...tail]) {
     let child = children.find(child => child.text === head);
     if (!child) children.push(child = {text: head, nodes: []});
@@ -263,8 +251,8 @@ function getTree () {
     return children;
   }
 
-  let filesArray = paths
-    .map(path => path.split('/').slice(1))
+  let filesArray = window.exampleFiles
+    .map(path => path.split('/'))
     .reduce((children, path) => insert(children, path), [])
     .map(current => {
       current.icon = "far fa-file-code";
