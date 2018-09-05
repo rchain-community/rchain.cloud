@@ -303,9 +303,10 @@ html, body {
 
 /* For desktops, center the editor to the middle of the screen
  in the presentation mode */
-@media only screen and (min-width: 980px){
-    .CodeMirror-presentation{
-        padding-left: 30%;
+@media only screen and (min-width: 850px) {
+    .CodeMirror-presentation {
+        max-width: 850px;
+        margin: 50px auto;
     }
 }
 
