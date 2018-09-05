@@ -129,7 +129,9 @@ function togglePresentation(){
     }
   }
   $('.CodeMirror').toggleClass('CodeMirror-presentation');
-  myCodeMirror.refresh();
+  setTimeout(function() {
+    myCodeMirror.refresh();
+  }, 1);
 }
 
 /*
@@ -143,8 +145,13 @@ function increaseEditorFontSize(){
     console.log("Can't increase font anymore");
     return;
   }
+
   editorFontSize++;
   $('.CodeMirror').css('font-size', editorFontSize + 'px');
+
+  setTimeout(function() {
+    myCodeMirror.refresh();
+  }, 1);
 }
 
 function decreaseEditorFontSize(){
@@ -153,8 +160,13 @@ function decreaseEditorFontSize(){
     console.log("Can't decrease font anymore");
     return;
   }
+
   editorFontSize--;
   $('.CodeMirror').css('font-size', editorFontSize + 'px');
+
+  setTimeout(function() {
+    myCodeMirror.refresh();
+  }, 1);
 }
 
 /*
