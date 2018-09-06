@@ -63,6 +63,31 @@ app.get('/v1/versions', function (req, res) {
   })
 })
 
+// Used by load balancer to check application health
+app.get('/health', function (req, res) {
+  const container = DockerManager.getCurrentContainer()
+  if (!container) {
+    res.status(500)
+    res.send('No container started yet')
+    return
+  }
+
+  container.inspect((err, data) => {
+    if (err) {
+      res.status(500)
+      res.send('Cannot get container status')
+      return
+    }
+    if (!data.State.Running) {
+      res.status(500)
+      res.send('Container is not running')
+      return
+    }
+
+    res.send('OK')
+  })
+})
+
 // Socket.io logic
 io.on('connection', function (socket) {
   console.log('a user connected')
