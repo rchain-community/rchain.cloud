@@ -15,7 +15,7 @@ var isDragging = false;
 // Run event triggered by user
 function run () {
   socket.emit('run', {version: config.version, body: myCodeMirror.getValue()})
-  $('#runButton').text('Loading...').addClass('loading')
+  $('#runButton').text('Compiling...').addClass('loading')
 }
 
 // Socket.io stuff
