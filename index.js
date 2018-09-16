@@ -1,7 +1,6 @@
 const fs = require('fs')
 const path = require('path')
 const bodyParser = require('body-parser')
-const shell = require('shelljs')
 const express = require('express')
 const app = express()
 const server = require('http').createServer(app)
@@ -78,13 +77,13 @@ app.get('/health', function (req, res) {
     if (err) {
       res.status(500)
       res.send('Cannot get container status')
-      shell.exec('service docker restart')
+      DockerManager.reset('rchain/rnode')
       return
     }
     if (!data.State.Running || data.State.ExitCode !== 0) {
       res.status(500)
       res.send('Container is not running')
-      DockerManager.startContainers('rchain/rnode')
+      DockerManager.reset('rchain/rnode')
       return
     }
 
