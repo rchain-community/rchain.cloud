@@ -58,9 +58,7 @@ app.post('/', function (req, res) {
 })
 
 app.get('/v1/versions', function (req, res) {
-  DockerManager.getTags('rchain/rnode', function (tags) {
-    res.send(tags)
-  })
+  res.json(['latest'])
 })
 
 // Used by load balancer to check application health
