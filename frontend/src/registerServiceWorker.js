@@ -37,9 +37,9 @@ function registerValidSW(swUrl) {
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
-              // New content is available
+              // TODO: Display message to reload the page
             } else {
-              // Content installed for offline use
+              // Content installed for offline use, do nothing
             }
           }
         };
@@ -67,7 +67,7 @@ function checkValidServiceWorker(swUrl) {
       }
     })
     .catch(() => {
-      // App is running in offline mode
+      // TODO: Display message that app is running in offline mode
     })
 }
 
