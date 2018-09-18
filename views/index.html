@@ -13,99 +13,99 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <!-- drawer.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
-
-
+    
+    
 </head>
 <body class="drawer drawer--left">
-
-<div class="header">
-    <button type="button" class="drawer-toggle drawer-hamburger" onclick="drawerClick()">
-        <i class="fas fa-bars fa-2x"></i>
-    </button>
-
-    <h2 class="mainTitle">rchain.cloud</h2>
-
-    <!--Editor Font Size Increment/Decrement Buttons-->
-    <div class="editorOptionsButtons">
-        <span class="editorFontSize">
-            <i class="increaseEditorFontSize fas fa-plus-square fa-3px" onclick="increaseEditorFontSize()"></i>
-            <i class="decreaseEditorFontSize fas fa-minus-square fa-3px" onClick="decreaseEditorFontSize()"></i>
-        </span>
-    </div>
-
-    <div class="link">
-        <span>online rholang interpreter</span>
-        <a class="github" target="_blank" href="https://github.com/th3build/rchain.cloud">
-            Github repository
-        </a>
-    </div>
-
-    <nav class="drawer-nav" role="navigation">
-        <ul class="drawer-menu">
-          <li><a class="drawer-brand">rchain.cloud</a></li>
-          <div id="tree"></div>
-        </ul>
-    </nav>
-
-</div>
-
-<div class="program main">
     
-    <!--    Editor/code div  -->
-    <div class="editor">
-        <div id="editorLabelDiv" class= "label">YOUR CODE</div>
-        <!--<a onclick="showOptions()" class="options">Options</a>-->
-        <a id="runButton" onclick="run()" class="run">Run</a>
-        <textarea title="Your code" id="mirror">{{ content }}</textarea>
+    <div class="header">
+        <button type="button" class="drawer-toggle drawer-hamburger" onclick="drawerClick()">
+            <i class="fas fa-bars fa-2x"></i>
+        </button>
+        
+        <h2 class="mainTitle">rchain.cloud</h2>
+        
+        <!--Editor Font Size Increment/Decrement Buttons-->
+        <div class="editorOptionsButtons">
+            <span class="editorFontSize">
+                <i class="increaseEditorFontSize fas fa-plus-square fa-3px" onclick="increaseEditorFontSize()"></i>
+                <i class="decreaseEditorFontSize fas fa-minus-square fa-3px" onClick="decreaseEditorFontSize()"></i>
+            </span>
+        </div>
+        
+        <div class="link">
+            <span>online rholang interpreter</span>
+            <a class="github" target="_blank" href="https://github.com/th3build/rchain.cloud">
+                Github repository
+            </a>
+        </div>
+        
+        <nav class="drawer-nav" role="navigation">
+            <ul class="drawer-menu">
+                <li><a class="drawer-brand">rchain.cloud</a></li>
+                <div id="tree"></div>
+            </ul>
+        </nav>
+        
     </div>
-    <!--    Draggable horizontal line  -->
-    <div id="draggable"></div>
-
-    <!--    Console/output div  -->
-    <div id="consoleDiv" class="console">
-        <div class="label" id="consoleLabel">OUTPUT</div>
-        <pre class="text" id="consoleText"></pre>
+    
+    <div class="program main">
+        
+        <!--    Editor/code div  -->
+        <div class="editor">
+            <div id="editorLabelDiv" class= "label">YOUR CODE</div>
+            <!--<a onclick="showOptions()" class="options">Options</a>-->
+            <a id="runButton" onclick="run()" class="run">Run</a>
+            <textarea title="Your code" id="mirror">{{ content }}</textarea>
+        </div>
+        <!--    Draggable horizontal line  -->
+        <div id="draggable"></div>
+        
+        <!--    Console/output div  -->
+        <div id="consoleDiv" class="console">
+            <div class="label" id="consoleLabel">OUTPUT</div>
+            <pre class="text" id="consoleText"></pre>
+        </div>
     </div>
-</div>
-
-<div class="modal" id="runOptions">
-    <div class="modal-inner">
-        <a class="close" onclick="hideOptions()">&times;</a>
-
-        <h3>Options</h3>
-
-        <fieldset>
-            <label>RNode version</label>
-            <select id="selectVersion" title="Select version" onchange="selectVersion(this)">
-                <option selected value="v0.4.1">v0.4.1</option>
-            </select>
-        </fieldset>
+    
+    <div class="modal" id="runOptions">
+        <div class="modal-inner">
+            <a class="close" onclick="hideOptions()">&times;</a>
+            
+            <h3>Options</h3>
+            
+            <fieldset>
+                <label>RNode version</label>
+                <select id="selectVersion" title="Select version" onchange="selectVersion(this)">
+                    <option selected value="v0.4.1">v0.4.1</option>
+                </select>
+            </fieldset>
+        </div>
     </div>
-</div>
-
-<script>window.config = {{ config }}</script>
-<script>var exampleFiles = {{ exampleFiles }}</script> 
-<script
+    
+    <script>window.config = {{ config }}</script>
+    <script>var exampleFiles = {{ exampleFiles }}</script> 
+    <script
     src="//code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
     crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
-<!-- drawer.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="/vendor/codemirror.js"></script>
-<script src="/vendor/bootstrap.min.js"></script>
-<script src="/vendor/bootstrap-treeview.min.js"></script>
-<script src="/vendor/rholang.js"></script>
-<script src="/editor.js?v=0.3.1"></script>
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119318187-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-119318187-1');
-</script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
+    <!-- drawer.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/vendor/codemirror.js"></script>
+    <script src="/vendor/bootstrap.min.js"></script>
+    <script src="/vendor/bootstrap-treeview.min.js"></script>
+    <script src="/vendor/rholang.js"></script>
+    <script src="/editor.js?v=0.3.1"></script>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119318187-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-119318187-1');
+    </script>
+    
 </body>
 </html>
