@@ -38,10 +38,12 @@ socket.on('output.done', function () { loadingDone() })
 // Functions for callbacks from socket.io
 function clearConsole () {
   lastType = ''
+  didEvaluatePart = false
   document.getElementById('consoleLabel').style.display = 'none'
   document.getElementById('consoleText').innerHTML = '<h4 class="uploading">uploading</h4>'
 }
 
+var didEvaluatePart = false;
 function appendToConsole (data) {
   var message = data[0]
   var type = data[1]
@@ -52,6 +54,10 @@ function appendToConsole (data) {
 
   if (message.length < 24 && message.indexOf(':\r\n') === message.length - 3) {
     message = '<span style="color: #9a9ea2;">' + message + '</span>'
+  }
+
+  if (!didEvaluatePart && type !== 'evaluating' && message.indexOf('new x0, x1, x2 in {') >= 0) {
+    type = 'evaluating'
   }
 
   message = message.replace(/^Syntax Error,/, '<span style="color: #e63747;">Syntax Error</span>,')
