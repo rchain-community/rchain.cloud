@@ -5,17 +5,23 @@ var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('mirror'), {
   mode: 'rholang',
   theme: 'solarized'
 })
-var lastType = ''
 
+var lastType = '';
 var editorFontSize = 16;
-
 var isDragging = false;
-
+var runTimeout = null;
 
 // Run event triggered by user
 function run () {
   socket.emit('run', {version: config.version, body: myCodeMirror.getValue()})
   $('#runButton').text('Compiling...').addClass('loading')
+
+  if (runTimeout) {
+    clearTimeout(runTimeout)
+  }
+  runTimeout = setTimeout(function () {
+    $('#runButton').text('Run').removeClass('loading');
+  }, 10000);
 }
 
 // Socket.io stuff
