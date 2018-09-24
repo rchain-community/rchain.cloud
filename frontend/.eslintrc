@@ -1,0 +1,7 @@
+{
+    "extends": [
+       "react",
+       "standard",
+       "standard-react"
+    ]
+ }

@@ -6,7 +6,7 @@ const isLocalhost = Boolean(
     )
 )
 
-export default function register() {
+export default function register () {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location)
     if (publicUrl.origin !== window.location.origin) {
@@ -17,23 +17,23 @@ export default function register() {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`
 
       if (isLocalhost) {
-        checkValidServiceWorker(swUrl);
+        checkValidServiceWorker(swUrl)
         navigator.serviceWorker.ready.then(() => {
           // Service worker ready
         })
       } else {
         registerValidSW(swUrl)
       }
-    });
+    })
   }
 }
 
-function registerValidSW(swUrl) {
+function registerValidSW (swUrl) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
       registration.onupdatefound = () => {
-        const installingWorker = registration.installing;
+        const installingWorker = registration.installing
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
@@ -42,15 +42,15 @@ function registerValidSW(swUrl) {
               // Content installed for offline use, do nothing
             }
           }
-        };
-      };
+        }
+      }
     })
     .catch(error => {
       console.error('Error during service worker registration:', error)
-    });
+    })
 }
 
-function checkValidServiceWorker(swUrl) {
+function checkValidServiceWorker (swUrl) {
   fetch(swUrl)
     .then(response => {
       if (
@@ -71,7 +71,7 @@ function checkValidServiceWorker(swUrl) {
     })
 }
 
-export function unregister() {
+export function unregister () {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(registration => {
       registration.unregister()
