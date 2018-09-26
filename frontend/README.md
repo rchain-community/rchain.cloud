@@ -10,7 +10,7 @@ If you want to help develop rchain.cloud, or run your own instance, follow these
 3. Run development enviroment locally using one of two options:
 - sh setup_locally.sh
 or
-- docker-network create rchain-cloud
+- docker network create rchain-cloud
 - docker-compose -f docker-compose-dev.yml build
 - docker-compose -f docker-compose-dev.yml up -d
 
