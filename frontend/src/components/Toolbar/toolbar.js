@@ -19,10 +19,12 @@ class Toolbar extends Component {
               </Typography>
             </div>
             <div className={styles.toolbarMenu} >
-              <FontAwesomeIcon icon='cog' className={styles.toolbarMenuItem} />
+              <div className={styles.toolbarMenuItem}>
+                <FontAwesomeIcon icon='cog' className={theme.icon} />
+              </div>
 
               <a className={[styles.toolbarLink, styles.toolbarMenuItem].join(' ')} target='_blank' rel='noopener noreferrer' href='https://github.com/rchain-community/rchain.cloud'>
-                <FontAwesomeIcon icon={['fab', 'github']} />
+                <FontAwesomeIcon icon={['fab', 'github']} className={theme.icon} />
                 {/*
                 <Typography variant='body2' color='inherit' noWrap>
                   Github

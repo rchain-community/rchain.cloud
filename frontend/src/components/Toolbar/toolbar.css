@@ -48,11 +48,13 @@
 }
 
 .toolbarMenu {
+  display: inline-flex;
   margin-left: auto;
 }
 
 .toolbarMenuItem {
   margin-right: 1rem;
+  text-decoration: none;
 }
 
 @media (max-width: 600px) {

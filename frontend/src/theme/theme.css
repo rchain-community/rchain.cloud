@@ -11,4 +11,14 @@
   background-color: #222733 !important;
 }
 
+.icon {
+  color: #586C7A !important;
+}
 
+.icon:active {
+  color: #8395a1 !important;
+}
+
+.icon:hover {
+  color: #ad0030 !important;
+}
