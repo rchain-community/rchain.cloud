@@ -14,7 +14,7 @@ export default class Editor extends Component {
         </div>
 
         <div className={styles.contentContainer}>
-          <SplitPane split='vertical' minSize={150} maxSize={500} defaultSize={230}>
+          <SplitPane split='vertical' style={{ position: 'relative', height: 'unset' }} minSize={150} maxSize={500} defaultSize={230}>
             <div className={[styles.sidebarContainer, theme.sidebarTheme].join(' ')}>
               <div style={{ color: 'white' }}> Sidebar placeholder </div>
             </div>
@@ -25,7 +25,6 @@ export default class Editor extends Component {
             <div>Car</div>
           </SplitPane>
         </div>
-        <div className={styles.example}>Editor</div>
       </div >
     )
   }

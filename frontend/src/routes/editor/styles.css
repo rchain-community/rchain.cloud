@@ -7,6 +7,8 @@
 }
 
 .mainContainer {
+    display: flex;
+    flex-direction: column;
     z-index: 10;
     width: 100%;
     height: 100%;
@@ -14,7 +16,9 @@
 
 .contentContainer {
     width: 100%;
-    height: 100%;
+    flex-grow: 1;
+    display: flex;
+    /*height: calc(100% - 50px);*/
 }
 
 .sidebarContainer {
