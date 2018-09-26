@@ -7,9 +7,10 @@
   width: 100%;
   text-align: left;
   margin-top: 0.5rem;
+  user-select: none;
 }
 
-.toolbarLogo{
+.toolbarLogo {
   position: relative;
   margin-left: 0.5rem;
   margin-right: 1rem;
