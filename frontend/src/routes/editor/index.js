@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import styles from './styles.css'
+import styles from './style.css'
 
 export default class Editor extends Component {
   render () {
