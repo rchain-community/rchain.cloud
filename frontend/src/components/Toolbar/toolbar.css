@@ -51,6 +51,10 @@
   margin-left: auto;
 }
 
+.toolbarMenuItem {
+  margin-right: 1rem;
+}
+
 @media (max-width: 600px) {
   .toolbarTitle {
     display: none !important;

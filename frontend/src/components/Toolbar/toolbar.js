@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import MaterialToolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './toolbar.css'
 import theme from '../../theme/theme.css'
 
@@ -19,11 +19,17 @@ class Toolbar extends Component {
               </Typography>
             </div>
             <div className={styles.toolbarMenu} >
-              <a className={styles.toolbarLink} target='_blank' rel='noopener noreferrer' href='https://github.com/rchain-community/rchain.cloud'>
+              <FontAwesomeIcon icon='cog' className={styles.toolbarMenuItem} />
+
+              <a className={[styles.toolbarLink, styles.toolbarMenuItem].join(' ')} target='_blank' rel='noopener noreferrer' href='https://github.com/rchain-community/rchain.cloud'>
+                <FontAwesomeIcon icon={['fab', 'github']} />
+                {/*
                 <Typography variant='body2' color='inherit' noWrap>
                   Github
                 </Typography>
+                */}
               </a>
+
             </div>
           </div>
         </MaterialToolbar>
