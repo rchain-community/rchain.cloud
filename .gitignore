@@ -2,3 +2,12 @@ node_modules
 deploy.sh
 deploy-script.sh
 deploy-ips.txt
+
+
+### IntelliJ IDEA ###
+.idea
+*.iml
+.DS_Store
+
+/logs
+/indices
