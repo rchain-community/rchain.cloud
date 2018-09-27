@@ -1,7 +1,17 @@
 {
     "extends": [
-       "react",
-       "standard",
-       "standard-react"
-    ]
- }
+        "react",
+        "standard",
+        "standard-react"
+    ],
+    "rules": {
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "always",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ]
+    }
+}

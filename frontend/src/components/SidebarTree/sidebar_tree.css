@@ -1,0 +1,23 @@
+
+.treeContainer {
+  padding-top: 1rem;
+  padding-left: 1rem;
+}
+
+.sidebarItem {
+  display: inline-flex;
+  margin-bottom: 2px;
+  font-size: 1.2rem;
+  user-select: none;
+  width: max-content;
+}
+
+.sidebarItemTitle {
+  padding-left: 8px;
+}
+
+.circleIcon {
+  padding-left: 0.5rem;
+  padding-top: 0.5rem;
+  font-size: 0.5rem;
+}

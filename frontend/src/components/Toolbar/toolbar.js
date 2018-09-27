@@ -7,7 +7,7 @@ import styles from './toolbar.css'
 import theme from '../../theme/theme.css'
 
 class Toolbar extends Component {
-  render () {
+  render() {
     return (
       <AppBar position='relative' className={theme.secondary} style={{ minHeight: '55px' }}>
         <MaterialToolbar>

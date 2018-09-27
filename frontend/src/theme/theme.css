@@ -11,8 +11,20 @@
   background-color: #222733 !important;
 }
 
-.consoleTheme {
+.consoleHeader {
   background-color: #222733 !important;
+}
+
+.sidebarItemText{
+  color: #586C7A !important;
+}
+
+.sidebarActiveIcon {
+  color: #F25D90 !important;
+}
+
+.sidebarIcon {
+  color: #586C7A !important;
 }
 
 .icon {
