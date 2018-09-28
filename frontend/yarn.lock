@@ -5783,6 +5783,14 @@ react-error-overlay@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-4.0.1.tgz#417addb0814a90f3a7082eacba7cee588d00da89"
 
+react-file-view@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-file-view/-/react-file-view-1.0.0.tgz#7563a3f29215392ebc08d088905ae01ea7bf8bb2"
+  dependencies:
+    classnames "^2.2.5"
+    js-tree "^2.0.1"
+    prop-types "^15.5.10"
+
 react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
@@ -5865,14 +5873,6 @@ react-treebeard@^3.1.0:
     prop-types "^15.6.2"
     shallowequal "^1.1.0"
     velocity-react "^1.4.1"
-
-react-ui-tree@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/react-ui-tree/-/react-ui-tree-4.0.0.tgz#99e36a68e274409485614ab1f31f52fdf884907e"
-  dependencies:
-    classnames "^2.2.5"
-    js-tree "^2.0.1"
-    prop-types "^15.5.10"
 
 react@^16.5.1:
   version "16.5.2"
