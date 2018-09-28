@@ -20,7 +20,7 @@ export default class Editor extends Component {
         </div>
 
         <div className={styles.contentContainer}>
-          <SplitPane split='vertical' style={{ position: 'relative', height: 'unset' }} minSize={150} maxSize={500} defaultSize={230}>
+          <SplitPane split='vertical' style={{ position: 'relative', height: 'unset' }} minSize={35} maxSize={500} defaultSize={230}>
             <div className={[styles.sidebarContainer, theme.sidebarTheme].join(' ')}>
               {/* ********************************** */}
               {/* ****** SIDEBAR PLACEHOLDER ******* */}
@@ -28,7 +28,7 @@ export default class Editor extends Component {
               <Sidebar />
             </div>
 
-            <SplitPane split='horizontal' minSize={400} maxSize={windowHeight - 110} defaultSize={650}>
+            <SplitPane split='horizontal' minSize={400} maxSize={windowHeight - 110} defaultSize={windowHeight * 0.65}>
 
               <div style={{ color: 'white' }}>
                 {/* ************************************* */}

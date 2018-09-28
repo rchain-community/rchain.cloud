@@ -5,11 +5,13 @@ import Typography from '@material-ui/core/Typography'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
+import Switch from 'react-toggle-switch'
 import SettingsModal from '../SettingsModal/settings_modal'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './toolbar.css'
 import theme from '../../theme/theme.css'
-import { toggleSettingsModal } from '../../actions'
+import { toggleSettingsModal, toggleFullscreenMode } from '../../actions'
+import './switch.css'
 
 class Toolbar extends Component {
   render() {
@@ -32,6 +34,11 @@ class Toolbar extends Component {
                 <a className={[styles.toolbarLink, styles.toolbarMenuItem].join(' ')} target='_blank' rel='noopener noreferrer' href='https://github.com/rchain-community/rchain.cloud'>
                   <FontAwesomeIcon icon={['fab', 'github']} className={theme.icon} />
                 </a>
+
+                <Switch
+                  on={this.props.settings.fullscreen.enabled}
+                  onClick={this.props.toggleFullscreenMode}
+                />
               </div>
             </div>
           </MaterialToolbar>
@@ -45,7 +52,9 @@ class Toolbar extends Component {
 }
 
 Toolbar.propTypes = {
-  toggleSettingsModal: PropTypes.func
+  toggleSettingsModal: PropTypes.func,
+  toggleFullscreenMode: PropTypes.func,
+  settings: PropTypes.object
 }
 
 function mapStateToProps(state) {
@@ -56,7 +65,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    toggleSettingsModal: toggleSettingsModal
+    toggleSettingsModal: toggleSettingsModal,
+    toggleFullscreenMode: toggleFullscreenMode
   }, dispatch)
 }
 
