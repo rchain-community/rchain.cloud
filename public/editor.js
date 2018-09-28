@@ -34,6 +34,11 @@ socket.on('connect', function () {
 socket.on('output.clean', function () { clearConsole() })
 socket.on('output.append', function (message) { appendToConsole(message) })
 socket.on('output.done', function () { loadingDone() })
+socket.on('rchain.version', function (message) {
+    console.log("Editor rchain version :)" + message)
+})
+
+
 
 // Functions for callbacks from socket.io
 function clearConsole () {
