@@ -9,6 +9,7 @@ import theme from '../../theme/theme.css'
 
 export default class Editor extends Component {
   render() {
+    let windowHeight = window.innerHeight
     return (
       <div className={styles.mainContainer}>
         <div className={styles.toolbarContainer} >
@@ -27,7 +28,7 @@ export default class Editor extends Component {
               <Sidebar />
             </div>
 
-            <SplitPane split='horizontal' minSize={400} maxSize={1000} defaultSize={650}>
+            <SplitPane split='horizontal' minSize={400} maxSize={windowHeight - 110} defaultSize={650}>
 
               <div style={{ color: 'white' }}>
                 {/* ************************************* */}
@@ -46,6 +47,7 @@ export default class Editor extends Component {
             </SplitPane>
 
           </SplitPane>
+
         </div>
 
       </div >

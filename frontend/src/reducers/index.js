@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux'
-import Files from './reducer_files'
+import FilesReducer from './reducer_files'
+import SettingsReducer from './reducer_settings'
 
 const rootReducer = combineReducers({
   state: (state = {}) => state,
-  files: Files
+  files: FilesReducer,
+  settings: SettingsReducer
 })
 
 export default rootReducer

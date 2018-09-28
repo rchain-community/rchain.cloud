@@ -3,6 +3,10 @@
   background-color: #2F3545 !important;
 }
 
+.primaryText {
+  color: #586C7A !important;
+}
+
 .secondary {
   background-color: #14171F !important;
 }
@@ -13,6 +17,15 @@
 
 .consoleHeader {
   background-color: #222733 !important;
+}
+
+
+.consoleContainer{
+  background-color: #282D3A !important;
+}
+
+.consoleText {
+  color: #586C7A !important;
 }
 
 .sidebarItemText{

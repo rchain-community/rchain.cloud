@@ -2,6 +2,7 @@
 .consoleContainer{
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .consoleHeader {
@@ -9,8 +10,7 @@
 }
 .consoleHeaderTitleContainer{
   color: white;
-  margin-top: 1rem;
-  margin-left: 1rem;
+  margin: 1rem;
 }
 
 .consoleHeaderIcon{
@@ -27,6 +27,7 @@
 }
 
 .consoleContent {
+  padding: 1rem;
   flex-grow: 1;
   height: 100%;
 }
