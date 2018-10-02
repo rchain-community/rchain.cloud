@@ -17,6 +17,9 @@ class SidebarTree extends Component {
     e.stopPropagation()
     // eslint-disable-next-line
     let name = window.prompt('Please enter new folder name', 'new-folder')
+    if (name === null || name === '') {
+      return
+    }
     let newFolder = {
       module: name
     }
@@ -27,6 +30,9 @@ class SidebarTree extends Component {
     e.stopPropagation()
     // eslint-disable-next-line
     let name = window.prompt('Please enter new file name', 'new-file')
+    if (name === null || name === '') {
+      return
+    }
     let newFile = {
       module: name,
       leaf: true
@@ -38,6 +44,9 @@ class SidebarTree extends Component {
     e.stopPropagation()
     // eslint-disable-next-line
     let newName = window.prompt('Please enter new file name', file.module)
+    if (newName === null || newName === '') {
+      return
+    }
     this.props.renameFile(file, newName)
   }
 
