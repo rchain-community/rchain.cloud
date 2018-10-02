@@ -1,5 +1,5 @@
 import defaultState from './files_default_state'
-import { FILE_SELECTED, FILE_ADDED } from '../actions'
+import { FILE_SELECTED, FILE_ADDED, FILE_RENAMED } from '../actions'
 
 export default function (state = defaultState, action) {
   switch (action.type) {
@@ -32,13 +32,19 @@ export default function (state = defaultState, action) {
       // If file is not leaf (it's a folder in that case)
       // then append '/' to the end of the path
       if (!action.payload.file.leaf) {
-        action.payload.file.path = action.payload.file.path + '/'
+        if (!action.payload.file.path.endsWith('/')) {
+          action.payload.file.path = action.payload.file.path + '/'
+        }
+        if (!action.payload.file.children || !(action.payload.file.children instanceof Array)) {
+          action.payload.file.children = []
+        }
       }
 
-      if (!(parent.children instanceof Array)) {
-        parent.children = []
-      }
       parent.children.push(action.payload.file)
+      return Object.assign({}, state)
+
+    case FILE_RENAMED:
+      action.payload.file.module = action.payload.newName
       return Object.assign({}, state)
   }
 

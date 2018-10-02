@@ -1,3 +1,6 @@
+.icon{
+  transition: all 0.3s linear;
+}
 
 .treeContainer {
   padding-top: 1rem;
@@ -20,7 +23,30 @@
   padding-left: 8px;
 }
 
+.sidebarItem:hover .nodeOptions {
+  visibility: visible;
+  opacity: 1;
+}
+
+.nodeOptions {
+  margin-left: 0.5rem;
+  display: inline-flex;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.nodeOptions .nodeOptionsIcons {
+  margin-left: 0.5rem;
+}
+
+.nodeOptionsIcons {
+  transition: all 0.3s ease-in-out;
+}
+
+
 .circleIcon {
+  display: block;
   padding-left: 0.5rem;
   padding-top: 0.5rem;
   font-size: 0.5rem;

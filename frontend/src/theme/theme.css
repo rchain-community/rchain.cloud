@@ -40,6 +40,10 @@
   color: #586C7A !important;
 }
 
+.sidebarOptionIcon:hover {
+  color: #F25D90 !important;
+}
+
 .icon {
   color: #586C7A !important;
 }
