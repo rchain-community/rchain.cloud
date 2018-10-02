@@ -13,9 +13,9 @@
 :global .switch-toggle {
   border: 1px solid #999;
   width: 16px;
-  height: 16px;
+  height: 15px;
   left: -2px;
-  top: -1.2px;
+  top: -1px;
   border-radius: 12px;
   background-color: #586C7A;
   position: relative;

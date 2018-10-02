@@ -18,7 +18,6 @@
     width: 100%;
     flex-grow: 1;
     display: flex;
-    z-index: 1000;
 }
 
 .sidebarContainer {
@@ -29,4 +28,25 @@
 .consoleContainer {
     height: 100%;
     width: 100%;
+}
+
+.codeContainer {
+    color: white;
+}
+
+.fullscreenCodeContainer {
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    z-index: 5000;
+    transition: all 0.3s ease-in-out;
+}
+
+.fullscreenToggleSwitch {
+    position: fixed;
+    top: 0%;
+    right: 0%;
+    margin: 1rem;
 }

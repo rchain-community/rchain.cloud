@@ -58,6 +58,11 @@
   text-decoration: none;
 }
 
+.fullscreenToggleSwitch {
+  z-index: 5100;
+}
+
+
 @media (max-width: 600px) {
   .toolbarTitle {
     display: none !important;

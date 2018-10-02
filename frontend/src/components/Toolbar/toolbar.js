@@ -5,19 +5,18 @@ import Typography from '@material-ui/core/Typography'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import Switch from 'react-toggle-switch'
 import SettingsModal from '../SettingsModal/settings_modal'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './toolbar.css'
 import theme from '../../theme/theme.css'
 import { toggleSettingsModal, toggleFullscreenMode } from '../../actions'
-import './switch.css'
+import ToggleSwitch from '../ToggleSwitch/toggle_switch'
 
 class Toolbar extends Component {
   render() {
     return (
       <div>
-        <AppBar position='relative' className={theme.secondary} style={{ minHeight: '55px' }}>
+        <AppBar position='relative' className={theme.secondary} style={{ minHeight: '55px', zIndex: 'unset' }}>
           <MaterialToolbar>
             <div className={styles.toolbarContainer}>
               <div className={styles.toolbarTitleContainer}>
@@ -35,9 +34,10 @@ class Toolbar extends Component {
                   <FontAwesomeIcon icon={['fab', 'github']} className={theme.icon} />
                 </a>
 
-                <Switch
-                  on={this.props.settings.fullscreen.enabled}
+                <ToggleSwitch
+                  enabled={this.props.settings.fullscreen.enabled}
                   onClick={this.props.toggleFullscreenMode}
+                  className={styles.fullscreenToggleSwitch}
                 />
               </div>
             </div>
