@@ -10,6 +10,7 @@ var lastType = '';
 var editorFontSize = 16;
 var isDragging = false;
 var runTimeout = null;
+var rnodeVersion = 0;
 
 // Run event triggered by user
 function run () {
@@ -34,6 +35,11 @@ socket.on('connect', function () {
 socket.on('output.clean', function () { clearConsole() })
 socket.on('output.append', function (message) { appendToConsole(message) })
 socket.on('output.done', function () { loadingDone() })
+socket.on('rnode.version', function (message) {
+    rnodeVersion = message;
+})
+
+
 
 // Functions for callbacks from socket.io
 function clearConsole () {
@@ -47,6 +53,7 @@ var didEvaluatePart = false;
 function appendToConsole (data) {
   var message = data[0]
   var type = data[1]
+
 
   if (type === 'queued') {
     document.getElementById('consoleText').innerHTML = '<h4 class="uploading">uploading</h4>'
@@ -68,7 +75,7 @@ function appendToConsole (data) {
       (type === 'stdout' ? 'output' : type) + '</h4>' : '') +
     (message.length ? '<div class="type-' + type + '">' + message + '</div>' : '')
 
-  lastType = type
+    lastType = type
 }
 
 function showOptions () {
@@ -82,6 +89,8 @@ function hideOptions () {
 function loadingDone () {
   $('#runButton').text('Run').removeClass('loading')
   document.getElementById('consoleText').innerHTML += '<h4 class="completed">completed</h4>'
+  document.getElementById('consoleText').innerHTML += ('<h4>' + 'RChain Node version: ' + rnodeVersion + '</h4>')
+
 }
 
 function selectVersion (select) {
