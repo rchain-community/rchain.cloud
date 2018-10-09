@@ -4,7 +4,7 @@
 
 .treeContainer {
   padding-top: 1rem;
-  padding-left: 1rem;
+  padding-left: 0rem;
 }
 
 .sidebarItem {
@@ -51,4 +51,8 @@
   padding-top: 0.5rem;
   font-size: 0.5rem;
   opacity: 0.8;
+}
+
+:global .m-tree > .m-node > .inner {
+  display: none;
 }

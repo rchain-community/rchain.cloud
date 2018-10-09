@@ -21,7 +21,13 @@ class Toolbar extends Component {
             <div className={styles.toolbarContainer}>
               <div className={styles.toolbarTitleContainer}>
                 <img className={styles.toolbarLogo} src='./images/rchain_logo_red.png' />
-                <Typography className={styles.toolbarTitle} variant='title' color='inherit' style={{ overflow: 'unset' }} noWrap>
+                <Typography
+                  className={styles.toolbarTitle}
+                  variant='title'
+                  color='inherit'
+                  style={{ overflow: 'unset' }}
+                  noWrap
+                >
                   RChain.Cloud
                 </Typography>
               </div>

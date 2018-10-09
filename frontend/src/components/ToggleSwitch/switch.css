@@ -6,7 +6,7 @@
   border-radius: 13px;
   cursor: pointer;
   display: inline-block;
-  border: 1px solid #ad0030;
+  border: 2px solid #ad0030;
   transition: background-color .3s ease-in-out;
 }
 

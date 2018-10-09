@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const bodyParser = require('body-parser')
 const express = require('express')
+var cors = require('cors');
 const app = express()
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
@@ -11,17 +12,28 @@ const DockerManager = require('./lib/DockerManager')
 const FileReader = require('./lib/FileReader')
 
 // Middleware
-app.use(express.static(path.join(__dirname, 'public')))
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(express.static(path.join(__dirname, 'public'), {
+  setHeaders: function setHeaders(res, path, stat) {
+    // Additional headers are needed to provide CORS support
+    // for serving static files
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+  }
+}))
+app.use(bodyParser.urlencoded({ extended: true }))
+// CORS support for express API endpoints
+app.use(cors({ origin: true }))
+app.options('*', cors());
 
 // Ensure /tmp/rnode exists
 try {
   fs.mkdirSync('/tmp/rnode')
-} catch (e) {}
+} catch (e) { }
 try {
   fs.unlinkSync('/tmp/rnode/rspace/data.mdb')
   fs.unlinkSync('/tmp/rnode/rspace/lock.mdb')
-} catch (e) {}
+} catch (e) { }
 
 // Start running container
 DockerManager.startContainers('rchain/rnode')
@@ -35,11 +47,11 @@ const files = FileReader.readFiles()
 const queue = new (require('better-queue'))(function (input, cb) {
   console.log('running queue', input.data)
   DockerManager.runWithInput(input, cb)
-}, {maxTimeout: 10000})
+}, { maxTimeout: 10000 })
 
 // HTTP Routes
 app.get('/', function (req, res) {
-  const config = {autorun: false, version: 'latest'}
+  const config = { autorun: false, version: 'latest' }
   const content = indexHTML
     .replace('{{ content }}', example)
     .replace('{{ config }}', JSON.stringify(config))
@@ -49,7 +61,7 @@ app.get('/', function (req, res) {
 })
 
 app.post('/', function (req, res) {
-  const config = {autorun: true, version: 'latest'}
+  const config = { autorun: true, version: 'latest' }
   const content = indexHTML
     .replace('{{ content }}', req.body.content || req.body.body || example)
     .replace('{{ config }}', JSON.stringify(config))
@@ -59,6 +71,11 @@ app.post('/', function (req, res) {
 
 app.get('/v1/versions', function (req, res) {
   res.json(['latest'])
+})
+
+// API Endpoint for serving example files to the frontend
+app.get('/example-files', function (req, res) {
+  res.json(files)
 })
 
 // Used by load balancer to check application health

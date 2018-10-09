@@ -1,6 +1,7 @@
 export const FILE_SELECTED = 'FILE_SELECTED'
 export const FILE_ADDED = 'FILE_ADDED'
 export const FILE_RENAMED = 'FILE_RENAMED'
+export const SET_EXAMPLES = 'SET_EXAMPLES'
 
 export const SETTINGS_MODAL_TOGGLE = 'SETTINGS_MODAL_TOGGLE'
 export const FULLSCREEN_MODE_TOGGLE = 'FULLSCREEN_MODE_TOGGLE'
@@ -28,6 +29,15 @@ export function addFile(file, path) {
     payload: {
       file: file,
       path: path
+    }
+  }
+}
+
+export function setExamples(examples) {
+  return {
+    type: SET_EXAMPLES,
+    payload: {
+      examples: examples
     }
   }
 }
