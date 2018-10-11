@@ -10,6 +10,7 @@ export default {
     module: 'root',
     path: '',
     children: [
+      /*
       {
         module: 'test-mock',
         path: '/test-mock/',
@@ -93,6 +94,7 @@ export default {
           }
         ]
       },
+      */
       {
         module: 'workspace',
         path: '/workspace/',
