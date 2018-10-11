@@ -14,6 +14,7 @@ const expected_output = [
   {
     module: 'example',
     path: '/example/',
+    serverStorage: true,
     children: [
       {
         module: 'file1.txt',
@@ -36,6 +37,7 @@ const expected_output = [
       {
         module: 'test',
         path: '/example/test/',
+        serverStorage: true,
         children: [
           {
             module: 'file4.doc',
@@ -46,6 +48,7 @@ const expected_output = [
           {
             module: 'test2',
             path: '/example/test/test2/',
+            serverStorage: true,
             children: [
               {
                 module: 'file5',
@@ -66,14 +69,17 @@ const expected_output = [
       {
         module: 'test3',
         path: '/example/test3/',
+        serverStorage: true,
         children: [
           {
             module: 'test4',
             path: '/example/test3/test4/',
+            serverStorage: true,
             children: [
               {
                 module: 'test5',
                 path: '/example/test3/test4/test5/',
+                serverStorage: true,
                 children: [
                   {
                     module: 'file6.jpg',

@@ -33,6 +33,7 @@ export default function parsePaths(paths) {
         foundFolder = {
           module: file,
           path: currentPath + '/',
+          serverStorage: true,
           children: []
         }
         currentParent.push(foundFolder)
