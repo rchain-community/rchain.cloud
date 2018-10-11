@@ -46,6 +46,19 @@ class SidebarTreeItem extends Component {
     this.props.createFile(newFile, path)
   }
 
+  /*
+    *******************************************
+    ----- Further testing is required. --------
+    *******************************************
+    It is possible that problem occurs with the
+    file path after renaming file/folder. Also
+    renaming file will probably cause problems
+    with local storage.
+    Possible solution is to assign uuid to the
+    files/folders and save them to the local
+    storage via their uuid and not path or
+    filename.
+  */
   renameFile(e, file) {
     e.stopPropagation()
     // eslint-disable-next-line
@@ -205,6 +218,10 @@ SidebarTreeItem.propTypes = {
   renameFile: PropTypes.func
 }
 
+/*
+  Connecting component to REDUX states
+  and actions.
+*/
 function mapStateToProps(state) {
   return {
     files: state.files

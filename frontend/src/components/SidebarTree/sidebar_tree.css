@@ -7,52 +7,6 @@
   padding-left: 0rem;
 }
 
-.sidebarItem {
-  display: inline-flex;
-  margin-bottom: 2px;
-  font-size: 1.2rem;
-  user-select: none;
-  width: max-content;
-}
-
-.sidebarItem:hover{
-  background: rgba(0,0,0, 0.2);
-}
-
-.sidebarItemTitle {
-  padding-left: 8px;
-}
-
-.sidebarItem:hover .nodeOptions {
-  visibility: visible;
-  opacity: 1;
-}
-
-.nodeOptions {
-  margin-left: 0.5rem;
-  display: inline-flex;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-}
-
-.nodeOptions .nodeOptionsIcons {
-  margin-left: 0.5rem;
-}
-
-.nodeOptionsIcons {
-  transition: all 0.3s ease-in-out;
-}
-
-
-.circleIcon {
-  display: block;
-  padding-left: 0.5rem;
-  padding-top: 0.5rem;
-  font-size: 0.5rem;
-  opacity: 0.8;
-}
-
 :global .m-tree > .m-node > .inner {
   display: none;
 }

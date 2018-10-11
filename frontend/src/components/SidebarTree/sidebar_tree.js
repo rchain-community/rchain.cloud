@@ -11,6 +11,13 @@ import SidebarTreeItem from '../SidebarTreeItem'
 
 class SidebarTree extends Component {
   componentDidMount() {
+    /*
+      after component mounts, fetch the example
+      list from the server.
+      TODO:
+      Should this be done after every mounting?
+      Maybe caching is not a bad idea.
+    */
     window.fetch(FETCH_EXAMPLE_LIST_URL)
       .then(res => {
         return res.json()
@@ -26,7 +33,7 @@ class SidebarTree extends Component {
 
   /*
     This method is used to render individual tree items.
-    Tree item contents are defined with SidebarTreeItem
+    Tree item contents are defined within SidebarTreeItem
     component.
   */
   renderNode = node => {
@@ -53,6 +60,10 @@ SidebarTree.propTypes = {
   setExamples: PropTypes.func
 }
 
+/*
+  Connecting component to REDUX states
+  and actions.
+*/
 function mapStateToProps(state) {
   return {
     files: state.files
