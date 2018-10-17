@@ -95,11 +95,11 @@ export default function (state = defaultState, action) {
     case SET_EXAMPLES:
       let examples = action.payload.examples.find(obj => { return obj.module === 'examples' })
       examples.fetch = true
-      let currentExamples = state.data.children.find((folder) => {
+      let currentExamplesIdx = state.data.children.findIndex((folder) => {
         return folder.module === 'examples'
       })
-      if (currentExamples) {
-        currentExamples = examples
+      if (currentExamplesIdx) {
+        state.data.children[currentExamplesIdx] = examples
       } else {
         state.data.children.push(examples)
       }

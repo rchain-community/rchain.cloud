@@ -6,7 +6,8 @@ const savedLocally = loadState()
 
 const store = createStore(
   rootReducer,
-  savedLocally
+  savedLocally,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
 store.subscribe(() => {
