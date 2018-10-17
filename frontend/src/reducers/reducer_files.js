@@ -1,6 +1,6 @@
 import defaultState from './files_default_state'
 import { FILE_SELECTED, FILE_ADDED, FILE_RENAMED, SET_EXAMPLES } from '../actions'
-import { SERVER_URL } from '../constants'
+import { SERVER_URL, EXAMPLES_FOLDER_NAME } from '../constants'
 
 export default function (state = defaultState, action) {
   switch (action.type) {
@@ -93,12 +93,12 @@ export default function (state = defaultState, action) {
       ***************
     */
     case SET_EXAMPLES:
-      let examples = action.payload.examples.find(obj => { return obj.module === 'examples' })
+      let examples = action.payload.examples.find(obj => { return obj.module === EXAMPLES_FOLDER_NAME })
       examples.fetch = true
       let currentExamplesIdx = state.data.children.findIndex((folder) => {
-        return folder.module === 'examples'
+        return folder.module === EXAMPLES_FOLDER_NAME
       })
-      if (currentExamplesIdx) {
+      if (currentExamplesIdx >= 0) {
         state.data.children[currentExamplesIdx] = examples
       } else {
         state.data.children.push(examples)

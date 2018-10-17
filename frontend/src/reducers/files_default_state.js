@@ -1,9 +1,11 @@
 export default {
   active: {
+    /*
     module: 'react-ui-tree.js',
     undragable: true,
     leaf: true,
     path: '/test-mock/react-ui-tree/dist/react-ui-tree.js'
+    */
 
   },
   data: {
