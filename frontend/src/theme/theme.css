@@ -1,0 +1,61 @@
+
+.primary {
+  background-color: #2F3545 !important;
+}
+
+.primaryText {
+  color: #586C7A !important;
+}
+
+.secondary {
+  background-color: #14171F !important;
+}
+
+.sidebarTheme {
+  background-color: #222733 !important;
+}
+
+.consoleHeader {
+  background-color: #222733 !important;
+}
+
+
+.consoleContainer{
+  background-color: #282D3A !important;
+}
+
+.consoleText {
+  color: #586C7A !important;
+}
+
+.sidebarItemText{
+  color: #586C7A !important;
+}
+
+.sidebarActiveIcon {
+  color: #F25D90 !important;
+}
+
+.sidebarIcon {
+  color: #586C7A !important;
+}
+
+.sidebarOptionIcon:hover {
+  color: #F25D90 !important;
+}
+
+.icon {
+  color: #586C7A !important;
+}
+
+.icon:active {
+  color: #8395a1 !important;
+}
+
+.icon:hover {
+  color: #ad0030 !important;
+}
+
+.icon:focus {
+  outline: 0;
+}

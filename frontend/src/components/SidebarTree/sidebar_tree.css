@@ -1,0 +1,12 @@
+.icon{
+  transition: all 0.3s linear;
+}
+
+.treeContainer {
+  padding-top: 1rem;
+  padding-left: 0rem;
+}
+
+:global .m-tree > .m-node > .inner {
+  display: none;
+}

@@ -1,3 +1,52 @@
 .example {
     color: red
 }
+
+.toolbarContainer {
+    position: relative;
+}
+
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+}
+
+.contentContainer {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+}
+
+.sidebarContainer {
+    height: 100%;
+    overflow: hidden;
+}
+
+.consoleContainer {
+    height: 100%;
+    width: 100%;
+}
+
+.codeContainer {
+    color: white;
+}
+
+.fullscreenCodeContainer {
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    z-index: 5000;
+    transition: all 0.3s ease-in-out;
+}
+
+.fullscreenToggleSwitch {
+    position: fixed;
+    top: 0%;
+    right: 0%;
+    margin: 1rem;
+}

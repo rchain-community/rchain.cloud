@@ -1,0 +1,33 @@
+
+.consoleContainer{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.consoleHeader {
+  height: 50px;
+}
+.consoleHeaderTitleContainer{
+  color: white;
+  margin: 1rem;
+}
+
+.consoleHeaderIcon{
+  margin-right: 0.7rem;
+  font-size: 0.5rem;
+  padding: 3px;
+  border: 2px solid white;
+  border-radius: 2px;
+}
+
+.consoleHeaderTitle{
+  font-weight: bold;
+  position: absolute;
+}
+
+.consoleContent {
+  padding: 1rem;
+  flex-grow: 1;
+  height: 100%;
+}
