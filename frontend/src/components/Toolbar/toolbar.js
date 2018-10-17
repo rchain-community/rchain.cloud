@@ -23,7 +23,7 @@ class Toolbar extends Component {
                 <img className={styles.toolbarLogo} src='./images/rchain_logo_red.png' />
                 <Typography
                   className={styles.toolbarTitle}
-                  variant='title'
+                  variant='h6'
                   color='inherit'
                   style={{ overflow: 'unset' }}
                   noWrap
