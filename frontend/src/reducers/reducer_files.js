@@ -34,8 +34,9 @@ export default function (state = defaultState, action) {
             .then(data => {
               // Display collected data
               console.log(data)
+            }).catch((err) => {
+              console.log('Error while fetching file: ' + action.payload.path + '; ' + err)
             })
-          console.log('Fetching from server...')
         }
       }
 
@@ -49,6 +50,8 @@ export default function (state = defaultState, action) {
     case FILE_ADDED:
       /*
         Adding new file
+        TODO:
+        - Check new file path if is possibly collides with any existing files.
       */
       let parent = findObjectByPath(state.data, action.payload.path)
       if (parent === null) {
@@ -76,18 +79,30 @@ export default function (state = defaultState, action) {
       ***************
     */
     case FILE_RENAMED:
+      /*
+        Renaming file
+        TODO:
+        - Check new file name if is possibly collides with any existing files.
+      */
       action.payload.file.module = action.payload.newName
       return Object.assign({}, state)
 
     /*
       ***************
-      -FILE_RENAMED--
+      -SET_EXAMPLES--
       ***************
     */
     case SET_EXAMPLES:
       let examples = action.payload.examples.find(obj => { return obj.module === 'examples' })
       examples.fetch = true
-      state.data.children.push(examples)
+      let currentExamples = state.data.children.find((folder) => {
+        return folder.module === 'examples'
+      })
+      if (currentExamples) {
+        currentExamples = examples
+      } else {
+        state.data.children.push(examples)
+      }
       return Object.assign({}, state)
   }
 

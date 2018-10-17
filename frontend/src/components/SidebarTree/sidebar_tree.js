@@ -28,6 +28,8 @@ class SidebarTree extends Component {
         if (examples) {
           this.props.setExamples(examples)
         }
+      }).catch((err) => {
+        console.log('Error while fetching example files, ' + err)
       })
   }
 

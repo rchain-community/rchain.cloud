@@ -27,6 +27,7 @@
   width: auto;
   height: auto;
   display: inline-block;
+  top: -0.25rem;
   margin-left: 1rem;
   margin-right: 2rem;
   
@@ -39,8 +40,8 @@
   position: relative;
   font-size: 10px;
   float: right;
-  top: 15px;
-  right: 10px;
+  top: 1.45rem;
+  right: 0.8rem;
 }
 
 .toolbarLink {

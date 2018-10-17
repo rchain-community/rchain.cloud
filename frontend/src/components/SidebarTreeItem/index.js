@@ -83,7 +83,9 @@ class SidebarTreeItem extends Component {
 
     let iconClass = [styles.icon, theme.sidebarIcon].join(' ')
     let nodeActive = false
-    if (this.props.node === this.props.files.active) {
+    if (this.props.files.active.module &&
+      this.props.node.module === this.props.files.active.module &&
+      this.props.node.path === this.props.files.active.path) {
       nodeActive = true
       iconClass = [styles.icon, theme.sidebarActiveIcon].join(' ')
     }
