@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { selectFile, addFile, renameFile } from '../../actions/index'
 import styles from './style.css'
 import theme from '../../theme/theme.css'
+import { WORKSPACE_FOLDER_NAME } from '../../constants'
 
 class SidebarTreeItem extends Component {
   fileClick(node) {
@@ -196,9 +197,13 @@ class SidebarTreeItem extends Component {
             }
             {
               /*
+                WORKSPACE FOLDER CAN'T BE RENAMED
+                That's why we check for file path if it matched the path
+                of the root workspace folder.
                 Folder & File operations:
                 -> rename file/folder
               */
+              this.props.node.path !== '/' + WORKSPACE_FOLDER_NAME + '/' &&
               <div>
                 {renameFileDiv}
               </div>

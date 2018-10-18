@@ -51,11 +51,28 @@ export default function (state = defaultState, action) {
       /*
         Adding new file
         TODO:
-        - Check new file path if is possibly collides with any existing files.
+        - Display alert when new file name collides with existing file
+        --- Possible solution: MaterialUI Snackbar
       */
+
+      if (!validateFileName(action.payload.file.module)) {
+        // Invalid filename
+        console.log('%cFile renaming failed: New filename (' + action.payload.file.module + ') is invalid', 'color: red')
+        return Object.assign({}, state)
+      }
+
       let parent = findObjectByPath(state.data, action.payload.path)
       if (parent === null) {
         return Object.assign({}, state)
+      }
+
+      // Check if filename collides with any existing files
+      for (let childIdx in parent.children) {
+        let child = parent.children[childIdx]
+        if (child.module === action.payload.file.module) {
+          console.log('%cFile creation failed: File with that name already exists inside: ' + parent.path, 'color: red')
+          return Object.assign({}, state)
+        }
       }
 
       action.payload.file.path = parent.path + action.payload.file.module
@@ -82,9 +99,36 @@ export default function (state = defaultState, action) {
       /*
         Renaming file
         TODO:
-        - Check new file name if is possibly collides with any existing files.
+        - Display alert when new file name collides with existing file
+        --- Possible solution: MaterialUI Snackbar
       */
+      if (!validateFileName(action.payload.newName)) {
+        // Invalid filename
+        console.log('%cFile renaming failed: New filename (' + action.payload.newName + ') is invalid', 'color: red')
+        return Object.assign({}, state)
+      }
+      let currentFileName = action.payload.file.module
+      let parentPath = action.payload.file.path.slice(0, -currentFileName.length)
+      parent = findObjectByPath(state.data, parentPath)
+
+      // Check if filename collides with any existing files
+      for (let childIdx in parent.children) {
+        let child = parent.children[childIdx]
+        if (child.module === action.payload.newName) {
+          console.log('%cFile renaming failed: File with that name already exists inside: ' + parent.path, 'color: red')
+          return Object.assign({}, state)
+        }
+      }
+
       action.payload.file.module = action.payload.newName
+      action.payload.file.path = parentPath + action.payload.newName
+
+      // Check if file was active/selected
+      if (state.active.path === parentPath + currentFileName) {
+        // Change active file details to new name and path
+        state.active = action.payload.file
+      }
+
       return Object.assign({}, state)
 
     /*
@@ -125,4 +169,9 @@ function findObjectByPath(file, path) {
     }
   }
   return null
+}
+
+function validateFileName(filename) {
+  let validFilename = /^[a-z0-9_.@()-]+$/i.test(filename)
+  return validFilename
 }
