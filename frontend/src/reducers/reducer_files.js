@@ -13,6 +13,10 @@ export default function (state = defaultState, action) {
       /*
         If file is selected, check if file is folder or file.
         If selected file is folder, collapse/uncollapse the folder.
+
+        action.payload: {
+          file - file that is currently being selected
+        }
       */
       if (!action.payload.leaf) {
         if (action.payload.collapsed) {
@@ -53,11 +57,20 @@ export default function (state = defaultState, action) {
         TODO:
         - Display alert when new file name collides with existing file
         --- Possible solution: MaterialUI Snackbar
+
+        action.payload: {
+          file - file to be added to the structure,
+          path - path of the parent folder where file should be placed into
+        }
       */
 
       if (!validateFileName(action.payload.file.module)) {
         // Invalid filename
-        console.log('%cFile renaming failed: New filename (' + action.payload.file.module + ') is invalid', 'color: red')
+        console.log(
+          '%cFile renaming failed: New filename ' +
+          '(' + action.payload.file.module + ')' +
+          ' is invalid', 'color: red'
+        )
         return Object.assign({}, state)
       }
 
@@ -101,6 +114,11 @@ export default function (state = defaultState, action) {
         TODO:
         - Display alert when new file name collides with existing file
         --- Possible solution: MaterialUI Snackbar
+
+        action.payload: {
+          file - file object to be renamed,
+          newName - new file name
+        }
       */
       if (!validateFileName(action.payload.newName)) {
         // Invalid filename
@@ -137,6 +155,11 @@ export default function (state = defaultState, action) {
       ***************
     */
     case SET_EXAMPLES:
+      /**
+       * action.payload: {
+       *  examples - file structure of example files
+       * }
+       */
       let examples = action.payload.examples.find(obj => { return obj.module === EXAMPLES_FOLDER_NAME })
       examples.fetch = true
       let currentExamplesIdx = state.data.children.findIndex((folder) => {
