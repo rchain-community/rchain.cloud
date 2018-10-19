@@ -1,75 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+// import { bindActionCreators } from 'redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { selectFile, addFile, renameFile } from '../../actions/index'
 import styles from './style.css'
 import theme from '../../theme/theme.css'
 import { WORKSPACE_FOLDER_NAME } from '../../constants'
+import { addNewFolderPrompt, addNewFilePrompt, renameFilePrompt, fileClick } from './file_operations'
 
 class SidebarTreeItem extends Component {
-  fileClick(node) {
-    this.props.selectFile(node)
-  }
-
-  /*
-    Prompts are disallowed by eslint but for now
-    prompts are the simplest and easiest solution
-    for gathering user input.
-    That is why window.prompt lines of code are
-    ignored by eslint.
-  */
-  addNewFolder(e, path) {
-    e.stopPropagation()
-    // eslint-disable-next-line
-    let name = window.prompt('Please enter new folder name', 'new-folder')
-    if (name === null || name === '') {
-      return
-    }
-    let newFolder = {
-      module: name
-    }
-    this.props.createFile(newFolder, path)
-  }
-
-  addNewFile(e, path) {
-    e.stopPropagation()
-    // eslint-disable-next-line
-    let name = window.prompt('Please enter new file name', 'new-file')
-    if (name === null || name === '') {
-      return
-    }
-    let newFile = {
-      module: name,
-      leaf: true
-    }
-    this.props.createFile(newFile, path)
-  }
-
-  /*
-    *******************************************
-    ----- Further testing is required. --------
-    *******************************************
-    It is possible that problem occurs with the
-    file path after renaming file/folder. Also
-    renaming file will probably cause problems
-    with local storage.
-    Possible solution is to assign uuid to the
-    files/folders and save them to the local
-    storage via their uuid and not path or
-    filename.
-  */
-  renameFile(e, file) {
-    e.stopPropagation()
-    // eslint-disable-next-line
-    let newName = window.prompt('Please enter new file name', file.module)
-    if (newName === null || newName === '') {
-      return
-    }
-    this.props.renameFile(file, newName)
-  }
-
   render() {
     let fileIcon
     let nodeFolder = false
@@ -114,7 +53,8 @@ class SidebarTreeItem extends Component {
         icon='folder-plus'
         size='xs'
         onClick={(e) => {
-          this.addNewFolder(e, this.props.node.path)
+          e.stopPropagation()
+          addNewFolderPrompt(this.props.node.path)
         }}
       />
     )
@@ -128,7 +68,8 @@ class SidebarTreeItem extends Component {
         icon='file-medical'
         size='xs'
         onClick={(e) => {
-          this.addNewFile(e, this.props.node.path)
+          e.stopPropagation()
+          addNewFilePrompt(this.props.node.path)
         }}
       />
     )
@@ -142,7 +83,8 @@ class SidebarTreeItem extends Component {
         icon='file-signature'
         size='xs'
         onClick={(e) => {
-          this.renameFile(e, this.props.node)
+          e.stopPropagation()
+          renameFilePrompt(this.props.node)
         }}
       />
     )
@@ -159,7 +101,7 @@ class SidebarTreeItem extends Component {
     */
     return (
       <span
-        onClick={() => this.fileClick(this.props.node)}
+        onClick={() => fileClick(this.props.node)}
         className={styles.sidebarItem}
       >
         <FontAwesomeIcon className={iconClass} icon={fileIcon} />
@@ -219,10 +161,7 @@ class SidebarTreeItem extends Component {
 
 SidebarTreeItem.propTypes = {
   node: PropTypes.object.isRequired,
-  files: PropTypes.object,
-  selectFile: PropTypes.func,
-  createFile: PropTypes.func,
-  renameFile: PropTypes.func
+  files: PropTypes.object
 }
 
 /*
@@ -235,6 +174,7 @@ function mapStateToProps(state) {
   }
 }
 
+/*
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     selectFile: selectFile,
@@ -242,5 +182,6 @@ function mapDispatchToProps(dispatch) {
     renameFile: renameFile
   }, dispatch)
 }
+*/
 
-export default connect(mapStateToProps, mapDispatchToProps)(SidebarTreeItem)
+export default connect(mapStateToProps)(SidebarTreeItem)
