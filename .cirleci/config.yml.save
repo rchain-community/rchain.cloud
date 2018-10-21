@@ -1,13 +1,12 @@
 version: 2
 jobs:
-  backend:
-    branches:
-      only:
-	- /circleci/
+  backend_build:
     docker:
       - image: node:8.12.0-alpine       
     steps:
-      - checkout
+      - checkout circleci
+
+      - run: npm install
 
       # Download and cache dependencies
       - restore_cache:
@@ -16,24 +15,12 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: yarn install
+      - run: npm start
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-  frontend:
-    docker:
-      - image: node:8.12.0-alpine
-    steps:
-      - checkout
-      - run: npm install
-      - run: npm run build
-      - run: npm start
-
 workflows:
   version: 2
-  build_and_run:
-    jobs:
-      - backend
-      - frontend
+  build
