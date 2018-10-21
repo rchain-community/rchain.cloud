@@ -29,7 +29,7 @@ jobs:
           name: Start container and verify it's working
           command: |
             set -x
-            docker-compose -f docker-compose-dev.yml up -d
+            docker-compose -f ../docker-compose-dev.yml up -d
             
       - deploy:
           name: Build and push Docker image
