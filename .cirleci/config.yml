@@ -1,6 +1,9 @@
 version: 2
-jobs:
+jobs:  
   build:
+     branches:
+       only:
+         - /circleci/
     docker:
       - image: node:8.12.0-alpine
 
