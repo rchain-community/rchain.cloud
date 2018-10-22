@@ -6,6 +6,8 @@ export const SET_EXAMPLES = 'SET_EXAMPLES'
 export const SETTINGS_MODAL_TOGGLE = 'SETTINGS_MODAL_TOGGLE'
 export const FULLSCREEN_MODE_TOGGLE = 'FULLSCREEN_MODE_TOGGLE'
 
+export const EDITOR_VALUE_CHANGED = 'EDITOR_VALUE_CHANGED'
+
 export function selectFile(file) {
   return {
     type: FILE_SELECTED,
@@ -51,5 +53,14 @@ export function toggleSettingsModal() {
 export function toggleFullscreenMode() {
   return {
     type: FULLSCREEN_MODE_TOGGLE
+  }
+}
+
+export function editorChangeValue(newValue) {
+  return {
+    type: EDITOR_VALUE_CHANGED,
+    payload: {
+      value: newValue
+    }
   }
 }

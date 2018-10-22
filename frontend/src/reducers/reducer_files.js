@@ -1,6 +1,7 @@
 import defaultState from './files_default_state'
-import { FILE_SELECTED, FILE_ADDED, FILE_RENAMED, SET_EXAMPLES } from '../actions'
-import { SERVER_URL, EXAMPLES_FOLDER_NAME } from '../constants'
+import { FILE_SELECTED, FILE_ADDED, FILE_RENAMED, SET_EXAMPLES, EDITOR_VALUE_CHANGED } from '../actions'
+import { SERVER_URL, EXAMPLES_FOLDER_NAME, LOCALSTORAGE_FILE_CONTENT_KEY } from '../constants'
+import { loadFile, saveFile } from '../store/localstorage'
 
 export default function (state = defaultState, action) {
   switch (action.type) {
@@ -26,21 +27,36 @@ export default function (state = defaultState, action) {
         }
         return Object.assign({}, state)
       } else {
-        // TODO First try to fetch from localstorage...
-        console.log('%cTODO Try to fetch from localstorage...', 'color: orange')
-        // Fetch file from server
-        // Works only for files that have attribute serverStorage
-        if (action.payload.serverStorage) {
+        /**
+         * TODO Business should not be done inside reducers,
+         * redux-saga or redux-logic should be used instead.
+         */
+        const localstorageFile = loadFile(action.payload)
+        if (localstorageFile) {
+          action.asyncDispatch({ type: EDITOR_VALUE_CHANGED, payload: { value: localstorageFile.content } })
+        } else if (action.payload.serverStorage) {
+          // Fetch file from server
+          // Works only for files that have attribute serverStorage
           window.fetch(SERVER_URL + action.payload.path)
             .then(res => {
               return res.text()
             })
             .then(data => {
-              // Display collected data
-              console.log(data)
+              /**
+               * TODO:
+               * IMPORTANT!!!
+               * Actions should not be dispatched from the reducer.
+               * This implementation uses custom middleware to create async actions.
+               * This should be changed by using redux-saga or redux-logic.
+               * This was done for the sake of limited time and simplicity.
+               */
+              action.asyncDispatch({ type: EDITOR_VALUE_CHANGED, payload: { value: data } })
             }).catch((err) => {
               console.log('Error while fetching file: ' + action.payload.path + '; ' + err)
             })
+        } else {
+          // Selected file is empty file from user's workspace, show empty editor
+          action.asyncDispatch({ type: EDITOR_VALUE_CHANGED, payload: { value: '' } })
         }
       }
 
@@ -145,6 +161,17 @@ export default function (state = defaultState, action) {
       if (state.active.path === parentPath + currentFileName) {
         // Change active file details to new name and path
         state.active = action.payload.file
+      }
+
+      // Check if there is localstorage data under old file's name
+      try {
+        const localstorageOld = loadFile({ path: parentPath + currentFileName })
+        if (localstorageOld) {
+          window.localStorage.removeItem(LOCALSTORAGE_FILE_CONTENT_KEY + parentPath + currentFileName)
+          saveFile(action.payload.file, localstorageOld.content)
+        }
+      } catch (err) {
+        console.log('Error while renaming local storage: ' + err)
       }
 
       return Object.assign({}, state)
