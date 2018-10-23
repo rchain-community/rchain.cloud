@@ -64,7 +64,8 @@ class CodeEditor extends React.PureComponent {
             tabSize: 2,
             mode: 'rholang',
             viewportMargin: Infinity,
-            theme: 'solarized'
+            theme: 'solarized',
+            scrollbarStyle: 'null'
           }}
           onBeforeChange={(editor, data, value) => {
             this.props.valueChanged(value)
