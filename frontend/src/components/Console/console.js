@@ -15,10 +15,29 @@ class Console extends Component {
   }
 
   compileClick() {
-    console.log('Compile: \n ' + this.props.editorState.editor.value)
+    console.log('Compile: \n ' + this.props.editorState.value)
   }
 
   render() {
+    let output
+    if (this.props.editorState.console.compiling) {
+      console.log('Compiling')
+      output = (
+        <hr className={styles.hrCompile} />
+      )
+    } else {
+      output = (
+        <div>
+          <h4>EVALUATING</h4>
+          <span>{this.props.editorState.console.content.evaluating}</span>
+          <hr />
+          <h4>OUTPUT</h4>
+          <span>{this.props.editorState.console.content.output}</span>
+          <hr />
+        </div>
+      )
+    }
+
     return (
       <div className={[styles.consoleContainer, theme.consoleContainer].join(' ')}>
         <div className={[styles.consoleHeader, theme.consoleHeader].join(' ')}>
@@ -30,10 +49,8 @@ class Console extends Component {
           </div>
         </div>
         <div className={[styles.consoleContent, theme.consoleText].join(' ')}>
-          <h4>OUTPUT</h4>
-          <span>Hello, World!</span>
-          <hr />
-          <h4>COMPLETED</h4>
+          {output}
+          {this.props.editorState.console.content.success && <h4>COMPLETED</h4>}
         </div>
       </div>
     )

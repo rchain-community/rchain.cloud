@@ -1,4 +1,8 @@
 
+:global .Pane .horizontal .Pane2{
+  overflow: hidden;
+}
+
 .consoleContainer{
   display: flex;
   flex-direction: column;
@@ -36,6 +40,7 @@
 
 .consoleContent {
   font-family: Ubuntu Mono;
+  overflow-y: auto;
   padding: 1rem;
   flex-grow: 1;
   height: 100%;
@@ -48,6 +53,53 @@
   border: 0;
 }
 
+hr:first-child {
+  margin-top: 0;
+}
+
 .consoleContent h4 {
   margin-top: 0.5rem;
+}
+
+@-moz-keyframes slide {
+  0% {width: 0%;}
+  50% {width: 100%;} 
+  100% { width: 0%; } 
+}
+@-webkit-keyframes slide {
+  0% {width: 0%;}
+  50% {width: 100%;} 
+  100% { width: 0%; } 
+}
+@keyframes slide {
+  0% {width: 0%; left: 0%;}
+  25% {width: 100%; left:0%;}
+  50% {left: 100%; width: 100%;}
+  75% {left: 0%; width: 100%;}
+  100% {left: 0%; width: 0%;} 
+}
+
+.hrCompile{
+  position: absolute;
+  margin: 0;
+  -webkit-animation:slide 5s linear infinite;
+  -moz-animation:slide 5s linear infinite;
+  animation:slide 5s ease-in-out infinite;
+}
+
+.consoleContent::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #586C7A;
+}
+
+.consoleContent::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #586C7A;
+}
+
+.consoleContent::-webkit-scrollbar-thumb
+{
+	background-color: #222733;
 }

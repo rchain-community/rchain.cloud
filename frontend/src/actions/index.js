@@ -8,6 +8,7 @@ export const FULLSCREEN_MODE_TOGGLE = 'FULLSCREEN_MODE_TOGGLE'
 
 export const EDITOR_VALUE_CHANGED = 'EDITOR_VALUE_CHANGED'
 export const EDITOR_COMPILE_CODE = 'EDITOR_COMPILE_CODE'
+export const EDITOR_COMPILE_RESULTS = 'EDITOR_COMPILE_RESULTS'
 
 export function selectFile(file) {
   return {

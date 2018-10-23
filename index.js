@@ -69,6 +69,18 @@ app.post('/', function (req, res) {
   res.send(content)
 })
 
+app.post("/eval", function (req, res) {
+  setTimeout(() => {
+    const mockReturn = {
+      evaluating: 'new x0, x1, x2 in { new x3 in { x3!("Hello, world!") | for( x4 <= x3 ) { x1!(*x4) } } }',
+      output: '@{"Hello, world!"}\n@{"Hello, world!"}',
+      storage_contents: '@{Unforgeable(0x43d68cb247bd8c32e5d30c07405b9e29a192c6f30f1223821a62da6fafaab6b3)}!(Unforgeable(0x582d234b6ae5d92ff66fb423068f70ce723124f09bb7dffe19d210989a858458)) | @{Unforgeable(0xd7526d3f667d12b641293f9ffeabd5bad17e1cd69143b11b9af43f1cd02e4fa3)}!(Unforgeable(0xcf90d2435e92047cd6548697614726f0b9bdb22cffea99f3429eb150d9a79729)) | @{Unforgeable(0x16912479aefc02968c8fa7c532fdbd896c4afb0dc7c294a9ef166f46c0c31076)}!("2 medium pies")'
+    }
+    res.setHeader('Content-Type', 'application/json')
+    res.send(JSON.stringify(mockReturn))
+  }, 2000)
+})
+
 app.get('/v1/versions', function (req, res) {
   res.json(['latest'])
 })

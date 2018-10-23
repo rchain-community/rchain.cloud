@@ -56,7 +56,7 @@ class CodeEditor extends React.PureComponent {
     return (
       <div className='code-editor'>
         <CodeMirror
-          value={this.props.state.editor.value}
+          value={this.props.state.value}
           defineMode={{ name: 'rholang', fn: rholang }}
           options={{
             lineNumbers: true,
