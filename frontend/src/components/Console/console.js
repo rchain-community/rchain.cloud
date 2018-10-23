@@ -21,7 +21,6 @@ class Console extends Component {
   render() {
     let output
     if (this.props.editorState.console.compiling) {
-      console.log('Compiling')
       output = (
         <hr className={styles.hrCompile} />
       )

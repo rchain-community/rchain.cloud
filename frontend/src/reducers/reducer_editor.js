@@ -27,7 +27,6 @@ export default function (state = defaultState, action) {
       }).then(res => {
         return res.json()
       }).then(data => {
-        console.log(data)
         action.asyncDispatch({ type: EDITOR_COMPILE_RESULTS, payload: { output: data.output, evaluating: data.evaluating } })
       }).catch((err) => {
         console.log('Error while requesting code eval: ' + err)
