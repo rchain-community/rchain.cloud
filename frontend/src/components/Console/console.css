@@ -27,6 +27,13 @@
   user-select: none;
 }
 
+.consoleHeaderRun {
+  float: right;
+  margin-right: 3rem;
+  top: -0.5rem;
+  color:#ad0030 !important;
+}
+
 .consoleContent {
   font-family: Ubuntu Mono;
   padding: 1rem;

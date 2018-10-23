@@ -37,6 +37,8 @@ export default function (state = defaultState, action) {
         } else if (action.payload.serverStorage) {
           // Fetch file from server
           // Works only for files that have attribute serverStorage
+          // HTTP Request should not be dispatched inside redux reducer!!
+          // -> This should be rewritten with redux-saga or redux-logic
           window.fetch(SERVER_URL + action.payload.path)
             .then(res => {
               return res.text()

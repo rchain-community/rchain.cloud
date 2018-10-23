@@ -7,6 +7,7 @@ export const SETTINGS_MODAL_TOGGLE = 'SETTINGS_MODAL_TOGGLE'
 export const FULLSCREEN_MODE_TOGGLE = 'FULLSCREEN_MODE_TOGGLE'
 
 export const EDITOR_VALUE_CHANGED = 'EDITOR_VALUE_CHANGED'
+export const EDITOR_COMPILE_CODE = 'EDITOR_COMPILE_CODE'
 
 export function selectFile(file) {
   return {
@@ -62,5 +63,11 @@ export function editorChangeValue(newValue) {
     payload: {
       value: newValue
     }
+  }
+}
+
+export function editorCompileCode() {
+  return {
+    type: EDITOR_COMPILE_CODE
   }
 }
