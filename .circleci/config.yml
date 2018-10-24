@@ -24,13 +24,13 @@ workflows:
   version: 2
   build:
     jobs:
-      - backend
+      - backend:
           filters:
              branches:
                only:
                 - circleci
                 - react 
-      - frontend
+      - frontend:
           filters:
             branches:
               only:
