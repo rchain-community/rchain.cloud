@@ -88,10 +88,16 @@ app.post("/server/eval", function (request, response) {
     .then((data) => {
       returnObj = {}
       console.log(data)
-      let evalSplit = data.split('Evaluating:')[1]
-      returnObj.evaluating = evalSplit.split('\n}')[0] + '\n}'
-      returnObj.output = evalSplit.split('\n}')[1].split('Result for')[0].split('\u0001\u0000')[0].trim()
-      returnObj.storageContents = data.split('Storage Contents:')[1].split('\u0001\u0000')[0].trim()
+      if (data.toLowerCase().indexOf('error') >= 0) {
+        // Errors in the code
+        returnObj.evaluating = 'Error'
+        returnObj.output = 'Error while evaluating...'
+      } else {
+        let evalSplit = data.split('Evaluating:')[1]
+        returnObj.evaluating = evalSplit.split('\n}')[0] + '\n}'
+        returnObj.output = evalSplit.split('\n}')[1].split('Result for')[0].split('\u0001\u0000')[0].trim()
+        returnObj.storageContents = data.split('Storage Contents:')[1].split('\u0001\u0000')[0].trim()
+      }
       console.log(returnObj)
       response.setHeader('Content-Type', 'application/json')
       response.send(JSON.stringify(returnObj))
