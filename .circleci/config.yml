@@ -25,11 +25,11 @@ workflows:
   build:
     jobs:
       - backend
-	  filters:
-	    branches:
-	      only:
-		- circleci
-		- react 
+          filters:
+             branches:
+               only:
+                - circleci
+                - react 
       - frontend
           filters:
             branches:
