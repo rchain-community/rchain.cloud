@@ -23,7 +23,10 @@ export default function (state = defaultState, action) {
     case EDITOR_COMPILE_CODE:
       window.fetch(EVALUATE_CODE_URL, {
         method: 'POST',
-        body: state.value
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8'
+        },
+        body: JSON.stringify({ code: state.value })
       }).then(res => {
         return res.json()
       }).then(data => {

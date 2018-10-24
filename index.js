@@ -22,6 +22,7 @@ app.use(express.static(path.join(__dirname, 'public'), {
   }
 }))
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 // CORS support for express API endpoints
 app.use(cors({ origin: true }))
 app.options('*', cors());
@@ -79,6 +80,22 @@ app.post("/eval", function (req, res) {
     res.setHeader('Content-Type', 'application/json')
     res.send(JSON.stringify(mockReturn))
   }, 2000)
+})
+
+app.post("/server/eval", function (request, response) {
+  console.log("Request data: " + request.body.code)
+  DockerManager.runWithInputWithoutSocket(request.body.code, response)
+    .then((data) => {
+      returnObj = {}
+      console.log(data)
+      let evalSplit = data.split('Evaluating:')[1]
+      returnObj.evaluating = evalSplit.split('\n}')[0] + '\n}'
+      returnObj.output = evalSplit.split('\n}')[1].split('Result for')[0].split('\u0001\u0000')[0].trim()
+      returnObj.storageContents = data.split('Storage Contents:')[1].split('\u0001\u0000')[0].trim()
+      console.log(returnObj)
+      response.setHeader('Content-Type', 'application/json')
+      response.send(JSON.stringify(returnObj))
+    })
 })
 
 app.get('/v1/versions', function (req, res) {
