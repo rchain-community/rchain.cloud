@@ -18,7 +18,8 @@ import '!style-loader!css-loader!react-redux-toastr/lib/css/react-redux-toastr.m
 
 class Editor extends Component {
   render() {
-    let windowHeight = window.innerHeight
+    const windowHeight = window.innerHeight
+    const windowWidth = window.innerWidth
     let codeContainerClasses = [styles.codeContainer, theme.primary].join(' ')
 
     if (this.props.fullscreen.enabled) {
@@ -38,9 +39,9 @@ class Editor extends Component {
           <SplitPane
             split='vertical'
             style={{ position: 'relative', height: 'unset' }}
-            minSize={35}
-            maxSize={500}
-            defaultSize={230}
+            minSize={30}
+            maxSize={windowWidth * 0.7}
+            defaultSize={windowWidth * 0.15}
           >
             <div className={[styles.sidebarContainer, theme.sidebarTheme].join(' ')}>
               {/* ********************************** */}
@@ -49,7 +50,7 @@ class Editor extends Component {
               <Sidebar />
             </div>
 
-            <SplitPane split='horizontal' minSize={400} maxSize={windowHeight - 110} defaultSize={windowHeight * 0.65}>
+            <SplitPane split='horizontal' minSize={windowHeight * 0.1} maxSize={windowHeight - 110} defaultSize={windowHeight * 0.65}>
 
               <div className={codeContainerClasses}>
                 {/* ************************************* */}

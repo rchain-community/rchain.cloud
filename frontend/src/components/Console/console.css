@@ -33,9 +33,10 @@
 
 .consoleHeaderRun {
   float: right;
-  margin-right: 3rem;
+  top: -0.7rem !important;
   top: -0.5rem;
   color:#ad0030 !important;
+  border: 2px solid #ad0030 !important;
 }
 
 .consoleContent {
