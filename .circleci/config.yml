@@ -2,42 +2,19 @@ version: 2
 jobs:
   backend:
     docker:
-      - image: node:8.12.0-alpine
+      - image: circleci/node
       
     working_directory: ~/rchain.cloud
 
     steps:
       - checkout
-      - npm install
-      - npm start
-  frontend:
-    docker:
-      - image: node:8.12.0-alpine
-
-    working_directory: ~/rchain.cloud
-
-    steps:
-      - checkout
-      - yarn install
-      - yarn start
-workflows:
-  version: 2
-  build:
-    jobs:
-      - backend:
-          filters:
-             branches:
-               only:
-                - circleci
-                - react 
-      - frontend:
-          filters:
-            branches:
-              only:
-                - circleci
-                - react
-
-      
-
-
-
+      - setup_remote_docker
+      - run: 
+          name: Install dependencies
+          command: npm install
+      - deploy:
+          name: Publish to docker hub
+          command: |
+            docker login -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
+            docker tag rchaincloudbackend $DOCKER_HUB_USER_ID/rchaincloudbackend:latest
+            docker push $DOCKER_HUB_USER_ID/rchaincloudbackend:latest
