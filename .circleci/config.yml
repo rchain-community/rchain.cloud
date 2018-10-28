@@ -19,8 +19,6 @@ jobs:
     machine:
         enabled: true
     working_directory: ~/rchain.cloud
-    environment:
-      HEROKU_APP: ""
     steps:
       - checkout
       - run:
