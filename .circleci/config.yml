@@ -1,7 +1,6 @@
 version: 2
 jobs:
   build:
-    context: rchaincloud
     docker:
       - image: circleci/node 
     working_directory: ~/rchain.cloud
@@ -16,3 +15,10 @@ jobs:
           docker build -f Dockerfile.frontend . -t rchaincommunity/rchaincloudfrontend:latest
           docker push rchaincommunity/rchaincloudbackend:latest
           docker push rchaincommunity/rchaincloudfrontend:latest          
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build:
+          context: rchaincloud
+          
