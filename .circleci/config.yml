@@ -32,9 +32,10 @@ workflows:
       - build:
           context: rchaincloud
       - deploy_to_dev:
+          context: rchaincloud
           requires:
             - build
           filters:
             branches:
-              only: react    
+              only: circleci   
           
