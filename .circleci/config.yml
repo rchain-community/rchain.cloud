@@ -2,19 +2,21 @@ version: 2
 jobs:
   backend:
     docker:
-      - image: circleci/node
-      
+      - image: circleci/node 
     working_directory: ~/rchain.cloud
-
+    environment:
+      DOCKER_USER: ijsfd
+      DOCKER_PASS: mandrilo
     steps:
       - checkout
       - setup_remote_docker
       - run: 
           name: Install dependencies
           command: npm install
-      - deploy:
-          name: Publish to docker hub
-          command: |
-            docker login -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
-            docker tag rchaincloudbackend $DOCKER_HUB_USER_ID/rchaincloudbackend:latest
-            docker push $DOCKER_HUB_USER_ID/rchaincloudbackend:latest
+      # Build and publish to Docker Hub
+      - run: |
+          echo $DOCKER_USER
+          echo $DOCKER_PASS
+          docker login -u $DOCKER_USER -p $DOCKER_PASS
+          docker build -t rchaincommunity/rchaincloudbackend:latest .
+          docker push rchaincommunity/rchaincloudbackend:latest
