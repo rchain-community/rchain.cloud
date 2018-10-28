@@ -15,10 +15,28 @@ jobs:
           docker build -f Dockerfile.frontend . -t rchaincommunity/rchaincloudfrontend:latest
           docker push rchaincommunity/rchaincloudbackend:latest
           docker push rchaincommunity/rchaincloudfrontend:latest          
+  deploy_to_dev:
+    machine:
+        enabled: true
+    working_directory: ~/rchain.cloud
+    environment:
+      HEROKU_APP: ""
+    steps:
+      - checkout
+      - run:
+          name: Deploy react branch to Heroku staging server
+          command: | 
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git react
 workflows:
   version: 2
   build_and_deploy:
     jobs:
       - build:
           context: rchaincloud
+      - deploy_to_dev:
+          requires:
+            - build
+          filters:
+            branches:
+              only: react    
           
