@@ -1,0 +1,34 @@
+version: "3.5"
+services:
+  rchain-frontend:
+    image: rchaincommunity/rchaincloudfrontend
+    container_name: rchain-frontend
+    ports:
+      - "8080:3000"
+    volumes:
+      - rchain-cloud-data:/var/lib/rchain-frontend/data
+    depends_on:
+      - rchain-backend
+    networks:
+      - rchain-local
+  rchain-backend:
+    image: rchaincommunity/rchaincloudbackend
+    container_name: rchain-backend    
+    ports:
+      - "80:80"
+    volumes:
+      - rchain-cloud-data:/var/lib/rchain-backend/data
+    depends_on:
+      - rchain-node
+    networks:
+      - rchain-local
+  rchain-node:
+    container_name: rchain-node
+    image: rchain/rnode:latest
+    networks:
+      - rchain-local
+networks:
+  rchain-local:
+    name: rchain-local
+volumes:
+  rchain-cloud-data:

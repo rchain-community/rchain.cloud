@@ -7,13 +7,11 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: 
-          name: Install dependencies
-          command: npm install
+
       # Build and publish to Docker Hub
       - run: |
-          echo $DOCKER_USER
-          echo $DOCKER_PASS
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker build -f Dockerfile.backend . -t rchaincommunity/rchaincloudbackend:latest
+          docker build -f Dockerfile.frontend . -t rchaincommunity/rchaincloudfrontend:latest
           docker push rchaincommunity/rchaincloudbackend:latest
+          docker push rchaincommunity/rchaincloudfrontend:latest          
