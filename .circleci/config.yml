@@ -4,9 +4,6 @@ jobs:
     docker:
       - image: circleci/node 
     working_directory: ~/rchain.cloud
-    environment:
-      DOCKER_USER: ijsfd
-      DOCKER_PASS: mandrilo
     steps:
       - checkout
       - setup_remote_docker
