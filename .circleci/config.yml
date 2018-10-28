@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  backend:
+  build:
     docker:
       - image: circleci/node 
     working_directory: ~/rchain.cloud
