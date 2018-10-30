@@ -44,7 +44,7 @@ class Console extends Component {
             <FontAwesomeIcon className={styles.consoleHeaderIcon} icon='terminal' size='xs' />
             <span className={styles.consoleHeaderTitle}>Output</span>
 
-            <Button className={styles.consoleHeaderRun} onClick={this.props.compileCode}>Compile</Button>
+            <Button className={styles.consoleHeaderRun} disabled={this.props.editorState.console.compiling} onClick={this.props.compileCode}>Compile</Button>
           </div>
         </div>
         <div className={[styles.consoleContent, theme.consoleText].join(' ')}>

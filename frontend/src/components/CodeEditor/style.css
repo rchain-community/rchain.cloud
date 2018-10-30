@@ -3,6 +3,14 @@
   height: 100%;
 }
 
+.cursor-data{
+  position: absolute;
+  bottom: 1%;
+  right: 3%;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
 .react-codemirror2 {
   height: 100%;
 }

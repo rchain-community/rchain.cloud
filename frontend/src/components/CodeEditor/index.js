@@ -8,6 +8,7 @@ import { saveFile } from '../../store/localstorage'
 // eslint-disable-next-line
 import '!style-loader!css-loader!./style.css'
 import { editorChangeValue } from '../../actions'
+import 'codemirror/addon/edit/closebrackets.js'
 
 /* eslint-disable */
 import '!style-loader!css-loader!codemirror/lib/codemirror.css'
@@ -35,6 +36,7 @@ class CodeEditor extends React.PureComponent {
     const regex = /^\s?\d+\s/gm
     let hasLineNumbers = false
     let value
+    let cursor
     if (props.children) {
       value = props.children
       hasLineNumbers = value.match(regex)
@@ -46,12 +48,22 @@ class CodeEditor extends React.PureComponent {
     this.state = {
       originalValue: value,
       hasLineNumbers,
-      value
+      value,
+      cursor
     }
+  }
+
+  cursorChanged(newState) {
+    this.setState({ cursor: newState })
   }
 
   render() {
     const { hasLineNumbers, originalValue } = this.state
+
+    let cursorData
+    if (this.state.cursor) {
+      cursorData = 'Ln: ' + (this.state.cursor.line + 1) + ' Col: ' + (this.state.cursor.ch + 1)
+    }
 
     return (
       <div className='code-editor'>
@@ -61,6 +73,7 @@ class CodeEditor extends React.PureComponent {
           options={{
             lineNumbers: true,
             lineWrapping: true,
+            autoCloseBrackets: true,
             tabSize: 2,
             mode: 'rholang',
             viewportMargin: Infinity,
@@ -73,7 +86,14 @@ class CodeEditor extends React.PureComponent {
           onChange={(editor, data, value) => {
             saveFile(this.props.activeFile, value)
           }}
+          onCursorActivity={(editor, data, value) => {
+            this.cursorChanged(editor.getDoc().getCursor())
+          }}
         />
+
+        <div className='cursor-data'>
+          {cursorData}
+        </div>
       </div>
     )
   }
