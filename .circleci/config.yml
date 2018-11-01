@@ -37,5 +37,5 @@ workflows:
             - build
           filters:
             branches:
-              only: circleci   
+              only: react   
           
