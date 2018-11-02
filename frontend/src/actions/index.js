@@ -10,6 +10,11 @@ export const EDITOR_VALUE_CHANGED = 'EDITOR_VALUE_CHANGED'
 export const EDITOR_COMPILE_CODE = 'EDITOR_COMPILE_CODE'
 export const EDITOR_COMPILE_RESULTS = 'EDITOR_COMPILE_RESULTS'
 
+export const FILE_INVALID_NAME = 'FILE_INVALID_NAME'
+export const FILE_ALREADY_EXISTS = 'FILE_ALREADY_EXISTS'
+
+export const FILE_FETCHING_ERROR = 'FILE_FETCHING_ERROR'
+
 export function selectFile(file) {
   return {
     type: FILE_SELECTED,
@@ -70,5 +75,32 @@ export function editorChangeValue(newValue) {
 export function editorCompileCode() {
   return {
     type: EDITOR_COMPILE_CODE
+  }
+}
+
+export function fileNameInvalid(invalidFileName) {
+  return {
+    type: FILE_INVALID_NAME,
+    payload: {
+      value: invalidFileName
+    }
+  }
+}
+
+export function fileAlreadyExists(existingFile) {
+  return {
+    type: FILE_ALREADY_EXISTS,
+    payload: {
+      value: existingFile
+    }
+  }
+}
+
+export function fileFetchError(fileName) {
+  return {
+    type: FILE_FETCHING_ERROR,
+    payload: {
+      value: fileName
+    }
   }
 }

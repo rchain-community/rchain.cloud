@@ -14,8 +14,14 @@ For an example there is a sub-state called `files` that stores the state of the 
     * `enabled` [`boolean`] - property defines Fullscreen Presentation Mode state.
   * `modal` [`object`] - property stores the state of the settings modal.
     * `open` [`boolean`] - property defines the state of the settings modal.
-  * `editor` [`object`] - property stores the settings of the Code Editor (**NOT IMPLEMENTED YET**).
-    * `font-size` [`number`] - property stores the font size of the editor (**NOT IMPLEMENTED YET**).
+* `editor` [`object`] - property stores the settings of the Code Editor.
+  * `console` [`object`] - property stores the state of the output window.
+    * `evaluating` [`string`] - property stores the contents of the `evaluating` component of the output window.
+    * `output` [`string`] - property stores the contents of the `output` component of the output window.
+    * `storageContents` [`string`] - property stores the `storage contents` component of the output window.
+    * `success` [`boolean`] - property defines the evaluation result (true or false).
+  * `value` [`string`] - property stores the contents of the Code Editor component.
+* `toastr` [`object`] - property controlled by the [`react-redux-toastr`](https://github.com/diegoddox/react-redux-toastr) module.
 
 ``` javascript
 {
@@ -39,6 +45,18 @@ For an example there is a sub-state called `files` that stores the state of the 
     modal: {
       open: false
     }
+  },
+  editor: {
+    console: {
+      compiling: false,
+      content: {
+        evaluating: '',
+        output: '',
+        storageContents: '',
+        success: true
+      }
+    },
+    value: 'Hello World'
   }
 }
 ```

@@ -73,10 +73,12 @@ class Editor extends Component {
         </div>
 
         <ReduxToastr
-          timeOut={2000}
+          // className={styles.toastrContainer}
+          timeOut={4000}
+          removeOnHover={false}
           newestOnTop
           preventDuplicates
-          position='top-left'
+          position='bottom-center'
           transitionIn='fadeIn'
           transitionOut='fadeOut'
           progressBar

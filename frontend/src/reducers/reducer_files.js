@@ -1,5 +1,5 @@
 import defaultState from './files_default_state'
-import { FILE_SELECTED, FILE_ADDED, FILE_RENAMED, SET_EXAMPLES, EDITOR_VALUE_CHANGED } from '../actions'
+import { FILE_SELECTED, FILE_ADDED, FILE_RENAMED, SET_EXAMPLES, EDITOR_VALUE_CHANGED, fileAlreadyExists, fileNameInvalid, fileFetchError } from '../actions'
 import { SERVER_URL, EXAMPLES_FOLDER_NAME, LOCALSTORAGE_FILE_CONTENT_KEY } from '../constants'
 import { loadFile, saveFile } from '../store/localstorage'
 
@@ -55,6 +55,7 @@ export default function (state = defaultState, action) {
               action.asyncDispatch({ type: EDITOR_VALUE_CHANGED, payload: { value: data } })
             }).catch((err) => {
               console.log('Error while fetching file: ' + action.payload.path + '; ' + err)
+              action.asyncDispatch(fileFetchError(action.payload.path))
             })
         } else {
           // Selected file is empty file from user's workspace, show empty editor
@@ -72,16 +73,13 @@ export default function (state = defaultState, action) {
     case FILE_ADDED:
       /*
         Adding new file
-        TODO:
-        - Display alert when new file name collides with existing file
-        --- Possible solution: MaterialUI Snackbar
 
         action.payload: {
           file - file to be added to the structure,
           path - path of the parent folder where file should be placed into
         }
       */
-
+      action.payload.file.module = preprocessFileName(action.payload.file.module)
       if (!validateFileName(action.payload.file.module)) {
         // Invalid filename
         console.log(
@@ -89,6 +87,7 @@ export default function (state = defaultState, action) {
           '(' + action.payload.file.module + ')' +
           ' is invalid', 'color: red'
         )
+        action.asyncDispatch(fileNameInvalid(action.payload.file.module))
         return Object.assign({}, state)
       }
 
@@ -102,6 +101,7 @@ export default function (state = defaultState, action) {
         let child = parent.children[childIdx]
         if (child.module === action.payload.file.module) {
           console.log('%cFile creation failed: File with that name already exists inside: ' + parent.path, 'color: red')
+          action.asyncDispatch(fileAlreadyExists(child))
           return Object.assign({}, state)
         }
       }
@@ -129,18 +129,17 @@ export default function (state = defaultState, action) {
     case FILE_RENAMED:
       /*
         Renaming file
-        TODO:
-        - Display alert when new file name collides with existing file
-        --- Possible solution: MaterialUI Snackbar
 
         action.payload: {
           file - file object to be renamed,
           newName - new file name
         }
       */
-      if (!validateFileName(action.payload.newName)) {
+      let newFileName = preprocessFileName(action.payload.newName)
+      if (!validateFileName(newFileName)) {
         // Invalid filename
-        console.log('%cFile renaming failed: New filename (' + action.payload.newName + ') is invalid', 'color: red')
+        console.log('%cFile renaming failed: New filename (' + newFileName + ') is invalid', 'color: red')
+        action.asyncDispatch(fileNameInvalid(newFileName))
         return Object.assign({}, state)
       }
       let currentFileName = action.payload.file.module
@@ -150,14 +149,15 @@ export default function (state = defaultState, action) {
       // Check if filename collides with any existing files
       for (let childIdx in parent.children) {
         let child = parent.children[childIdx]
-        if (child.module === action.payload.newName) {
+        if (child.module === newFileName) {
           console.log('%cFile renaming failed: File with that name already exists inside: ' + parent.path, 'color: red')
+          action.asyncDispatch(fileAlreadyExists(child))
           return Object.assign({}, state)
         }
       }
 
-      action.payload.file.module = action.payload.newName
-      action.payload.file.path = parentPath + action.payload.newName
+      action.payload.file.module = newFileName
+      action.payload.file.path = parentPath + newFileName
 
       // Check if file was active/selected
       if (state.active.path === parentPath + currentFileName) {
@@ -221,6 +221,12 @@ function findObjectByPath(file, path) {
     }
   }
   return null
+}
+
+function preprocessFileName(input) {
+  let fileName = input.trim()
+  // Other processing logic
+  return fileName
 }
 
 function validateFileName(filename) {
