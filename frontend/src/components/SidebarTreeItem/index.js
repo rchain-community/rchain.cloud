@@ -50,6 +50,7 @@ class SidebarTreeItem extends Component {
       */
       <FontAwesomeIcon
         className={[styles.nodeOptionsIcons, theme.sidebarOptionIcon].join(' ')}
+        title='New Folder'
         icon='folder-plus'
         size='xs'
         onClick={(e) => {
@@ -65,6 +66,7 @@ class SidebarTreeItem extends Component {
       */
       <FontAwesomeIcon
         className={[styles.nodeOptionsIcons, theme.sidebarOptionIcon].join(' ')}
+        title='New File'
         icon='file-medical'
         size='xs'
         onClick={(e) => {
@@ -80,6 +82,7 @@ class SidebarTreeItem extends Component {
       */
       <FontAwesomeIcon
         className={[styles.nodeOptionsIcons, theme.sidebarOptionIcon].join(' ')}
+        title='Rename'
         icon='file-signature'
         size='xs'
         onClick={(e) => {

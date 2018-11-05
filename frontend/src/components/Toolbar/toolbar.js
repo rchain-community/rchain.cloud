@@ -33,18 +33,18 @@ class Toolbar extends Component {
               </div>
               <div className={styles.toolbarMenu} >
                 <div className={styles.toolbarMenuItem} onClick={this.props.toggleSettingsModal}>
-                  <FontAwesomeIcon icon='cog' className={theme.icon} />
+                  <FontAwesomeIcon title='Settings' icon='cog' className={theme.icon} />
                 </div>
 
                 <a className={[styles.toolbarLink, styles.toolbarMenuItem].join(' ')} target='_blank' rel='noopener noreferrer' href='https://github.com/rchain-community/rchain.cloud'>
-                  <FontAwesomeIcon icon={['fab', 'github']} className={theme.icon} />
+                  <FontAwesomeIcon title='Github Repo' icon={['fab', 'github']} className={theme.icon} />
                 </a>
-
-                <ToggleSwitch
-                  enabled={this.props.settings.fullscreen.enabled}
-                  onClick={this.props.toggleFullscreenMode}
-                  className={styles.fullscreenToggleSwitch}
-                />
+                <div title='Toggle Fullscreen Mode' className={styles.fullscreenToggleSwitchContainer}>
+                  <ToggleSwitch
+                    enabled={this.props.settings.fullscreen.enabled}
+                    onClick={this.props.toggleFullscreenMode}
+                  />
+                </div>
               </div>
             </div>
           </MaterialToolbar>
