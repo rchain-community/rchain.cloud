@@ -1,7 +1,7 @@
 import { EDITOR_VALUE_CHANGED, EDITOR_COMPILE_CODE, EDITOR_COMPILE_RESULTS } from '../actions'
 import { EVALUATE_CODE_URL } from '../constants'
 
-const defaultState = {
+export const defaultState = {
   value: '',
   console: {
     compiling: false,

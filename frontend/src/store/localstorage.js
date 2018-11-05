@@ -1,4 +1,5 @@
 import { LOCALSTORAGE_APP_STATE_KEY, LOCALSTORAGE_FILE_CONTENT_KEY } from '../constants'
+import { defaultState as editorDefaultState } from '../reducers/reducer_editor'
 
 /**
  * Load state from the local storage.
@@ -10,6 +11,15 @@ export const loadState = () => {
       return undefined
     }
     const stateParsed = JSON.parse(state)
+
+    /**
+     * Reload console redux state to the default value
+     * This solves bug where state of the app is endlessly
+     * stuck in the "compiling" state.
+     */
+    if (stateParsed.editor.console) {
+      stateParsed.editor.console = editorDefaultState.console
+    }
     return stateParsed
   } catch (err) {
     console.log('Error while reading from local storage')
