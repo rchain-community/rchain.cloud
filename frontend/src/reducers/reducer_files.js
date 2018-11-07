@@ -46,6 +46,7 @@ export default function (state = defaultState, action) {
       /*
         File added successfully
       */
+      state.data = Object.assign({}, action.payload.data)
       return Object.assign({}, state)
 
     /*

@@ -199,9 +199,10 @@ export function* renameFile(action) {
     yield put(fileAlreadyExists(res.file))
     return
   }
-
-  action.payload.file.module = newFileName
-  action.payload.file.path = parentPath + newFileName
+  let renamedFile = yield Object.assign({}, action.payload.file)
+  renamedFile.module = newFileName
+  renamedFile.path = parentPath + newFileName
+  action.payload.file = renamedFile
 
   // Check if file was active/selected
   if (state.active.path === parentPath + currentFileName) {
@@ -219,12 +220,18 @@ export function* renameFile(action) {
       // Remove old file name entry
       window.localStorage.removeItem(LOCALSTORAGE_FILE_CONTENT_KEY + parentPath + currentFileName)
       // Save new file name entry
-      saveFile(action.payload.file, localstorageOld.content)
+      yield put(saveFile(action.payload.file, localstorageOld.content))
     }
   } catch (err) {
     console.log('Error while renaming local storage: ' + err)
   }
 
+  // Change file in the state structure
+  let fileIdx = yield parent.children.findIndex((file) => {
+    return file.path === parentPath + currentFileName
+  })
+
+  parent.children[fileIdx] = renamedFile
   yield put(addVerifiedFile(state.data))
 }
 

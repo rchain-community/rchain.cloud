@@ -4,7 +4,7 @@ import { loadState, saveState } from './localstorage.js'
 import notificationMiddleware from './middleware/notifications.js'
 import asyncDispatchMiddleware from './middleware/asyncActions.js'
 import createSagaMiddleware from 'redux-saga'
-import { fileSelectedWatch, saveEditorContentsWatch, addFileWatch, renameFileWatch, setExampleFilesWatch, editorCompileCodeWatch } from '../saga/sagas'
+import { fileSelectedWatch, saveEditorContentsWatch, addFileWatch, renameFileWatch, setExampleFilesWatch, editorCompileCodeWatch, saveFileWatch } from '../saga/sagas'
 
 const savedLocally = loadState()
 
@@ -24,6 +24,7 @@ sagaMiddleware.run(fileSelectedWatch)
 sagaMiddleware.run(saveEditorContentsWatch)
 sagaMiddleware.run(addFileWatch)
 sagaMiddleware.run(renameFileWatch)
+sagaMiddleware.run(saveFileWatch)
 sagaMiddleware.run(setExampleFilesWatch)
 sagaMiddleware.run(editorCompileCodeWatch)
 // sagaMiddleware.run(editorInputChangedWatch)
