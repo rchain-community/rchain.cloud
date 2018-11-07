@@ -22,6 +22,7 @@ export default function (state = defaultState, action) {
 
     case EDITOR_COMPILATION_INPROGRESS:
       newStateConsole.compiling = true
+      newStateConsole.content.success = false
       return Object.assign({}, state, { console: newStateConsole })
 
     case EDITOR_COMPILE_RESULTS:
