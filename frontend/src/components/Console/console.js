@@ -9,18 +9,9 @@ import Button from '@material-ui/core/Button'
 import { editorCompileCode } from '../../actions'
 
 class Console extends Component {
-  constructor() {
-    super()
-    this.compileClick = this.compileClick.bind(this)
-  }
-
-  compileClick() {
-    console.log('Compile: \n ' + this.props.editorState.value)
-  }
-
   render() {
     let output
-    if (this.props.editorState.console.compiling) {
+    if (this.props.editorState.compiling) {
       output = (
         <hr className={styles.hrCompile} />
       )
@@ -28,10 +19,10 @@ class Console extends Component {
       output = (
         <div>
           <h4>EVALUATING</h4>
-          <span>{this.props.editorState.console.content.evaluating}</span>
+          <span>{this.props.editorState.content.evaluating}</span>
           <hr />
           <h4>OUTPUT</h4>
-          <span>{this.props.editorState.console.content.output}</span>
+          <span>{this.props.editorState.content.output}</span>
           <hr />
         </div>
       )
@@ -44,12 +35,12 @@ class Console extends Component {
             <FontAwesomeIcon className={styles.consoleHeaderIcon} icon='terminal' size='xs' />
             <span className={styles.consoleHeaderTitle}>Output</span>
 
-            <Button className={styles.consoleHeaderRun} disabled={this.props.editorState.console.compiling} onClick={this.props.compileCode}>Compile</Button>
+            <Button className={styles.consoleHeaderRun} disabled={this.props.editorState.compiling} onClick={this.props.compileCode}>Compile</Button>
           </div>
         </div>
         <div className={[styles.consoleContent, theme.consoleText].join(' ')}>
           {output}
-          {this.props.editorState.console.content.success && <h4>COMPLETED</h4>}
+          {this.props.editorState.content.success && <h4>COMPLETED</h4>}
         </div>
       </div>
     )
@@ -67,7 +58,7 @@ Console.propTypes = {
 */
 function mapStateToProps(state) {
   return {
-    editorState: state.editor
+    editorState: state.editor.console
   }
 }
 

@@ -12,6 +12,13 @@
                 "named": "never",
                 "asyncArrow": "always"
             }
+        ],
+        "generator-star-spacing": [
+            "error",
+            {
+                "before": false,
+                "after": true
+            }
         ]
     }
 }

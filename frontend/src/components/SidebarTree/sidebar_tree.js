@@ -32,6 +32,11 @@ class SidebarTree extends Component {
         console.log('Error while fetching example files, ' + err)
       })
   }
+  /*
+  shouldComponentUpdate(nextProps, nextState) {
+    return JSON.stringify(nextProps.files) !== JSON.stringify(this.props.files)
+  }
+  */
 
   /*
     This method is used to render individual tree items.

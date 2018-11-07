@@ -4,10 +4,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import rholang from 'codemirror-rholang'
-import { saveFile } from '../../store/localstorage'
 // eslint-disable-next-line
 import '!style-loader!css-loader!./style.css'
-import { editorChangeValue } from '../../actions'
+import { editorChangeValue, saveEditorContent } from '../../actions'
 import 'codemirror/addon/edit/closebrackets.js'
 
 /* eslint-disable */
@@ -24,14 +23,9 @@ import 'codemirror/mode/javascript/javascript.js'
  * CodeMirror is Controller by Redux, that's why we use Controlled variant
  * of CodeMirror instead of Uncontrolled.
  */
-class CodeEditor extends React.PureComponent {
-  static propTypes = {
-    children: PropTypes.string
-  }
-
+class CodeEditor extends React.Component {
   constructor(props) {
     super(props)
-
     // Remove line numbers in front of some of the code examples
     const regex = /^\s?\d+\s/gm
     let hasLineNumbers = false
@@ -52,7 +46,16 @@ class CodeEditor extends React.PureComponent {
       cursor
     }
   }
-
+  /*
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(nextState)
+    return nextProps.state.value !== this.props.state.value
+  }
+  
+  componentWillUpdate(nextProps, nextState) {
+    console.log(nextState)
+  }
+  */
   cursorChanged(newState) {
     this.setState({ cursor: newState })
   }
@@ -80,11 +83,14 @@ class CodeEditor extends React.PureComponent {
             theme: 'solarized',
             scrollbarStyle: 'null'
           }}
+
           onBeforeChange={(editor, data, value) => {
             this.props.valueChanged(value)
+            //this.setState({ originalValue: value })
           }}
+
           onChange={(editor, data, value) => {
-            saveFile(this.props.activeFile, value)
+            this.props.saveFile(this.props.activeFile, value)
           }}
           onCursorActivity={(editor, data, value) => {
             this.cursorChanged(editor.getDoc().getCursor())
@@ -97,6 +103,11 @@ class CodeEditor extends React.PureComponent {
       </div>
     )
   }
+}
+
+CodeEditor.propTypes = {
+  state: PropTypes.object,
+  activeFile: PropTypes.object
 }
 
 /*
@@ -112,7 +123,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    valueChanged: editorChangeValue
+    valueChanged: editorChangeValue,
+    saveFile: saveEditorContent
   }, dispatch)
 }
 

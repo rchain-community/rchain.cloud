@@ -23,9 +23,9 @@ class SidebarTreeItem extends Component {
 
     let iconClass = [styles.icon, theme.sidebarIcon].join(' ')
     let nodeActive = false
-    if (this.props.files.active.module &&
-      this.props.node.module === this.props.files.active.module &&
-      this.props.node.path === this.props.files.active.path) {
+    if (this.props.activeFile.module &&
+      this.props.node.module === this.props.activeFile.module &&
+      this.props.node.path === this.props.activeFile.path) {
       nodeActive = true
       iconClass = [styles.icon, theme.sidebarActiveIcon].join(' ')
     }
@@ -164,7 +164,7 @@ class SidebarTreeItem extends Component {
 
 SidebarTreeItem.propTypes = {
   node: PropTypes.object.isRequired,
-  files: PropTypes.object
+  activeFile: PropTypes.object
 }
 
 /*
@@ -173,7 +173,7 @@ SidebarTreeItem.propTypes = {
 */
 function mapStateToProps(state) {
   return {
-    files: state.files
+    activeFile: state.files.active
   }
 }
 
