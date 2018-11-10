@@ -69,11 +69,23 @@ function* preprocessFileName(input) {
   return fileName
 }
 
+/**
+ * Check whether filename is valid
+ * @param {string} filename Filename to check
+ */
 function* validateFileName(filename) {
   let validFilename = yield /^[a-z0-9_.@()-]+$/i.test(filename)
   return validFilename
 }
 
+/**
+ * Function finds and returns the file object from the
+ * file structure tree.
+ * Function uses recursive search as the file structure
+ * is represented with tree structure.
+ * @param {object} file Root of the file structure tree
+ * @param {*} path Path of the file to look for
+ */
 const findObjectByPath = function (file, path) {
   return new Promise(function (resolve) {
     function recursiveFind(file, path) {
@@ -86,8 +98,8 @@ const findObjectByPath = function (file, path) {
       }
       let found
       for (var child in file.children) {
-        found = findObjectByPath(file.children[child], path)
-        if (found !== null) {
+        found = recursiveFind(file.children[child], path)
+        if (found) {
           return found
         }
       }
@@ -108,6 +120,94 @@ const checkFileNameCollisions = function (fileName, parent) {
     }
     resolve({ success: true })
   })
+}
+
+/**
+ * Update the old file object in the local storage structure
+ * @param {object} file new file object
+ * @param {*} oldFile old file object
+ */
+function* updateLocalstorageFileName(file, oldFile) {
+  try {
+    const localstorageOld = yield loadFile({ path: oldFile.path })
+    if (localstorageOld) {
+      // Remove old file name entry
+      yield window.localStorage.removeItem(LOCALSTORAGE_FILE_CONTENT_KEY + oldFile.path)
+      // Save new file name entry
+      yield put(saveFile(file, localstorageOld.content))
+    }
+  } catch (err) {
+    console.log('Error while renaming local storage: ' + err)
+  }
+}
+
+function* extractParentsPath(file) {
+  if (file.leaf) {
+    return yield file.path.slice(0, -file.module.length)
+  } else {
+    return yield file.path.slice(0, -(file.module.length + 1))
+  }
+}
+
+function* createRenamedFileObject(file, newFileName) {
+  let renamedFile = yield Object.assign({}, file)
+  let parentPath = yield call(extractParentsPath, file)
+  renamedFile.module = newFileName
+  renamedFile.path = parentPath + newFileName
+  if (!file.leaf) {
+    renamedFile.path += '/'
+  }
+  return renamedFile
+}
+
+/**
+ * This function is critical for successful folder renaming.
+ * This function takes care of all children of a given folder
+ * by updating it's path to the new valid one as the parent folder
+ * just changed it's name. As file structure is nested tree
+ * this function is recursive to reach each node and leaf of the
+ * tree structure.
+ * @param {object} folder New parent folder object
+ * @param {*} oldFolder Old parent folder object
+ */
+function* changeSubfoldersPaths(folder, oldFolder) {
+  /**
+   * Recursive function that does all the work.
+   * -> Updates file path
+   * -> Updates file entry in the local storage
+   * @param {object} file Fole that is currently being processed
+   * @param {object} rootFolder New parent folder object
+   * @param {object} oldFolder Old parent folder object
+   */
+  function* recursiveChange(file, rootFolder, oldFolder) {
+    // Change file path
+    if (file.path) {
+      let oldFile = Object.assign({}, file)
+      let pathExtension = file.path.substring(oldFolder.path.length)
+      file.path = folder.path + pathExtension
+
+      // Update local storage
+      yield call(updateLocalstorageFileName, file, oldFile)
+    }
+    // Recursive call for each of the children of the current folder
+    for (let child in file.children) {
+      // New updated object
+      let newChild = yield call(recursiveChange, file.children[child], folder, oldFolder)
+      // Replace object
+      file.children[child] = newChild
+    }
+
+    // Return updated file object
+    return file
+  }
+
+  // Call recursive update for each child of the folder that just changed it's name
+  for (var child in folder.children) {
+    // New updated object
+    let newChild = yield call(recursiveChange, folder.children[child], folder, oldFolder)
+    // Replace object
+    folder.children[child] = newChild
+  }
 }
 
 export function* addFile(action) {
@@ -181,8 +281,9 @@ export function* renameFile(action) {
     return
   }
 
-  let currentFileName = action.payload.file.module
-  let parentPath = action.payload.file.path.slice(0, -currentFileName.length)
+  let oldFile = Object.assign({}, action.payload.file)
+  // Extract Parent's Path
+  let parentPath = yield call(extractParentsPath, action.payload.file)
   /**
    * Find parent folder in the file structure
    */
@@ -199,13 +300,13 @@ export function* renameFile(action) {
     yield put(fileAlreadyExists(res.file))
     return
   }
-  let renamedFile = yield Object.assign({}, action.payload.file)
-  renamedFile.module = newFileName
-  renamedFile.path = parentPath + newFileName
-  action.payload.file = renamedFile
 
+  // Create new file object
+  let renamedFile = yield call(createRenamedFileObject, action.payload.file, newFileName)
+
+  action.payload.file = renamedFile
   // Check if file was active/selected
-  if (state.active.path === parentPath + currentFileName) {
+  if (state.active.path === parentPath + oldFile.module) {
     // Change active file details to new name and path
     state.active = action.payload.file
   }
@@ -214,23 +315,20 @@ export function* renameFile(action) {
    *  Check if there is a localstorage data under old file's name,
    *  if there is update it's name to the new file name.
    */
-  try {
-    const localstorageOld = loadFile({ path: parentPath + currentFileName })
-    if (localstorageOld) {
-      // Remove old file name entry
-      window.localStorage.removeItem(LOCALSTORAGE_FILE_CONTENT_KEY + parentPath + currentFileName)
-      // Save new file name entry
-      yield put(saveFile(action.payload.file, localstorageOld.content))
-    }
-  } catch (err) {
-    console.log('Error while renaming local storage: ' + err)
+  yield call(updateLocalstorageFileName, action.payload.file, oldFile)
+
+  if (!action.payload.file.leaf) {
+    yield call(changeSubfoldersPaths, action.payload.file, oldFile)
   }
 
   // Change file in the state structure
   let fileIdx = yield parent.children.findIndex((file) => {
-    return file.path === parentPath + currentFileName
+    if (file.leaf) {
+      return file.path === parentPath + oldFile.module
+    } else {
+      return file.path === parentPath + oldFile.module + '/'
+    }
   })
-
   parent.children[fileIdx] = renamedFile
   yield put(addVerifiedFile(state.data))
 }

@@ -9,6 +9,14 @@ import { WORKSPACE_FOLDER_NAME } from '../../constants'
 import { addNewFolderPrompt, addNewFilePrompt, renameFilePrompt, fileClick } from './file_operations'
 
 class SidebarTreeItem extends Component {
+  /*
+  shouldComponentUpdate(nextState, nextProps) {
+    console.log(this.props)
+    console.log(nextState)
+
+    return true
+  }
+  */
   render() {
     let fileIcon
     let nodeFolder = false
@@ -173,7 +181,8 @@ SidebarTreeItem.propTypes = {
 */
 function mapStateToProps(state) {
   return {
-    activeFile: state.files.active
+    activeFile: state.files.active,
+    files: state.files
   }
 }
 

@@ -5,6 +5,11 @@
         "standard-react"
     ],
     "rules": {
+        "max-len": [
+            1,
+            250,
+            2
+        ],
         "space-before-function-paren": [
             "error",
             {
