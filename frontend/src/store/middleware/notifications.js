@@ -1,4 +1,4 @@
-import { FILE_INVALID_NAME, FILE_ALREADY_EXISTS, FILE_FETCHING_ERROR } from '../../actions'
+import { FILE_INVALID_NAME, FILE_ALREADY_EXISTS, FILE_FETCHING_ERROR, EDITOR_COMPILATION_FAILURE } from '../../actions'
 import { toastr } from 'react-redux-toastr'
 
 const notificationMiddleWare = store => next => action => {
@@ -11,6 +11,9 @@ const notificationMiddleWare = store => next => action => {
       break
     case FILE_FETCHING_ERROR:
       toastr.error('Fetching error', `Error while fetching "${action.payload.value}".`)
+      break
+    case EDITOR_COMPILATION_FAILURE:
+      toastr.error('Evaluation error', `Error while evaluating: ${action.payload.error}`)
       break
   }
   next(action)
