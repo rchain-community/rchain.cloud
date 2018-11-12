@@ -15,5 +15,8 @@ deploy-ips.txt
 *.iml
 .DS_Store
 
+.env.local
+.env
+
 /logs
 /indices

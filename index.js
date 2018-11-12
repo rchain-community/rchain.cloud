@@ -7,6 +7,8 @@ const app = express()
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
 
+require('dotenv').config()
+
 // Local libs
 const DockerManager = require('./lib/DockerManager')
 const FileReader = require('./lib/FileReader')
@@ -165,6 +167,6 @@ io.on('connection', function (socket) {
   })
 })
 
-const port = process.env.PORT || 80
+const port = process.env.BACKEND_PORT || 80
 server.listen(port)
 console.log('server started on port', port)
