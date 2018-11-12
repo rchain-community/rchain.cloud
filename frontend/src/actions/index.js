@@ -14,6 +14,7 @@ export const EDITOR_VALUE_CHANGED = 'EDITOR_VALUE_CHANGED'
 export const EDITOR_VALUE_CHANGED_DEBOUNCED = 'EDITOR_VALUE_CHANGED_DEBOUNCED'
 export const EDITOR_COMPILE_CODE = 'EDITOR_COMPILE_CODE'
 export const EDITOR_COMPILATION_INPROGRESS = 'EDITOR_COMPILATION_INPROGRESS'
+export const EDITOR_COMPILATION_FAILURE = 'EDITOR_COMPILATION_FAILURE'
 export const EDITOR_COMPILE_RESULTS = 'EDITOR_COMPILE_RESULTS'
 export const SAVE_FILE = 'SAVE_FILE'
 export const SAVE_EDITOR_CONTENT = 'SAVE_EDITOR_CONTENT'
@@ -149,6 +150,15 @@ export function editorCompileCode() {
 export function editorCompilationInProgress() {
   return {
     type: EDITOR_COMPILATION_INPROGRESS
+  }
+}
+
+export function editorCompilationFailed(error) {
+  return {
+    type: EDITOR_COMPILATION_FAILURE,
+    payload: {
+      error: error
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-import { EDITOR_COMPILE_RESULTS, EDITOR_VALUE_CHANGED, EDITOR_COMPILATION_INPROGRESS } from '../actions'
+import { EDITOR_COMPILE_RESULTS, EDITOR_VALUE_CHANGED, EDITOR_COMPILATION_INPROGRESS, EDITOR_COMPILATION_FAILURE } from '../actions'
 
 export const defaultState = {
   value: '',
@@ -22,6 +22,11 @@ export default function (state = defaultState, action) {
 
     case EDITOR_COMPILATION_INPROGRESS:
       newStateConsole.compiling = true
+      newStateConsole.content.success = false
+      return Object.assign({}, state, { console: newStateConsole })
+
+    case EDITOR_COMPILATION_FAILURE:
+      newStateConsole.compiling = false
       newStateConsole.content.success = false
       return Object.assign({}, state, { console: newStateConsole })
 
