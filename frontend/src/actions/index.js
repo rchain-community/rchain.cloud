@@ -162,13 +162,14 @@ export function editorCompilationFailed(error) {
   }
 }
 
-export function editorCompilationDone(evaluating, storageContents, output) {
+export function editorCompilationDone(evaluating, storageContents, output, deploymentCost) {
   return {
     type: EDITOR_COMPILE_RESULTS,
     payload: {
       output: output,
       evaluating: evaluating,
-      storageContents: storageContents
+      storageContents: storageContents,
+      deploymentCost: deploymentCost
     }
   }
 }

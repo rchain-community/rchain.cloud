@@ -24,6 +24,9 @@ class Console extends Component {
           <h4>OUTPUT</h4>
           <span>{this.props.editorState.content.output}</span>
           <hr />
+          <h4>DEPLOYMENT COST</h4>
+          <span>{this.props.editorState.content.deploymentCost}</span>
+          <hr />
         </div>
       )
     }

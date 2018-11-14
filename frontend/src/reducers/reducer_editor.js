@@ -5,6 +5,7 @@ export const defaultState = {
   console: {
     compiling: false,
     content: {
+      deploymentCost: '',
       evaluating: '',
       output: '',
       storageContents: '',
@@ -33,6 +34,7 @@ export default function (state = defaultState, action) {
     case EDITOR_COMPILE_RESULTS:
       newStateConsole.content.output = action.payload.output
       newStateConsole.content.evaluating = action.payload.evaluating
+      newStateConsole.content.deploymentCost = action.payload.deploymentCost
       newStateConsole.compiling = false
       newStateConsole.content.success = true
       return Object.assign({}, state, { console: newStateConsole })
