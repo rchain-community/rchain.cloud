@@ -8,7 +8,7 @@ For an example there is a sub-state called `files` that stores the state of the 
 
 * `files` [`object`] - as mentioned earlier, stores the data about the file structure connected to the sidebar file tree. 
   * `active` [`object`] - property stores the currently selected file in the sidebar file tree.
-  * `data` [`object`] - property stores the file tree structure. Full description of file tree structure can be found [**here**](./redux_file_tree_desc.md).
+  * `data` [`object`] - property stores the file tree structure. Full description of file tree structure can be found [**here**](redux_file_tree_desc.md).
 * `settings` [`object`] - property stores the general settings of the app. If any new options are added to the settings, they should be added here as well to ensure persistance.
   * `fullscreen` [`object`] - property stores the state of the Fullscreen Presentation Mode.
     * `enabled` [`boolean`] - property defines Fullscreen Presentation Mode state.
@@ -63,8 +63,8 @@ For an example there is a sub-state called `files` that stores the state of the 
 
 ## Redux reducers
 
-* `files` state is handled by the [reducer_files.js](../frontend/src/reducers/reducer_files.js)
-* `settings` state is handled by the [reducer_settings.js](../frontend/src/reducers/reducer_settings.js)
+* `files` state is handled by the [reducer_files.js](../../frontend/src/reducers/reducer_files.js)
+* `settings` state is handled by the [reducer_settings.js](../../frontend/src/reducers/reducer_settings.js)
 
 ___
 Author: Andrijan Ostrun

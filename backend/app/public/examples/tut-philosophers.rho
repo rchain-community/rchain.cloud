@@ -1,0 +1,20 @@
+new philosopher1, philosopher2, north, south, knife, spoon in {
+  north!(*knife) |
+  south!(*spoon) |
+  for (@knf <- north; @spn <- south) {
+    philosopher1!("Complete!") |
+    north!(knf) |
+    south!(spn)
+  } |
+  for (@spn <- south; @knf <- north) {
+    philosopher2!("Complete!") |
+    north!(knf) |
+    south!(spn)
+  }|
+  for (@text <- philosopher1){
+    stdout!("Philosopher 1" | text)
+  } |
+  for (@text <- philosopher2){
+    stdout!("Philosopher 2" | text )
+  }
+}

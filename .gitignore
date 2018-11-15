@@ -2,6 +2,7 @@ node_modules
 deploy.sh
 deploy-script.sh
 deploy-ips.txt
+rnode.deb
 
 # VS Code
 .vscode/
@@ -20,3 +21,4 @@ deploy-ips.txt
 
 /logs
 /indices
+/evaluations

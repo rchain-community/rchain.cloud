@@ -1,0 +1,29 @@
+FROM ubuntu:18.04
+
+RUN apt-get update \
+  && apt-get install -y curl openjdk-8-jre-headless nodejs npm libsodium23 systemd nano\
+  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /home/rnode/
+
+RUN npm i -g npm
+
+COPY scripts/install scripts/install
+RUN bash scripts/install
+
+COPY scripts/start scripts/start
+
+COPY app app/
+RUN cd app && npm install
+
+RUN cd app && mkdir -p evaluations
+RUN cd app && touch evaluations/output.log
+
+COPY config .rnode/
+RUN touch .rnode/rnode.log
+
+RUN chmod -R 777 /home/rnode/
+
+EXPOSE 40402
+
+CMD ["bash", "scripts/start"]

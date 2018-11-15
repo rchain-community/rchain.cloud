@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd app
+PORT=10000 npm start &
+cd ..
+rnode run --standalone --no-upnp --validator-private-key 46e729c476cf0a66a900c1bb3331b37358332e698dbff7d85265149b2822d2cd &> app/evaluations/output.log

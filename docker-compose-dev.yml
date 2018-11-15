@@ -1,40 +1,34 @@
 version: "3.5"
 services:
   rchain-frontend:
-    container_name: rchain-frontend
+    container_name: rchain-cloud-frontend
     build:
-      context: .
+      context: frontend
       dockerfile: Dockerfile.frontend
     ports:
-      - "8080:3000"
+    - 80:3000
     volumes:
-      - rchain-cloud-data:/var/lib/rchain-frontend/data
+    - ./frontend/:/home/node/app/
     depends_on:
-      - rchain-backend
+    - rchain-backend-standalone
     networks:
-      - rchain-local
-  rchain-backend:
-    container_name: rchain-backend
+    - rnode-net
+  rchain-backend-standalone:
+    container_name: rchain-cloud-backend-standalone
     build:
-      context: .
-      dockerfile: Dockerfile.backend
-    ports:
-      - "80:80"
+      context: backend
+      dockerfile: Dockerfile.standalone
     volumes:
-      - rchain-cloud-data:/var/lib/rchain-backend/data
-    depends_on:
-      - rchain-node
+    - ./app:/root/app
+    - ./app/node_modules:/root/app/node_modules:cached
+    ports:
+    - 10000:10000
     networks:
-      - rchain-local
-  rchain-node:
-    container_name: rchain-node
-    image: rchain/rnode:latest
-    networks:
-      - rchain-local
+    - rnode-net
 
 networks:
-  rchain-local:
-    name: rchain-local
+  rnode-net:
+    name: rnode-net
 
 volumes:
   rchain-cloud-data:

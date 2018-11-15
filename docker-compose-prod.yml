@@ -13,7 +13,7 @@ services:
       - rchain-local
   rchain-backend:
     image: rchaincommunity/rchaincloudbackend
-    container_name: rchain-backend    
+    container_name: rchain-backend
     ports:
       - "80:80"
     volumes:
@@ -21,12 +21,12 @@ services:
     depends_on:
       - rchain-node
     networks:
-      - rchain-local
+    - rnode-net
   rchain-node:
     container_name: rchain-node
     image: rchain/rnode:latest
     networks:
-      - rchain-local
+    - rnode-net
 networks:
   rchain-local:
     name: rchain-local
