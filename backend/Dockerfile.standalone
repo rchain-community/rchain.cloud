@@ -8,7 +8,10 @@ WORKDIR /home/rnode/
 
 RUN npm i -g npm
 
+RUN echo $PWD
+
 COPY scripts/install scripts/install
+
 RUN bash scripts/install
 
 COPY scripts/start scripts/start
