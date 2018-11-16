@@ -6,18 +6,14 @@ RUN apt-get update \
 
 WORKDIR /home/rnode/
 
-RUN npm i -g npm
+RUN npm i -g npm -q
 
-RUN echo $PWD
+COPY scripts scripts
 
-COPY scripts/install scripts/install
-
-RUN bash scripts/install
-
-COPY scripts/start scripts/start
+RUN bash scripts/install -q
 
 COPY app app/
-RUN cd app && npm install
+RUN cd app && npm install -q
 
 RUN cd app && mkdir -p evaluations
 RUN cd app && touch evaluations/output.log
