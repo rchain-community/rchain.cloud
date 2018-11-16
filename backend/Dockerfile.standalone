@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
 RUN apt-get update \
-  && apt-get install -y curl openjdk-8-jre-headless nodejs npm libsodium23 systemd nano\
+  && apt-get install -qq curl openjdk-8-jre-headless nodejs npm libsodium23 systemd nano\
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/rnode/
