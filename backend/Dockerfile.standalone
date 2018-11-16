@@ -8,7 +8,7 @@ WORKDIR /home/rnode/
 
 RUN npm i -g npm -q
 
-COPY scripts scripts
+COPY scripts/* scripts/
 
 RUN bash scripts/install -q
 
