@@ -15,8 +15,8 @@ jobs:
       # Build and publish to Docker Hub
       - run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASS
-          docker build -f backend/Dockerfile.standalone . -t rchaincommunity/rchaincloudbackend:latest
-          docker build -f frontend/Dockerfile.frontend . -t rchaincommunity/rchaincloudfrontend:latest
+          docker build -f Dockerfile.standalone backend -t rchaincommunity/rchaincloudbackend:latest
+          docker build -f Dockerfile.frontend frontend -t rchaincommunity/rchaincloudfrontend:latest
           docker push rchaincommunity/rchaincloudbackend:latest
           docker push rchaincommunity/rchaincloudfrontend:latest          
   deploy_to_staging:
