@@ -21,7 +21,7 @@ jobs:
           docker push rchaincommunity/rchaincloudfrontend:latest          
   deploy_to_staging:
     docker:
-      image: rchaincommunity/rchaincloudfrontend
+      - image: rchaincommunity/rchaincloudfrontend
     working_directory: ~/rchain.cloud
     steps:
       - checkout
