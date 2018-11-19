@@ -19,27 +19,27 @@ jobs:
           docker build -f frontend/Dockerfile.rchaincloudfrontend frontend -t rchaincommunity/rchaincloudfrontend:latest
           docker push rchaincommunity/rchaincloudbackend:latest
           docker push rchaincommunity/rchaincloudfrontend:latest          
-  deploy_to_staging:
-    docker:
-      - image: rchaincommunity/rchaincloudfrontend
-    working_directory: ~/rchain.cloud
-    steps:
-      - checkout
-      - run:
-          name: Deploy react branch to Heroku staging server
-          command: |
-            heroku login
-            heroku container:push --recursive
+#  deploy_to_staging:
+#    docker:
+#      - image: rchaincommunity/rchaincloudfrontend
+#    working_directory: ~/rchain.cloud
+#    steps:
+#      - checkout
+#      - run:
+#          name: Deploy react branch to Heroku staging server
+#          command: |
+#            heroku login
+#            heroku container:push --recursive
 workflows:
   version: 2
   build_and_deploy:
     jobs:
       - build:
           context: rchaincloud
-      - deploy_to_staging:
-          context: rchaincloud
-          requires:
-            - build
-          filters:
-            branches:
-              only: react   
+#      - deploy_to_staging:
+#          context: rchaincloud
+#          requires:
+#            - build
+#          filters:
+#            branches:
+#              only: react   
