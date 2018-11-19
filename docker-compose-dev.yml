@@ -4,7 +4,7 @@ services:
     container_name: rchain-cloud-frontend
     build:
       context: frontend
-      dockerfile: Dockerfile.frontend
+      dockerfile: Dockerfile.rchaincloudfrontend
     ports:
     - 80:3000
     volumes:
@@ -17,7 +17,7 @@ services:
     container_name: rchain-cloud-backend-standalone
     build:
       context: backend
-      dockerfile: Dockerfile.standalone
+      dockerfile: Dockerfile.rchaincloudbackend
     volumes:
     - ./app:/root/app
     - ./app/node_modules:/root/app/node_modules:cached

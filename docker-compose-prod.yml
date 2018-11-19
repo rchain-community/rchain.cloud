@@ -5,11 +5,15 @@ services:
     image: rchaincommunity/rchaincloudfrontend
     networks:
     - rnode-net
+    ports:
+    - 80:3000
   rchain-backend-standalone:
     container_name: rchain-cloud-backend-standalone
     image: rchaincommunity/rchaincloudbackend
     networks:
     - rnode-net
+    ports:
+    - 10000:10000
 
 networks:
   rnode-net:
