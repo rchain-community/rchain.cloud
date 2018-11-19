@@ -11,7 +11,14 @@ Just want to play around with Rholang? Simply go to [rchain.cloud](http://rchain
 
 ## Running it locally
 If you want to help develop rchain.cloud, or run your own instance, follow these instructions:
+There are two options:
+1) run:
+docker-compose -f docker-compose-dev.yml up -d    
+(to build an image from code that you developed)
+or using offical stable images from docker hub by:
+docker-compose -f docker-compose-prod.yml up -d
 
+Other option is:
 1. Ensure [Docker](https://www.docker.com/) and [Node.JS](https://nodejs.org) (version 8 or above) are installed on your machine.
 2. Clone the Github repo to your desired location using `git clone https://github.com/th3build/rchain.cloud`.
 3. Install NPM dependencies: `npm install`
