@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Modal from 'react-modal'
 import PropTypes from 'prop-types'
-import { toggleSettingsModal } from '../../actions'
-import styles from './settings_modal.css'
+import { toggleAboutModal } from '../../actions'
+import styles from './about_modal.css'
 import theme from '../../theme/theme.css'
 
 const customStyles = {
@@ -28,7 +28,7 @@ const customStyles = {
   }
 }
 
-class SettingsModal extends Component {
+class AboutModal extends Component {
   componentWillMount() {
     Modal.setAppElement('#root')
   }
@@ -37,13 +37,13 @@ class SettingsModal extends Component {
     return (
       <div>
         <Modal
-          isOpen={this.props.settings.modal.open}
-          onRequestClose={this.props.toggleSettingsModal}
+          isOpen={this.props.opened}
+          onRequestClose={this.props.toggleAboutModal}
           style={customStyles}
-          contentLabel='Settings modal'
+          contentLabel='About modal'
         >
           <div className={[styles.modalContainer, theme.primaryText].join(' ')}>
-            <span className={styles.settingsModalTitle}> Settings </span>
+            <span className={styles.settingsModalTitle}> About </span>
             <span> Lorem ipsum dolor sit amet. </span>
             <span> Lorem ipsum, dolor sit amet consectetur adipisicing. </span>
             <span> Lorem ipsum dolor sit amet. </span>
@@ -56,21 +56,21 @@ class SettingsModal extends Component {
   }
 }
 
-SettingsModal.propTypes = {
-  settings: PropTypes.object,
-  toggleSettingsModal: PropTypes.func
+AboutModal.propTypes = {
+  opened: PropTypes.bool,
+  toggleAboutModal: PropTypes.func
 }
 
 function mapStateToProps(state) {
   return {
-    settings: state.settings
+    opened: state.settings.aboutModalOpen
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    toggleSettingsModal: toggleSettingsModal
+    toggleAboutModal: toggleAboutModal
   }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal)
+export default connect(mapStateToProps, mapDispatchToProps)(AboutModal)

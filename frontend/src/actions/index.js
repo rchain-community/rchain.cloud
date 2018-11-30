@@ -8,6 +8,7 @@ export const SET_EXAMPLES = 'SET_EXAMPLES'
 export const EXAMPLE_FILES_FETCHED = 'EXAMPLE_FILES_FETCHED'
 
 export const SETTINGS_MODAL_TOGGLE = 'SETTINGS_MODAL_TOGGLE'
+export const ABOUT_MODAL_TOGGLE = 'ABOUT_MODAL_TOGGLE'
 export const FULLSCREEN_MODE_TOGGLE = 'FULLSCREEN_MODE_TOGGLE'
 
 export const EDITOR_VALUE_CHANGED = 'EDITOR_VALUE_CHANGED'
@@ -114,6 +115,12 @@ export function exampleFilesFetched(examples) {
 export function toggleSettingsModal() {
   return {
     type: SETTINGS_MODAL_TOGGLE
+  }
+}
+
+export function toggleAboutModal() {
+  return {
+    type: ABOUT_MODAL_TOGGLE
   }
 }
 

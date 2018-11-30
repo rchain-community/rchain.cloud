@@ -6,10 +6,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import SettingsModal from '../SettingsModal/settings_modal'
+import AboutModal from '../AboutModal/about_modal'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './toolbar.css'
 import theme from '../../theme/theme.css'
-import { toggleSettingsModal, toggleFullscreenMode } from '../../actions'
+import { toggleSettingsModal, toggleFullscreenMode, toggleAboutModal } from '../../actions'
 import ToggleSwitch from '../ToggleSwitch/toggle_switch'
 
 class Toolbar extends Component {
@@ -32,8 +33,11 @@ class Toolbar extends Component {
                 </Typography>
               </div>
               <div className={styles.toolbarMenu} >
-                <div className={styles.toolbarMenuItem} onClick={this.props.toggleSettingsModal}>
+                <div style={{ display: 'none' }} className={styles.toolbarMenuItem} onClick={this.props.toggleSettingsModal}>
                   <FontAwesomeIcon title='Settings' icon='cog' className={theme.icon} />
+                </div>
+                <div className={styles.toolbarMenuItem} onClick={this.props.toggleAboutModal}>
+                  <FontAwesomeIcon title='About' icon='question-circle' className={theme.icon} />
                 </div>
 
                 <a className={[styles.toolbarLink, styles.toolbarMenuItem].join(' ')} target='_blank' rel='noopener noreferrer' href='https://github.com/rchain-community/rchain.cloud'>
@@ -51,14 +55,16 @@ class Toolbar extends Component {
         </AppBar >
 
         <SettingsModal />
+        <AboutModal />
 
-      </div>
+      </div >
     )
   }
 }
 
 Toolbar.propTypes = {
   toggleSettingsModal: PropTypes.func,
+  toggleAboutModal: PropTypes.func,
   toggleFullscreenMode: PropTypes.func,
   settings: PropTypes.object
 }
@@ -72,6 +78,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     toggleSettingsModal: toggleSettingsModal,
+    toggleAboutModal: toggleAboutModal,
     toggleFullscreenMode: toggleFullscreenMode
   }, dispatch)
 }

@@ -7,7 +7,8 @@ import {
   faFolderOpen, faFileCode,
   faDotCircle, faTerminal,
   faFileMedical, faFolderPlus,
-  faFileSignature
+  faFileSignature,
+  faQuestionCircle
 } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 
@@ -16,7 +17,8 @@ library.add([
   faFolder, faFolderOpen,
   faFileCode, faDotCircle,
   faTerminal, faFileMedical,
-  faFolderPlus, faFileSignature
+  faFolderPlus, faFileSignature,
+  faQuestionCircle
 ])
 // library.add(faGithub)
 
