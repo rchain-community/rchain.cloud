@@ -7,7 +7,7 @@ const app = express()
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
 
-require('dotenv').config()
+require('dotenv').config({ path: '../.env' })
 
 // Local libs
 const DockerManager = require('./lib/DockerManager')
