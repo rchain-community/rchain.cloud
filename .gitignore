@@ -17,7 +17,6 @@ rnode.deb
 .DS_Store
 
 .env.local
-.env
 
 /logs
 /indices

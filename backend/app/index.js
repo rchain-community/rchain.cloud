@@ -238,7 +238,7 @@ io.on('connection', function (socket) {
     })
 })
 
-const port = process.env.PORT || 80
+const port = process.env.BACKEND_PORT || 80
 server.listen(port)
 console.log('server started on port', port)
 

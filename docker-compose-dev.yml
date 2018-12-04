@@ -2,6 +2,10 @@ version: "3.5"
 services:
   rchain-frontend:
     container_name: rchain-cloud-frontend
+    environment:
+    - FRONTEND_PORT=${FRONTEND_PORT}
+    - BACKEND_PORT=${BACKEND_PORT}
+    - HTTPS=${HTTPS}
     build:
       context: frontend
       dockerfile: Dockerfile.rchaincloudfrontend
@@ -15,6 +19,10 @@ services:
     - rnode-net
   rchain-backend-standalone:
     container_name: rchain-cloud-backend-standalone
+    environment:
+    - FRONTEND_PORT=${FRONTEND_PORT}
+    - BACKEND_PORT=10000
+    - HTTPS=${HTTPS}
     build:
       context: backend
       dockerfile: Dockerfile.rchaincloudbackend
