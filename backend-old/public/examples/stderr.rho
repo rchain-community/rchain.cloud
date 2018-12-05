@@ -1,3 +1,0 @@
-new stderr(`rho:io:stderr`) in {
-  stderr!("hello, world!")
-}
