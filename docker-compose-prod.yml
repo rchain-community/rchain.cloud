@@ -2,13 +2,21 @@ version: "3.5"
 services:
   rchain-frontend:
     container_name: rchain-cloud-frontend
+    environment:
+    - FRONTEND_PORT=${FRONTEND_PORT}
+    - BACKEND_PORT=${BACKEND_PORT}
+    - HTTPS=${HTTPS}
     image: rchaincommunity/rchaincloudfrontend
     networks:
     - rnode-net
     ports:
-    - 80:3000
+    - 81:3000
   rchain-backend-standalone:
     container_name: rchain-cloud-backend-standalone
+    environment:
+    - FRONTEND_PORT=${FRONTEND_PORT}
+    - BACKEND_PORT=10000
+    - HTTPS=${HTTPS}
     image: rchaincommunity/rchaincloudbackend
     networks:
     - rnode-net
@@ -21,3 +29,4 @@ networks:
 
 volumes:
   rchain-cloud-data:
+
