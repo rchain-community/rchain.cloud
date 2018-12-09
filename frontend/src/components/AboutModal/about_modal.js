@@ -44,11 +44,9 @@ class AboutModal extends Component {
         >
           <div className={[styles.modalContainer, theme.primaryText].join(' ')}>
             <span className={styles.settingsModalTitle}> About </span>
-            <span> Lorem ipsum dolor sit amet. </span>
-            <span> Lorem ipsum, dolor sit amet consectetur adipisicing. </span>
-            <span> Lorem ipsum dolor sit amet. </span>
-            <span> Lorem ipsum dolor sit amet consectetur adipisicing. </span>
-            <span> Lorem, ipsum dolor. </span>
+            <span> Find some infos to start at developer.rchain.cloud </span>
+            <span> rchain.cloud currently works with rnode v0.7.1 </span>
+            <span> Have fun.</span>
           </div>
         </Modal>
       </div>
