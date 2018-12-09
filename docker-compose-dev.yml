@@ -3,26 +3,25 @@ services:
   rchain-frontend:
     container_name: rchain-cloud-frontend
     environment:
-    - FRONTEND_PORT=${FRONTEND_PORT}
+    - INTERNAL_FRONTEND_PORT=${INTERNAL_FRONTEND_PORT}
+    - EXTERNAL_FRONTEND_PORT=${EXTERNAL_FRONTEND_PORT}
     - BACKEND_PORT=${BACKEND_PORT}
     - HTTPS=${HTTPS}
+    - IP=${IP}
     build:
       context: frontend
       dockerfile: Dockerfile.rchaincloudfrontend
     ports:
-    - 80:3000
+    - ${EXTERNAL_FRONTEND_PORT}:${INTERNAL_FRONTEND_PORT}
     volumes:
     - ./frontend/:/home/node/app/
+    - /etc/letsencrypt/live/rchain.cloud/fullchain.pem:/home/node/app/node_modules/webpack-dev-server/ssl
     depends_on:
     - rchain-backend-standalone
     networks:
     - rnode-net
   rchain-backend-standalone:
     container_name: rchain-cloud-backend-standalone
-    environment:
-    - FRONTEND_PORT=${FRONTEND_PORT}
-    - BACKEND_PORT=10000
-    - HTTPS=${HTTPS}
     build:
       context: backend
       dockerfile: Dockerfile.rchaincloudbackend
