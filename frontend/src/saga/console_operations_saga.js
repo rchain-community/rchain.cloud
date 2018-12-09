@@ -24,7 +24,7 @@ export function* compileCode() {
       body: payload
     }))
     let resJSON = yield response.json()
-    yield put(editorCompilationDone(resJSON.evaluating, '', resJSON.output, 0))
+    yield put(editorCompilationDone(resJSON.evaluating, '', resJSON.output, resJSON.deploymentCost))
   } catch (error) {
     console.log('Error while requesting code eval: ' + error)
     yield put(editorCompilationFailed(error))

@@ -19,7 +19,7 @@ const FileReader = require('./lib/FileReader')
 const files = FileReader.readFiles()
 
 // Middleware
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // CORS support for express API endpoints
@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public'), {
         res.header('Access-Control-Allow-Headers', 'Content-Type');
     }
 }))
-app.use(cors({origin: true}))
+app.use(cors({ origin: true }))
 app.options('*', cors());
 
 app.use(express.static(path.join(__dirname, 'public'), {
@@ -58,7 +58,7 @@ try {
 }
 
 // Set up gRPC connection
-const repl = new REPL()
+const repl = new REPL('localhost', 40402)
 let version = null
 let executions = null
 let logs = []
@@ -97,7 +97,7 @@ const queue = new Queue((input, cb) => {
             input.socket.emit('output.append', [(e.message || e), 'error'])
             cb()
         })
-}, {maxTimeout: 10000})
+}, { maxTimeout: 10000 })
 
 // Node version
 app.get('/v1/node/version', (req, res) => {
