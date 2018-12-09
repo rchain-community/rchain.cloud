@@ -80,6 +80,7 @@ function getClientEnvironment(publicUrl) {
 
         BACKEND_PORT: process.env.BACKEND_PORT,
         HTTPS: process.env.HTTPS,
+        IP: process.env.IP,
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

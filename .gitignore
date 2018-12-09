@@ -16,6 +16,7 @@ rnode.deb
 *.iml
 .DS_Store
 
+.env
 .env.local
 
 /logs

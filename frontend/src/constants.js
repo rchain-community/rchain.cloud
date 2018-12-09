@@ -1,9 +1,9 @@
 export const DEFAULT_BACKEND_PORT = parseInt(process.env.BACKEND_PORT, 10) || 10000
-export const IP = 'rchain.cloud'
-
+export const IP = process.env.IP
 export const PROTOCOL = process.env.HTTPS === 'true' ? 'https' : 'http'
 export const SERVER_URL = 'https' + '://' + IP + ':' + DEFAULT_BACKEND_PORT + '/'
 export const FETCH_EXAMPLE_LIST_URL = SERVER_URL + 'example-files/'
+console.log(FETCH_EXAMPLE_LIST_URL)
 export const EVALUATE_CODE_URL = SERVER_URL + 'v1/node/eval'
 export const EVALUATE_CODE_TIMEOUT = 30000
 

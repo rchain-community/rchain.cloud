@@ -29,7 +29,7 @@ services:
     - ./app:/root/app
     - ./app/node_modules:/root/app/node_modules:cached
     ports:
-    - 10000:10000
+    - ${BACKEND_PORT}:80
     networks:
     - rnode-net
 
