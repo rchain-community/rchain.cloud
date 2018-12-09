@@ -43,12 +43,11 @@ class SettingsModal extends Component {
           contentLabel='Settings modal'
         >
           <div className={[styles.modalContainer, theme.primaryText].join(' ')}>
-            <span className={styles.settingsModalTitle}> Settings </span>
-            <span> Lorem ipsum dolor sit amet. </span>
-            <span> Lorem ipsum, dolor sit amet consectetur adipisicing. </span>
-            <span> Lorem ipsum dolor sit amet. </span>
-            <span> Lorem ipsum dolor sit amet consectetur adipisicing. </span>
-            <span> Lorem, ipsum dolor. </span>
+            <span className={styles.settingsModalTitle}> About rchain.cloud</span>
+            <span> Here are some resources to get you started on rholang: </span>
+            <span> https:\/\/developer.rchain.coop </span>
+            <span> rchain.cloud currently uses rnode v0.7.1. </span>
+            <span> Have fun. </span>
           </div>
         </Modal>
       </div>
