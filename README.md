@@ -2,7 +2,7 @@
 
 **Web interface to play with the [Rholang](https://developer.rchain.coop/) language.**
 
-[![Screenshot](backend-old/docs/screenshot.png)](http://rchain.cloud/)
+[![Screenshot](docs/screenshot.png)](http://rchain.cloud/)
 
 
 ## Find it online
