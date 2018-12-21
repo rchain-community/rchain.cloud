@@ -1,4 +1,4 @@
-export const DEFAULT_BACKEND_PORT = parseInt(process.env.BACKEND_PORT, 10) || 10000
+export const DEFAULT_BACKEND_PORT = parseInt(process.env.EXTERNAL_BACKEND_PORT, 10) || 10000
 export const IP = process.env.IP
 export const PROTOCOL = process.env.HTTPS === 'true' ? 'https' : 'http'
 export const SERVER_URL = PROTOCOL + '://' + IP + ':' + DEFAULT_BACKEND_PORT + '/'

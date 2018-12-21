@@ -1,24 +1,20 @@
-node_modules
-deploy.sh
-deploy-script.sh
-deploy-ips.txt
-rnode.deb
+**/.github
+**/.idea
+**/.vscode
+**/*.iml
+**/.DS_Store
+**/.env
 
-# VS Code
-.vscode/
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+**/logs
+**/indices
+**/evaluations
+**/node_modules
+**/yarn.lock
+**/rnode.deb
+**/coverage
 
-### IntelliJ IDEA ###
-.idea
-*.iml
-.DS_Store
+**/build
 
-.env
-.env.local
-
-/logs
-/indices
-/evaluations
+# production
+**/build
+**.log

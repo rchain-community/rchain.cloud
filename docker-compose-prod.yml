@@ -3,30 +3,25 @@ services:
   rchain-frontend:
     container_name: rchain-cloud-frontend
     environment:
-    - FRONTEND_PORT=${FRONTEND_PORT}
-    - BACKEND_PORT=${BACKEND_PORT}
+    - INTERNAL_FRONTEND_PORT=${INTERNAL_FRONTEND_PORT}
+    - EXTERNAL_FRONTEND_PORT=${EXTERNAL_FRONTEND_PORT}
+    - INTERNAL_BACKEND_PORT=${INTERNAL_BACKEND_PORT}
+    - EXTERNAL_BACKEND_PORT=${EXTERNAL_BACKEND_PORT}
     - HTTPS=${HTTPS}
+    - IP=${IP}
     image: rchaincommunity/rchaincloudfrontend
-    networks:
-    - rnode-net
     ports:
-    - 81:3000
+    - ${EXTERNAL_FRONTEND_PORT}:${INTERNAL_FRONTEND_PORT}
   rchain-backend-standalone:
     container_name: rchain-cloud-backend-standalone
     environment:
-    - FRONTEND_PORT=${FRONTEND_PORT}
-    - BACKEND_PORT=10000
+    - INTERNAL_BACKEND_PORT=${INTERNAL_BACKEND_PORT}
+    - EXTERNAL_BACKEND_PORT=${EXTERNAL_BACKEND_PORT}
     - HTTPS=${HTTPS}
     image: rchaincommunity/rchaincloudbackend
-    networks:
-    - rnode-net
     ports:
-    - 10000:10000
-
+    - ${EXTERNAL_BACKEND_PORT}:${INTERNAL_BACKEND_PORT}
 networks:
-  rnode-net:
-    name: rnode-net
-
-volumes:
-  rchain-cloud-data:
-
+  default:
+    external:
+      name: rnode-net
