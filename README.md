@@ -57,10 +57,11 @@ docker network create rnode-net
 
 
 -------------------------------------------------------
-
+# Deep dive:
 If you want to change default running ports for backend and frontend  then use .env file to store on which ports you want to run it.
 
 There is an example of configuration in .env.example file.
+
 Let's get through it:
 We use docker image for frontend and another for backend.
 There are two sources for images. Local dockerfiles where you can build your own images by using docker-compose-dev.yml file or production images published on docker hub that you can use by docker-compose-prod.yml file.
@@ -81,8 +82,8 @@ HTTPS flag states if React frontend should work via https or if false via http (
 
 IP is domain or ip you are running rcain.cloud on.
 
-Deep dive into configurations:
-BACKEND:
+**Deep dive into configurations:**
+# BACKEND:
 is built using Dockerfile.rchaincloudbackend. 
 Important lines inside dockerfile are:
 * scripts/install -> downloads and installs rnode.deb (which is how backend communicates with rchain blockchain)
@@ -100,6 +101,9 @@ and running rnode in standalone mode with validator private key and redirecting 
 
 Private key specified to run rnode is predefined as a validator that has stake and in this way we run rnode in write mode. If we don't run it with validator tat doesn't have stake we would run it in only read only mode and this won't work.
 
-For current version to work we don't need no more parameters which can change in the future. 
+Current rnode version works only with stated parameters which can change in the future. 
 
-For any questions or else send us a mail at: edi.sinovcic@gmail.com or open issue on github so we can help you.
+# FRONTEND
+TBD
+
+For any questions send us a mail at: edi.sinovcic@gmail.com or open issue on github so we can help you.
