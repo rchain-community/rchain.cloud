@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Downloads the latest version of RNode, by looking up the URL to the .deb
+# file for the latest release using the Github API.
+
+if [ ! -f rnode.deb ]; then
+  URL=$(curl -s https://api.github.com/repos/rchain/rchain/releases \
+  | grep "browser_download_url.*deb" \
+  | cut -d '"' -f 4 \
+  | head -n 8 \
+  | grep v0.7.1)
+
+  echo "Downloading ${URL}"
+
+  curl -L -s -o rnode.deb $URL
+
+fi
+
+echo "Installing"
+
+dpkg -i rnode.deb
+
+echo "Cleaning up"

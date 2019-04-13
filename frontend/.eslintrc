@@ -1,0 +1,29 @@
+{
+    "extends": [
+        "react",
+        "standard",
+        "standard-react"
+    ],
+    "rules": {
+        "max-len": [
+            1,
+            250,
+            2
+        ],
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "always",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ],
+        "generator-star-spacing": [
+            "error",
+            {
+                "before": false,
+                "after": true
+            }
+        ]
+    }
+}

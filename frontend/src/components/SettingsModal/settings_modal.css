@@ -1,0 +1,14 @@
+
+
+.modalContainer{
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.settingsModalTitle{
+  margin: auto;
+  font-size: 2rem;
+  font-weight: bold;
+  padding-bottom: 3rem;
+}

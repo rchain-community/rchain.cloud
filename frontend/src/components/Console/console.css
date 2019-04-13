@@ -1,0 +1,107 @@
+
+:global .Pane .horizontal .Pane2{
+  overflow: hidden;
+}
+
+.consoleContainer{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.consoleHeader {
+  height: 50px;
+}
+.consoleHeaderTitleContainer{
+  color: white;
+  margin: 1rem;
+}
+
+.consoleHeaderIcon{
+  margin-right: 0.7rem;
+  font-size: 0.5rem;
+  padding: 3px;
+  border: 2px solid white;
+  border-radius: 2px;
+}
+
+.consoleHeaderTitle{
+  font-weight: bold;
+  position: absolute;
+  user-select: none;
+}
+
+.consoleHeaderRun {
+  float: right;
+  top: -0.7rem !important;
+  top: -0.5rem;
+  color: white  !important;
+  background-color: rgba(232, 35, 35, 0.5) !important;
+  border: 2px solid #ad0030 !important;
+}
+
+.consoleContent {
+  font-family: Ubuntu Mono;
+  overflow-y: auto;
+  padding: 1rem;
+  flex-grow: 1;
+  height: 100%;
+}
+
+.consoleContent hr {
+  background-color: #7c0022; 
+  margin: 1rem 0;
+  height: 1px; 
+  border: 0;
+}
+
+hr:first-child {
+  margin-top: 0;
+}
+
+.consoleContent h4 {
+  margin-top: 0.5rem;
+}
+
+@-moz-keyframes slide {
+  0% {width: 0%;}
+  50% {width: 100%;} 
+  100% { width: 0%; } 
+}
+@-webkit-keyframes slide {
+  0% {width: 0%;}
+  50% {width: 100%;} 
+  100% { width: 0%; } 
+}
+@keyframes slide {
+  0% {width: 0%; left: 0%;}
+  25% {width: 100%; left:0%;}
+  50% {left: 100%; width: 100%;}
+  75% {left: 0%; width: 100%;}
+  100% {left: 0%; width: 0%;} 
+}
+
+.hrCompile{
+  position: absolute;
+  margin: 0;
+  -webkit-animation:slide 5s linear infinite;
+  -moz-animation:slide 5s linear infinite;
+  animation:slide 5s ease-in-out infinite;
+}
+
+.consoleContent::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #586C7A;
+}
+
+.consoleContent::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #586C7A;
+}
+
+.consoleContent::-webkit-scrollbar-thumb
+{
+	background-color: #222733;
+}

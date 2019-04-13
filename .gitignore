@@ -1,4 +1,20 @@
-node_modules
-deploy.sh
-deploy-script.sh
-deploy-ips.txt
+**/.github
+**/.idea
+**/.vscode
+**/*.iml
+**/.DS_Store
+**/.env
+
+**/logs
+**/indices
+**/evaluations
+**/node_modules
+**/yarn.lock
+**/rnode.deb
+**/coverage
+
+**/build
+
+# production
+**/build
+**.log

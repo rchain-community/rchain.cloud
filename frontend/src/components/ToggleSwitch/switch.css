@@ -1,0 +1,36 @@
+
+:global .switch {
+  width: 30px;
+  height: 15px;
+  margin-left: 1.5rem;
+  border-radius: 13px;
+  cursor: pointer;
+  display: inline-block;
+  border: 2px solid #ad0030;
+  transition: background-color .3s ease-in-out;
+}
+
+:global .switch-toggle {
+  border: 1px solid #999;
+  width: 16px;
+  height: 15px;
+  left: -2px;
+  top: -1px;
+  border-radius: 12px;
+  background-color: #586C7A;
+  position: relative;
+  transition: left .3s ease-in-out;
+}
+
+:global .switch.on {
+  background-color: #ad0030;
+}
+
+:global .switch.on .switch-toggle {
+  left: 14px;
+}
+
+:global .switch.disabled {
+  cursor: not-allowed;
+}
+
