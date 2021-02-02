@@ -2006,10 +2006,10 @@ codemirror-rholang@^1.0.1:
   resolved "https://registry.yarnpkg.com/codemirror-rholang/-/codemirror-rholang-1.0.1.tgz#073462dcd7cdbb3203a32c8a02396dfeafce8059"
   integrity sha512-BHo8DfbFRVAtP2aFAHTt67QATGNl9zOIJmtr4CfcmRSp6GSIeeVzkKnssJx//6WNBxKvfG74RA8ucEL/ulzMgQ==
 
-codemirror@^5.40.2:
-  version "5.42.0"
-  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.42.0.tgz#2d5b640ed009e89dee9ed8a2a778e2a25b65f9eb"
-  integrity sha512-pbApC8zDzItP3HRphD6kQVwS976qB5Qi0hU3MZMixLk+AyugOW1RF+8XJEjeyl5yWsHNe88tDUxzeRh5AOxPRw==
+codemirror@^5.59.1:
+  version "5.59.2"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.59.2.tgz#ee674d3a4a8d241af38d52afc482625ba7393922"
+  integrity sha512-/D5PcsKyzthtSy2NNKCyJi3b+htRkoKv3idswR/tR6UAvMNKA7SrmyZy6fOONJxSRs1JlUWEDAbxqfdArbK8iA==
 
 collection-visit@^1.0.0:
   version "1.0.0"
